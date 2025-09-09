@@ -1,0 +1,167 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  background: #1e293b;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease-in-out;
+}
+
+.sidebar h2 {
+  padding: 20px;
+  text-align: center;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+
+.sidebar ul li a {
+  display: block;
+  color: white;
+  text-decoration: none;
+  padding: 15px 20px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.sidebar ul li a:hover {
+  background: #ef4444;
+  color: white;
+}
+
+.sidebar ul li.active,
+.sidebar ul li.active a {
+  background: #ef4444;
+  color: white;
+}
+
+.sidebar footer {
+  padding: 15px;
+  font-size: 12px;
+  text-align: center;
+}
+
+.main {
+  flex: 1;
+  padding: 20px;
+  background: #f8fafc;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+
+.menu-toggle {
+  display: none;
+  font-size: 22px;
+  background: none;
+  border: none;
+  color: #1e293b;
+  cursor: pointer;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.card .number {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.success {
+  color: green;
+}
+
+.danger {
+  color: red;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+.chart, .activity {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.activity ul {
+  list-style: none;
+}
+
+.activity ul li {
+  margin: 10px 0;
+}
+
+.chart-footer {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    transform: translateX(-100%); 
+    z-index: 1000;
+  }
+
+  .sidebar.show {
+    transform: translateX(0); 
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .main {
+    padding: 15px;
+  }
+
+  .content {
+    grid-template-columns: 1fr;
+  }
+}
