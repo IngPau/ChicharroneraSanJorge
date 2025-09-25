@@ -164,6 +164,131 @@
   }
 }
 
+
+/*--------CSS VENTAS-------------- KEVIN NATARENO*/
+.parent {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 8px;
+    border: solid 1px red;
+    width: 100%;
+    background-color: aliceblue;
+}
+    
+/* Contenedor general */
+.div2 {
+    grid-column: span 4 / span 4;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb; /* gris claro */
+    border-radius: 0.75rem; /* esquinas redondeadas */
+    margin: 1rem;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); /* sombra suave */
+}
+
+/* Tarjetas pequeñas de métricas */
+.div3, .div4, .div5, .div6 {
+    grid-row-start: 2;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    margin: 0.5rem;
+    padding: 1rem;
+    text-align: left; /* alineación izquierda como en la imagen */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Títulos dentro de las tarjetas */
+.div3 h3, .div4 h3, .div5 h3, .div6 h3 {
+    font-size: 0.9rem;
+    color: #6b7280; /* gris */
+    margin-bottom: 0.25rem;
+}
+
+.div3 p, .div4 p, .div5 p, .div6 p {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827; /* casi negro */
+    margin: 0;
+}
+
+/* Tabla de ventas */
+.div7 {
+    grid-column: span 4 / span 4;
+    grid-row: span 3 / span 3;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    margin: 0.5rem;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    overflow-x: auto;
+}
+
+/* Estilos de tabla */
+.div7 table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.div7 th {
+    text-align: left;
+    font-weight: 600;
+    color: #374151;
+    padding: 0.75rem;
+    border-bottom: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+}
+
+.div7 td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #f3f4f6;
+    color: #4b5563;
+}
+
+/* Estados con etiquetas */
+.estado-completada {
+    background-color: #d1fae5;
+    color: #065f46;
+    font-size: 0.8rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+}
+
+.estado-pendiente {
+    background-color: #fef3c7;
+    color: #92400e;
+    font-size: 0.8rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+}
+
+.estado-cancelada {
+    background-color: #fee2e2;
+    color: #991b1b;
+    font-size: 0.8rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+}
+
+/* Acciones (iconos) */
+.div7 .acciones {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+.div7 .acciones i {
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+        
+
 /* CSS para clientes */
 .clientes-grid {
   display: grid;
