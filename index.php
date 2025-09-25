@@ -42,7 +42,7 @@
       <section class="cards">
         <div class="card">
           <h3>Ventas del Día</h3>
-          <p class="number">$2,450.00</p>
+          <p class="number">Q2,450.00</p>
           <span class="success">+15.3% vs ayer</span>
         </div>
         <div class="card">
@@ -67,8 +67,8 @@
           <h3>Ventas Semanales</h3>
           <canvas id="salesChart"></canvas>
           <div class="chart-footer">
-            <p>Total Semanal: <strong>$38,900</strong></p>
-            <p>Promedio Diario: <strong>$5,557</strong></p>
+            <p>Total Semanal: <strong>Q38,900</strong></p>
+            <p>Promedio Diario: <strong>Q5,557</strong></p>
             <p>Mejor Día: <strong>Sábado</strong></p>
           </div>
         </div>
@@ -76,10 +76,10 @@
         <div class="activity">
           <h3>Actividad Reciente</h3>
           <ul>
-            <li>Nueva venta completada - Mesa #5 <span class="success">$45.50</span></li>
+            <li>Nueva venta completada - Mesa 5 <span class="success">Q45.50</span></li>
             <li>Nuevo cliente registrado: María González</li>
-            <li>Stock bajo: Tomates (5 kg restantes)</li>
-            <li>Pedido a domicilio entregado <span class="success">$32.75</span></li>
+            <li>Stock bajo: Tomates (4 Cajas) </li>
+            <li>Pedido a domicilio entregado <span class="success">Q32.75</span></li>
           </ul>
         </div>
       </section>
