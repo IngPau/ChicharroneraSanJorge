@@ -18,7 +18,7 @@
   color: white;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /*justify-content: space-between;*/
   transition: transform 0.3s ease-in-out;
 }
 
@@ -432,5 +432,188 @@
 .btn-delete:hover {
   opacity: 0.9;
 }
+/* ===== Servicio a Domicilio ===== */
+.servicio-domicilio .servicio-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
 
+.servicio-domicilio .menu {
+  flex: 2;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
 
+.servicio-domicilio .menu h2 {
+  margin-bottom: 15px;
+  color: #1e293b;
+}
+
+.servicio-domicilio .menu-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.servicio-domicilio .menu-item {
+  background: #f1f5f9;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.servicio-domicilio .menu-item:hover {
+  background: #ef4444;
+  color: #fff;
+  transform: translateY(-3px);
+}
+
+.servicio-domicilio .menu-item h3 {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.servicio-domicilio .menu-item span {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.servicio-domicilio .menu-item button {
+  background: #1e293b;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.servicio-domicilio .menu-item button:hover {
+  background: #ef4444;
+}
+
+/* Carrito */
+.servicio-domicilio .cart {
+  flex: 1;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.servicio-domicilio .cart h2 {
+  margin-bottom: 15px;
+  color: #1e293b;
+}
+
+.servicio-domicilio .cart-items {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-bottom: 15px;
+}
+
+.servicio-domicilio .cart-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.servicio-domicilio .cart-summary {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.servicio-domicilio .checkout-btn {
+  width: 100%;
+  margin-top: 10px;
+  background: #ef4444;
+  color: #fff;
+  border: none;
+  padding: 10px 0;
+  border-radius: 8px;
+  cursor: not-allowed; /* deshabilitado hasta JS */
+}
+
+/* Modal Checkout (solo visual) */
+.servicio-domicilio .checkout-modal {
+  margin-top: 20px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+.servicio-domicilio .checkout-card h3 {
+  margin-bottom: 15px;
+  color: #1e293b;
+}
+
+.servicio-domicilio .checkout-card label {
+  display: block;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+.servicio-domicilio .checkout-card input,
+.servicio-domicilio .checkout-card textarea {
+  width: 100%;
+  padding: 8px 10px;
+  margin-top: 5px;
+  border: 1px solid #cbd5e1;
+  border-radius: 5px;
+}
+
+.servicio-domicilio .checkout-card textarea {
+  resize: none;
+}
+
+.servicio-domicilio .form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.servicio-domicilio .btn {
+  padding: 8px 15px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.servicio-domicilio .btn.primary {
+  background: #ef4444;
+  color: #fff;
+}
+
+.servicio-domicilio .btn.primary:hover {
+  background: #dc2626;
+}
+
+.servicio-domicilio .btn[type="button"] {
+  background: #cbd5e1;
+  color: #1e293b;
+}
+
+.servicio-domicilio .btn[type="button"]:hover {
+  background: #94a3b8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .servicio-domicilio .servicio-container {
+    flex-direction: column;
+  }
+
+  .servicio-domicilio .menu,
+  .servicio-domicilio .cart {
+    width: 100%;
+  }
+}
