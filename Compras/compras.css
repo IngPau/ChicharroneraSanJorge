@@ -1,0 +1,280 @@
+/* Compras/compras.css */
+
+/* ===================== SIDEBAR ===================== */
+.sidebar {
+  width: 250px;
+  background: #1e293b; 
+  color: white;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease-in-out;
+}
+
+.sidebar h2 {
+  padding: 20px;
+  text-align: center;
+  font-size: 24px;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar ul li a {
+  display: block;
+  color: white;
+  text-decoration: none;
+  padding: 15px 20px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.sidebar ul li a:hover {
+  background: #dc2626; 
+  color: white;
+}
+
+.sidebar ul li.active,
+.sidebar ul li.active a {
+  background: #dc2626;
+  color: white;
+}
+
+.sidebar footer {
+  padding: 15px;
+  font-size: 12px;
+  text-align: center;
+}        
+/* ===================== FIN SIDEBAR ===================== */
+
+.container {
+  display: flex;            
+  min-height: 100vh;          
+}
+
+/* Contenido principal*/
+.main {
+  flex: 1;                 
+  max-width: none;          
+  margin: 25px;                
+  background: #f8fafc;       
+}
+
+body{
+  color:var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+}
+
+.page-header{
+  display:flex; 
+  align-items:end; 
+  gap:16px; 
+  justify-content:space-between;
+  margin-bottom:18px;
+}
+
+.page-title{
+  font-size: 50px; 
+  font-weight: 900; 
+  letter-spacing: -0.02em; 
+  margin-bottom: 18px;
+}
+
+.page-sub{
+  color:var(--muted);
+  font-size:14px;
+}
+
+/* Card contenedor */
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:12px;
+}
+
+/* Secciones y subtítulos */
+.section-title{
+  font-size: 0.5cm;
+  font-weight: 700;
+  margin:8px 0 14px;
+}
+
+/* Grid responsive para los campos de encabezado */
+.grid{
+  display:grid;
+  gap:14px;
+}
+.grid-2{ 
+  grid-template-columns: 
+  repeat(2, minmax(0,1fr)); 
+}
+
+.grid-3{ 
+  grid-template-columns: 
+  repeat(3, minmax(0,1fr)); 
+}
+@media (max-width: 860px){ .grid-2,.grid-3{ grid-template-columns: 1fr; } }
+
+/* Form fields */
+.form-group label{
+  display:block; 
+  font-weight:600; 
+  margin-bottom:6px; 
+  color:#111827;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="date"],
+.form-group select{
+  width:100%;
+  padding:12px 12px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:#fff;
+  outline:none;
+  transition: box-shadow .15s, border-color .15s, background .15s;
+}
+.form-group input:focus,
+.form-group select:focus{
+  border-color: var(--focus);
+  box-shadow: 0 0 0 4px rgba(37,99,235,.12);
+}
+
+/* Tabla de detalle */
+.table-wrap{
+  margin-top:10px; 
+  border:1px solid var(--border); 
+  border-radius:12px; 
+  overflow:hidden; 
+  background:#fff;
+}
+
+.table{
+  width:100%; border-collapse: collapse;
+}
+
+.table thead th{
+  background:#fafafa; 
+  border-bottom:1px solid var(--border);
+  font-size:13px; 
+  color:#374151; 
+  text-transform:uppercase; 
+  letter-spacing:.04em;
+  padding:12px; 
+  position: sticky; 
+  top:0; 
+  z-index:1;
+  text-align: center;
+}
+
+.table td{ 
+  border-top:1px solid var(--border); 
+  padding:10px; 
+  vertical-align:middle;
+ }
+
+.table select, 
+.table input{
+  width:100%; 
+  padding:10px; 
+  border:1px solid var(--border); 
+  border-radius:10px; 
+  background:#fff;
+}
+
+.table 
+.actions{ 
+  width:1%; 
+  white-space:nowrap; }
+
+/* Totales */
+.totals{
+  display:flex; 
+  gap:16px; 
+  align-items:center; 
+  justify-content:flex-end;
+  margin-top:16px; 
+  flex-wrap:wrap;
+}
+
+#total_compra{
+  border-radius: 12px;
+  padding:10px 17px; 
+}
+
+.total-box{
+  display:flex; 
+  align-items:center; 
+  gap:10px; 
+  background:#fafafa; 
+  border:1px dashed var(--border);
+  padding:10px 14px; 
+  border-radius:12px;
+}
+
+.total-box input{
+  width:160px; 
+  font-weight:800; 
+  letter-spacing:.02em; 
+  text-align:right; 
+  background:#fff;
+}
+
+/* Botones */
+.btn{
+  display:inline-flex; 
+  align-items:center; 
+  justify-content:center; 
+  gap:8px;
+  padding:11px 18px; 
+  border-radius:12px; 
+  border:1px solid transparent; 
+  cursor:pointer;
+  font-weight:700; 
+  text-decoration:none; 
+  transition: transform .08s ease, background .15s ease, border-color .15s ease;
+}
+
+.btn:active{ 
+  transform: translateY(1px); 
+  background-color: #dc2626;
+  color: #fff;
+}
+
+.btn-ghost,
+.btn-primary,
+.btn-danger,
+.btn-remove{ 
+  background:#dc2626; 
+  border-color:#ffffff; 
+  color:#ffffff; 
+}
+
+.btn-ghost:hover,
+.btn-danger:hover,
+.btn-primary:hover,
+.btn-remove:hover{ 
+  background:#b70f0f; 
+}
+
+.divider{ 
+  height:1px; 
+  background:var(--border); 
+  margin:18px 0; 
+}
+
+/* Helpers */
+.help-text { 
+  color:#dc2626; 
+  font-size:12px;
+  font-weight: bold;
+}
+
+.inline-actions{ 
+  display:flex; 
+  gap:10px; 
+  flex-wrap:wrap; 
+}
