@@ -1,52 +1,5 @@
 /* Compras/compras.css */
 
-/* ===================== SIDEBAR ===================== */
-.sidebar {
-  width: 250px;
-  background: #1e293b; 
-  color: white;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.3s ease-in-out;
-}
-
-.sidebar h2 {
-  padding: 20px;
-  text-align: center;
-  font-size: 24px;
-}
-
-.sidebar ul {
-  list-style: none;
-}
-
-.sidebar ul li a {
-  display: block;
-  color: white;
-  text-decoration: none;
-  padding: 15px 20px;
-  font-size: 16px;
-  font-weight: 500;
-}
-
-.sidebar ul li a:hover {
-  background: #dc2626; 
-  color: white;
-}
-
-.sidebar ul li.active,
-.sidebar ul li.active a {
-  background: #dc2626;
-  color: white;
-}
-
-.sidebar footer {
-  padding: 15px;
-  font-size: 12px;
-  text-align: center;
-}        
-/* ===================== FIN SIDEBAR ===================== */
-
 .container {
   display: flex;            
   min-height: 100vh;          

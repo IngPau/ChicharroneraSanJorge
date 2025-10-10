@@ -9,7 +9,7 @@
         <li><a href="proveedores.php">Proveedores</a></li>
         <li><a href="inventario.php">Inventario</a></li>
         <li><a href="planilla.php">Planilla</a></li>
-        <li><a href="compras.php">Compras</a></li>
+        <li><a href="compras/compras.php">Compras</a></li>
         <li><a href="sucursales.php">Sucursales</a></li>
         <li><a href="vehiculos.php">Vehículos</a></li>
         <li><a href="bi.php">Business Intelligence</a></li>
