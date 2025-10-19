@@ -1,0 +1,107 @@
+/* ===================== FUENTE GLOBAL ===================== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+* {
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  scroll-behavior: smooth;
+}
+
+/* ===================== CONTENEDOR ===================== */
+.container {
+  display: flex;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* ===================== SIDEBAR ===================== */
+.sidebar {
+  width: 250px;
+  background: #1e293b;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  overflow-y: auto;
+  padding-bottom: 20px;
+  z-index: 1000;
+}
+
+.sidebar h2 {
+  padding: 20px;
+  text-align: center;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar ul li a {
+  display: block;
+  color: white;
+  text-decoration: none;
+  padding: 15px 20px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.sidebar ul li a:hover {
+  background: #ef4444;
+  color: white;
+}
+
+.sidebar ul li.active,
+.sidebar ul li.active a {
+  background: #ef4444;
+  color: white;
+}
+
+.sidebar footer {
+  padding: 15px;
+  font-size: 12px;
+  text-align: center;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: #2a4782;
+  border-radius: 4px;
+}
+
+/* ===================== CONTENIDO PRINCIPAL ===================== */
+.main {
+  margin-left: 250px;
+  padding: 20px;
+  flex: 1;
+  background: #f8fafc;
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar.show {
+    transform: translateX(0);
+  }
+
+  .main {
+    margin-left: 0;
+    padding: 15px;
+  }
+}
