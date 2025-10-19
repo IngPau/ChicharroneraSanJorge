@@ -1,8 +1,8 @@
 	<!--Compras/compras.php -->
   <?php
-    include_once 'guardar_compra.php';
-    include_once 'conexion.php';
-    include '../sidebar.php';
+    //include_once 'guardar_compra.php';
+    //include_once 'conexion.php';
+    include '../SideBar/sidebar.php';
   ?>
 
 	<!DOCTYPE html>
@@ -12,7 +12,8 @@
 	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	  <title>Dashboard Restaurante</title>
 	  <link rel="stylesheet" href="compras.css">
-     <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../SideBar/sidebar.css">
+    <link rel="stylesheet" href="../globales.css">
 	</head>
 	<body>
 

@@ -6,8 +6,8 @@
   <title>Módulo Ventas</title>
 
   <!-- Estilos globales, del sidebar y ventas -->
-  <link rel="stylesheet" href="../SideBar/sidebar.css">
   <link rel="stylesheet" href="../ventas/ventas.css">
+  <link rel="stylesheet" href="../SideBar/sidebar.css">
   <link rel="stylesheet" href="../globales.css">
 
   <!-- Iconos Font Awesome -->
