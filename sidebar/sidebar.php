@@ -1,10 +1,11 @@
 <!-- Sidebar -->
+ 
 <aside class="sidebar">
     <h2>Chicharonera San Jorge</h2>
     <nav>
     <ul>
-        <li><a href="index.php">Dashboard</a></li>     
-        <li><a href="ventas.php">Ventas</a></li>     
+        <li><a href="/index.php">Dashboard</a></li>     
+        <li><a href="ventas/ventas.php">Ventas</a></li>     
         <li><a href="clientes.php">Clientes</a></li>
         <li><a href="proveedores.php">Proveedores</a></li>
         <li><a href="inventario.php">Inventario</a></li>

@@ -8,10 +8,12 @@
 	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	  <title>Dashboard Restaurante</title>
 	  <link rel="stylesheet" href="style.css">
+	  <link rel="stylesheet" href="/SideBar/sidebar.css">
+	    <link rel="stylesheet" href="../globales.css">
 	</head>
 	<body>
-	  <div class="container">
-		<?php include 'sidebar.php'; ?>
+	<div class="container">
+		<?php include 'SideBar/sidebar.php'; ?>
 		<!-- Main Dashboard -->
 		<main class="main">
 		  <header class="header">
@@ -54,17 +56,12 @@
 			</div>
 
 			<div class="activity">
-			  <h3>Actividad Reciente</h3>
-			  <ul>
-				<li>Nueva venta completada - Mesa 5 <span class="success">Q45.50</span></li>
-				<li>Nuevo cliente registrado: María González</li>
-				<li>Stock bajo: Tomates (4 Cajas) </li>
-				<li>Pedido a domicilio entregado <span class="success">Q32.75</span></li>
-			  </ul>
+			  <h3>Acerca del proyecto</h3>
+			  <p></p>
 			</div>
 		  </section>
 		</main>
-	  </div>
+	</div>
 
 	  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	  <script src="script.js"></script>
