@@ -32,13 +32,7 @@
     <div class="section-title">Listado</div>
 
     <div class="grid grid-3">
-      <div class="form-group">
-        <label for="proveedor">Proveedor</label>
-        <select name="id_proveedor" id="proveedor" required>
-          <option value="">Seleccione un proveedor</option>
-        </select>
-        <div class="help-text">Campo obligatorio</div> 
-      </div>
+
 
       <div class="form-group">
         <label for="fecha_compra">Fecha de compra</label>
@@ -57,36 +51,58 @@
     <div class="section-title">Detalle de compra</div>
 
     <!-- Tabla de compras -->
-    <div class="table-wrap">
-      <table class="table" id="detalle_compra">
-        <thead>
-          <tr>
-            <th>Insumo</th>
-            <th style="width:120px;">Cantidad</th>
-            <th style="width:160px;">Precio Unitario</th>
-            <th style="width:160px;">Subtotal</th>
-            <th class="actions">Acciones</th>
-          </tr>
-        </thead>
-<tbody>
-  <tr class="row-item">
-    <td>
-      <select name="id_insumo[]" class="sel-insumo" required>
-        <option value="">Seleccione un insumo</option>
-      </select>
+          <table class="table" id="detalle_compra">
+            <thead>
+              <tr>
+                <th>Proveedor</th> <!-- Nueva columna -->
+                <th>Insumo</th>
+                <th style="width:120px;">Cantidad</th>
+                <th style="width:160px;">Precio Unitario</th>
+                <th style="width:160px;">Subtotal</th>
+                <th class="actions">Acciones</th>
+              </tr>
+            </thead>
 
-    </td>
-    <td><input type="number" name="cantidad_insumo[]" class="qty" min="1" step="1" required></td>
-    <td><input type="number" name="precio_unitario[]" class="price" step="0.01" min="0" required></td>
-    <td><input type="text" name="subtotal[]" class="subtotal" readonly></td>
-    <td class="actions">
-      <button type="button" class="btn btn-edit" onclick="editRow(this)">Editar</button>
-      <button type="button" class="btn btn-danger" onclick="removeRow(this)">Eliminar</button>
-    </td>
-  </tr>
-</tbody>
+            <tbody>
+              <tr class="row-item">
+                <!-- Proveedor-->
+                <td>
+                    <select name="id_proveedor" id="proveedor" required>
+                      <option value="">Seleccione un proveedor</option>
+                    </select>
+                </td>
 
-      </table>
+                <!-- Insumo -->
+                <td>
+                  <select name="id_insumo[]" class="sel-insumo" required>
+                    <option value="">Seleccione un insumo</option>
+                  </select>
+                </td>
+
+                <!-- Cantidad -->
+                <td>
+                  <input type="number" name="cantidad_insumo[]" class="qty" min="1" step="1" required>
+                </td>
+
+                <!-- Precio Unitario -->
+                <td>
+                  <input type="number" name="precio_unitario[]" class="price" step="0.01" min="0" required>
+                </td>
+
+                <!-- Subtotal -->
+                <td>
+                  <input type="text" name="subtotal[]" class="subtotal" readonly>
+                </td>
+
+                <!-- Acciones -->
+                <td class="actions">
+                  <button type="button" class="btn btn-edit" onclick="editRow(this)">Editar</button>
+                  <button type="button" class="btn btn-danger" onclick="removeRow(this)">Eliminar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
     </div>
 
     <div class="totals">
