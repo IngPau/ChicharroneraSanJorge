@@ -30,7 +30,7 @@ body{
   font-size: 50px; 
   font-weight: 900; 
   letter-spacing: -0.02em; 
-  margin-bottom: 18px;
+  margin-bottom: 10px;
 }
 
 .page-sub{
@@ -51,7 +51,7 @@ body{
 .section-title{
   font-size: 0.5cm;
   font-weight: 700;
-  margin:8px 0 14px;
+  margin:4px 0 4px;
 }
 
 /* Grid responsive para los campos de encabezado */
@@ -103,6 +103,8 @@ body{
   border-radius:12px; 
   overflow:hidden; 
   background:#fff;
+  max-height: 200px; /* alto máximo visible */
+  overflow-y: auto;  /* scroll vertical si excede */
 }
 
 .table{
@@ -119,8 +121,11 @@ body{
   padding:12px; 
   position: sticky; 
   top:0; 
-  z-index:1;
   text-align: center;
+
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }
 
 .table td{ 
@@ -200,7 +205,8 @@ body{
 .btn-ghost,
 .btn-primary,
 .btn-danger,
-.btn-remove{ 
+.btn-remove,
+.btn-edit{ 
   background:#dc2626; 
   border-color:#ffffff; 
   color:#ffffff; 
@@ -209,7 +215,8 @@ body{
 .btn-ghost:hover,
 .btn-danger:hover,
 .btn-primary:hover,
-.btn-remove:hover{ 
+.btn-remove:hover,
+.btn-edit:hover{ 
   background:#b70f0f; 
 }
 

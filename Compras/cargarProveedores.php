@@ -1,13 +1,12 @@
 <?php
 header('X-Content-Type-Options: nosniff');
 
-$format = $_GET['format'] ?? 'options'; // forzamos options para tu <select>
+$format = $_GET['format'] ?? 'options'; // forzamos options para <select>
 
 try {
-    $pdo = new PDO("odbc:DSN=DW");                 // <-- DSN
+    $pdo = new PDO("odbc:DSN=DW");    
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // OJO: nombres coinciden con tu CREATE TABLE
     $sql = "SELECT id_proveedor, nombre_proveedor AS nombre
             FROM Proveedores
             ORDER BY nombre_proveedor";
@@ -22,7 +21,7 @@ try {
         echo "<option value=\"{$id}\">{$nom}</option>";
     }
 } catch (PDOException $e) {
-    // Muestra el error en la respuesta (temporal para depurar)
+    // Muestra el error en la respuesta HTTP
     http_response_code(500);
     header('Content-Type: text/plain; charset=UTF-8');
     echo "ERROR: " . $e->getMessage();

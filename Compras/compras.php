@@ -1,8 +1,7 @@
 	<!--Compras/compras.php -->
   <?php
-    //include_once 'guardar_compra.php';
-include '../conexion.php';    
-include '../SideBar/sidebar.php';
+    include '../conexion.php';    
+    include '../SideBar/sidebar.php';
   ?>
 
 	<!DOCTYPE html>
@@ -11,6 +10,8 @@ include '../SideBar/sidebar.php';
 	  <meta charset="UTF-8">
 	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	  <title>Dashboard Restaurante</title>
+
+  <!-- Archivos Extras -->
 	  <link rel="stylesheet" href="compras.css">
     <link rel="stylesheet" href="../SideBar/sidebar.css">
     <link rel="stylesheet" href="../globales.css">
@@ -20,24 +21,24 @@ include '../SideBar/sidebar.php';
 <div class="main">
   <div class="page-header">
     <div>
-    <div class="page-title"> Agregar Compra </div>
+      <div class="page-title"> Agregar Compra </div>
     </div>
-    <div class="inline-actions">
-    </div>
+      <div 
+        class="inline-actions">
+      </div>
   </div>
 
   <form action="guardar_compra.php" method="post" class="card" id="form-compra">
     <div class="section-title">Listado</div>
 
     <div class="grid grid-3">
-<div class="form-group">
-  <label for="proveedor">Proveedor</label>
-  <select name="id_proveedor" id="proveedor" required>
-    <option value="">Seleccione un proveedor</option>
-  </select>
-  <div class="help-text">Campo obligatorio</div> 
-</div>
-
+      <div class="form-group">
+        <label for="proveedor">Proveedor</label>
+        <select name="id_proveedor" id="proveedor" required>
+          <option value="">Seleccione un proveedor</option>
+        </select>
+        <div class="help-text">Campo obligatorio</div> 
+      </div>
 
       <div class="form-group">
         <label for="fecha_compra">Fecha de compra</label>
@@ -54,6 +55,8 @@ include '../SideBar/sidebar.php';
     <div class="divider"></div>
 
     <div class="section-title">Detalle de compra</div>
+
+    <!-- Tabla de compras -->
     <div class="table-wrap">
       <table class="table" id="detalle_compra">
         <thead>
@@ -65,21 +68,24 @@ include '../SideBar/sidebar.php';
             <th class="actions">Acciones</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>
-              <select name="id_insumo[]" required>
-                <option value="">Seleccione un insumo</option>
+<tbody>
+  <tr class="row-item">
+    <td>
+      <select name="id_insumo[]" class="sel-insumo" required>
+        <option value="">Seleccione un insumo</option>
+      </select>
 
-              </select>
-            </td>
-            <td><input type="number" name="cantidad_insumo[]" min="1" step="1" required></td>
-            <td><input type="number" name="precio_unitario[]" step="0.01" min="0" required></td>
-            <td><input type="text" name="subtotal[]" readonly></td>
-            <td class="actions"><button type="button" class="btn btn-danger" onclick="removeRow(this)">Eliminar</button></td>
-            
-          </tr>
-        </tbody>
+    </td>
+    <td><input type="number" name="cantidad_insumo[]" class="qty" min="1" step="1" required></td>
+    <td><input type="number" name="precio_unitario[]" class="price" step="0.01" min="0" required></td>
+    <td><input type="text" name="subtotal[]" class="subtotal" readonly></td>
+    <td class="actions">
+      <button type="button" class="btn btn-edit" onclick="editRow(this)">Editar</button>
+      <button type="button" class="btn btn-danger" onclick="removeRow(this)">Eliminar</button>
+    </td>
+  </tr>
+</tbody>
+
       </table>
     </div>
 
@@ -93,24 +99,13 @@ include '../SideBar/sidebar.php';
   </form>
 </div>
 
-
-<script>
-document.addEventListener('DOMContentLoaded', async () => {
-  const select = document.getElementById('proveedor');
-  try {
-    // Importante: ruta relativa correcta desde compras.php
-    const res = await fetch('cargarProveedores.php?format=options', { cache: 'no-store' });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const html = await res.text();
-    select.innerHTML = html; // Inserta las <option> generadas por PHP
-  } catch (err) {
-    console.error('Error cargando proveedores:', err);
-    select.innerHTML = '<option value="">Error cargando proveedores</option>';
-  }
-});
-</script>
-
+<!-- Incluir Scripts -->
 <script src="compras.js"></script>
+<script src="editarbtn.js"></script>
+<script src="cargarProveedores.js"></script>
+<script src="cargarInsumos.js"></script>
+
+
 
 </body>
 </html>

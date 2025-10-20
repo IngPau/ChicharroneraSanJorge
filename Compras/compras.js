@@ -18,13 +18,13 @@ function addRow() {
   const cell4 = newRow.insertCell(3);
   const cell5 = newRow.insertCell(4);
 
-  // Select de insumos (clon del primero)
+// ==========  Select de insumos  ==========
   const firstSelect = tbody.rows[0].cells[0].querySelector('select');
   const select = firstSelect.cloneNode(true);
   select.selectedIndex = 0;
   cell1.appendChild(select);
 
-  // Cantidad
+// ========== Cantidad  ==========
   const inputCantidad = document.createElement("input");
   inputCantidad.type = "number";
   inputCantidad.name = "cantidad_insumo[]";
@@ -34,7 +34,7 @@ function addRow() {
   inputCantidad.addEventListener('input', calculateSubtotal);
   cell2.appendChild(inputCantidad);
 
-  // Precio unitario
+  // ==========  Precio unitario  ==========
   const inputPrecio = document.createElement("input");
   inputPrecio.type = "number";
   inputPrecio.name = "precio_unitario[]";
@@ -44,7 +44,7 @@ function addRow() {
   inputPrecio.addEventListener('input', calculateSubtotal);
   cell3.appendChild(inputPrecio);
 
-  // Subtotal (solo lectura, formateado GTQ)
+// ========== Subtotal formateado GTQ  ==========
   const inputSubtotal = document.createElement("input");
   inputSubtotal.type = "text";
   inputSubtotal.name = "subtotal[]";
@@ -52,13 +52,21 @@ function addRow() {
   inputSubtotal.value = formatGTQ(0);
   cell4.appendChild(inputSubtotal);
 
-  // Botón eliminar
+// ========== Botón eliminar  ==========
   const removeButton = document.createElement("button");
   removeButton.type = "button";
   removeButton.className = "btn btn-remove";
   removeButton.textContent = "Eliminar";
   removeButton.onclick = function(){ removeRow(this); };
   cell5.appendChild(removeButton);
+
+  // ========== Botón eliminar  ==========
+  const editButton = document.createElement("button");
+  editButton.type = "button";
+  editButton.className = "btn btn-edit";
+  editButton.textContent = "Editar";
+  editButton.onclick = function(){ removeRow(this); };
+  cell5.appendChild(editButton);
 }
 
 // ========== Eliminar fila ==========
@@ -71,7 +79,7 @@ function removeRow(button) {
   calculateTotal();
 }
 
-// ========== Cálculo por fila (subtotal) ==========
+// ========== Cálculo subtotal ==========
 function calculateSubtotal(event) {
   const row = event.target.closest('tr');
   const cantidad = parseFloat(row.querySelector('input[name="cantidad_insumo[]"]').value) || 0;
@@ -99,13 +107,23 @@ function calculateTotal() {
 
 // ========== Inicializar ==========
 document.addEventListener('DOMContentLoaded', function () {
-  // Asegura listeners en la primera fila existente
   document.querySelectorAll('input[name="cantidad_insumo[]"], input[name="precio_unitario[]"]').forEach(inp => {
     inp.addEventListener('input', calculateSubtotal);
   });
 
-  // Inicializa subtotales/total visuales
+  // Inicializa subtotales  ==========
   const firstSubtotal = document.querySelector('input[name="subtotal[]"]');
   if (firstSubtotal && !firstSubtotal.value) firstSubtotal.value = formatGTQ(0);
   calculateTotal();
 });
+
+// ========== Cargar insumos en nuevas filas ==========
+window.addRow = async function addRow() {
+  const tbody = document.querySelector('#detalle_compra tbody');
+  const tpl   = tbody.querySelector('tr'); // 1ra fila como plantilla
+  const clone = tpl.cloneNode(true);
+  clone.querySelectorAll('input').forEach(i => i.value = '');
+  clone.querySelectorAll('select').forEach(s => s.selectedIndex = 0)
+  tbody.appendChild(clone);
+  await hydrateRowInsumos(clone);
+};
