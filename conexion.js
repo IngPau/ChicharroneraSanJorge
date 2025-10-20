@@ -1,4 +1,4 @@
-const odbc = require('odbc');
+/* const odbc = require('odbc');
 
 class ConexionDW {
   constructor() {
@@ -38,3 +38,4 @@ class ConexionDW {
 
   await conexion.desconectar();
 })();
+*/

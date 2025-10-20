@@ -1,28 +1,34 @@
 <?php
+//cargarProveedores.php
 header('X-Content-Type-Options: nosniff');
+header('Content-Type: text/html; charset=UTF-8');
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+header('Pragma: no-cache');
 
-$format = $_GET['format'] ?? 'options'; // forzamos options para <select>
+require_once __DIR__ . '/../conexion.php'; 
 
 try {
-    $pdo = new PDO("odbc:DSN=DW");    
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $conn = conectar();
 
     $sql = "SELECT id_proveedor, nombre_proveedor AS nombre
             FROM Proveedores
             ORDER BY nombre_proveedor";
-    $stmt = $pdo->query($sql);
-    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $result = $conn->query($sql);
+    if (!$result) {
+        throw new Exception("Error en la consulta: " . $conn->error);
+    }
 
-    header('Content-Type: text/html; charset=UTF-8');
     echo '<option value="">Seleccione un proveedor</option>';
-    foreach ($rows as $r) {
+    while ($r = $result->fetch_assoc()) {
         $id  = htmlspecialchars($r['id_proveedor'], ENT_QUOTES, 'UTF-8');
         $nom = htmlspecialchars($r['nombre'],        ENT_QUOTES, 'UTF-8');
         echo "<option value=\"{$id}\">{$nom}</option>";
     }
-} catch (PDOException $e) {
-    // Muestra el error en la respuesta HTTP
+    $conn->close();
+
+} catch (Exception $e) {
     http_response_code(500);
     header('Content-Type: text/plain; charset=UTF-8');
-    echo "ERROR: " . $e->getMessage();
+    echo "❌ ERROR: " . $e->getMessage();
 }
+
