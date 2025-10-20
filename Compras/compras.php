@@ -1,8 +1,8 @@
 	<!--Compras/compras.php -->
   <?php
     //include_once 'guardar_compra.php';
-    //include_once 'conexion.php';
-    include '../SideBar/sidebar.php';
+include '../conexion.php';    
+include '../SideBar/sidebar.php';
   ?>
 
 	<!DOCTYPE html>
@@ -30,18 +30,19 @@
     <div class="section-title">Listado</div>
 
     <div class="grid grid-3">
-      <div class="form-group">
-        <label for="proveedor">Proveedor</label>
-        <select name="id_proveedor" id="proveedor" required>
-          <option value="">Seleccione un proveedor</option>
+<div class="form-group">
+  <label for="proveedor">Proveedor</label>
+  <select name="id_proveedor" id="proveedor" required>
+    <option value="">Seleccione un proveedor</option>
+  </select>
+  <div class="help-text">Campo obligatorio</div> 
+</div>
 
-        </select>
-        <div class="help-text">Campo obligatorio</div> 
-      </div>
 
       <div class="form-group">
         <label for="fecha_compra">Fecha de compra</label>
-        <input type="date" name="fecha_compra" id="fecha_compra" value="<?php echo date('d-m-y'); ?>" required>
+        <input type="date" name="fecha_compra" id="fecha_compra"
+       value="<?php echo date('Y-m-d'); ?>" required>
       </div>
 
       <div class="form-group">
@@ -91,6 +92,23 @@
     </div>
   </form>
 </div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  const select = document.getElementById('proveedor');
+  try {
+    // Importante: ruta relativa correcta desde compras.php
+    const res = await fetch('cargarProveedores.php?format=options', { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const html = await res.text();
+    select.innerHTML = html; // Inserta las <option> generadas por PHP
+  } catch (err) {
+    console.error('Error cargando proveedores:', err);
+    select.innerHTML = '<option value="">Error cargando proveedores</option>';
+  }
+});
+</script>
 
 <script src="compras.js"></script>
 
