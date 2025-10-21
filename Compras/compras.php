@@ -62,13 +62,11 @@
         </td>
 
         <td><input type="number" name="cantidad_insumo[]" class="qty" min="1" step="1" required></td>
-
         <td><input type="number" name="precio_unitario[]" class="price" step="0.01" min="0" required></td>
-
         <td><input type="text" name="subtotal[]" class="subtotal" readonly></td>
 
         <td class="actions">
-          <button type="button" class="btn btn-edit" onclick="editRow(this)">Editar</button>
+          <button type="button" class="btn btn-edit"  onclick="editRow(this)">Editar</button>
           <button type="button" class="btn btn-danger" onclick="removeRow(this)">Eliminar</button>
         </td>
       </tr>
@@ -92,8 +90,6 @@
 <script src="editarbtn.js"></script>
 <script src="cargarProveedores.js"></script>
 <script src="cargarInsumos.js"></script>
-
-
 
 </body>
 </html>

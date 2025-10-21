@@ -1,38 +1,35 @@
 <?php
 // Compras/cargarInsumos.php 
 header('X-Content-Type-Options: nosniff');
+header('X-Content-Type-Options: nosniff');
+header('Content-Type: text/html; charset=UTF-8');
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+header('Pragma: no-cache');
 
-$format = $_GET['format'] ?? 'options'; 
-
+require_once __DIR__ . '/../conexion.php'; 
 try {
-    $pdo = new PDO("odbc:DSN=DW");
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $conn = conectar();
 
-$sql = "SELECT id_materia_prima AS id_insumo, nombre_insumos
+    $sql = "SELECT id_materia_prima, nombre_insumos AS nombre
             FROM MateriaPrima
-            ORDER BY id_materia_prima";
-    $rows = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-
-    if ($format === 'json') {
-        header('Content-Type: application/json; charset=UTF-8');
-        echo json_encode(['ok' => true, 'data' => $rows], JSON_UNESCAPED_UNICODE);
-        exit;
+            ORDER BY nombre_insumos";
+    $result = $conn->query($sql);
+    if (!$result) {
+        throw new Exception("Error en la consulta: " . $conn->error);
     }
 
-    header('Content-Type: text/html; charset=UTF-8');
-    echo '<option value="">Seleccione un insumo</option>';
-    foreach ($rows as $r) {
-        $id  = htmlspecialchars($r['id_insumo'], ENT_QUOTES, 'UTF-8');
-        $nom = htmlspecialchars($r['nombre_insumos'], ENT_QUOTES, 'UTF-8');
+    echo '<option value="">Seleccione un Insumo</option>';
+    while ($r = $result->fetch_assoc()) {
+        $id  = htmlspecialchars($r['id_materia_prima'], ENT_QUOTES, 'UTF-8');
+        $nom = htmlspecialchars($r['nombre'],        ENT_QUOTES, 'UTF-8');
         echo "<option value=\"{$id}\">{$nom}</option>";
     }
-} catch (Throwable $e) {
+    $conn->close();
+
+} catch (Exception $e) {
     http_response_code(500);
-    if ($format === 'json') {
-        header('Content-Type: application/json; charset=UTF-8');
-        echo json_encode(['ok' => false, 'error' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
-    } else {
-        header('Content-Type: text/html; charset=UTF-8');
-        echo '<option value="">Error cargando insumos</option>';
-    }
+    header('Content-Type: text/plain; charset=UTF-8');
+    echo "❌ ERROR: " . $e->getMessage();
 }
+
+
