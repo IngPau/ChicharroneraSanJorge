@@ -1,12 +1,13 @@
 window.Compras = window.Compras || {};
 (function(NS){
-  if (NS._insumosLoaded) return;
-  NS._insumosLoaded = true;
+  if (NS._InsumosLoaded) return;
+  NS._InsumosLoaded = true;
 
-  let insumoOptionsHTML = null; 
+  const PROV_URL = 'cargarInsumos.php?format=options';
+  let InsumosOptionsHTML = null;
 
-  async function fetchInsumoOptions() {
-    const res = await fetch('cargarInsumos.php?format=options', { cache: 'no-store' });
+  async function fetchOptions(url) {
+    const res = await fetch(url, { cache: 'no-store' });
     if (!res.ok) {
       const txt = await res.text().catch(()=> '');
       console.error('Respuesta servidor (insumos):', txt);
@@ -15,31 +16,29 @@ window.Compras = window.Compras || {};
     return await res.text();
   }
 
-  // Llena todos los selects de insumo existentes
-  NS.cargarInsumosEnPagina = async function cargarInsumosEnPagina() {
-    const selects = document.querySelectorAll('select.sel-insumo'); 
-    if (!selects.length) return;
+  NS.ensureInsumosOptions = async function() {
+    if (!InsumosOptionsHTML) {
+      InsumosOptionsHTML = await fetchOptions(PROV_URL);
+    }
+    return InsumosOptionsHTML;
+  };
+
+  NS.fillInsumosSelect = async function(selectEl) {
     try {
-      if (!insumoOptionsHTML) insumoOptionsHTML = await fetchInsumoOptions();
-      selects.forEach(sel => sel.innerHTML = insumoOptionsHTML);
+      const html = await NS.ensureInsumosOptions();
+      selectEl.innerHTML = html;
     } catch (e) {
-      console.error('Error cargarInsumosEnPagina:', e);
-      selects.forEach(sel => sel.innerHTML = '<option value="">Error cargando insumos</option>');
+      console.error('Error cargando proveedores:', e);
+      selectEl.innerHTML = '<option value="">Error cargando Insumos</option>';
     }
   };
 
-  // Llena el select de una fila nueva 
-  NS.hydrateRowInsumos = async function hydrateRowInsumos(row) {
-    const sel = row.querySelector('select.sel-insumo');
-    if (!sel) return;
-    try {
-      if (!insumoOptionsHTML) insumoOptionsHTML = await fetchInsumoOptions();
-      sel.innerHTML = insumoOptionsHTML;
-    } catch (e) {
-      console.error('Error hydrateRowInsumos:', e);
-      sel.innerHTML = '<option value="">Error cargando insumos</option>';
-    }
+  NS.fillAllInsumosSelects = async function() {
+    const html = await NS.ensureInsumosOptions();
+    document.querySelectorAll('select.sel-insumo').forEach(sel => {
+      sel.innerHTML = html;
+    });
   };
 
-  document.addEventListener('DOMContentLoaded', NS.cargarInsumosEnPagina);
+  document.addEventListener('DOMContentLoaded', NS.fillAllInsumosSelects);
 })(window.Compras);
