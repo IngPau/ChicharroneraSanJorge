@@ -1,5 +1,3 @@
-
-
 /* ===================== ENCABEZADO ===================== */
 .main h1 {
   font-size: 36px;
@@ -15,23 +13,186 @@
   color: #475569;
 }
 
-/* ===================== RESUMEN DE VENTAS ===================== */
-.resumen-ventas {
+/* ===================== FORMULARIO DE VENTA ===================== */
+.formulario {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
   margin-bottom: 30px;
-}
-
-.resumen-ventas > div {
   background: #ffffff;
-  padding: 15px;
+  padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  text-align: center;
+}
+
+
+.formulario label {
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+.formulario input,
+.formulario select {
+  padding: 10px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
   font-size: 16px;
-  font-weight: 500;
+  width: 100%;
+}
+
+.formulario input:focus,
+.formulario select:focus {
+  outline: none;
+  border-color: #dc2626;
+}
+
+.botones {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+
+
+/* ===================== BOTONES ===================== */
+.btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.2s ease;
+}
+
+.btn-agregar {
+  background: #dc2626;
+  color: white;
+}
+
+.btn-editar {
+  background: #1e40af;
+  color: white;
+}
+
+.btn-eliminar {
+  background: #ef4444;
+  color: white;
+}
+
+.btn-cancelar {
+  background: #9ca3af;
+  color: white;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+/* ===================== DETALLE DE VENTA ===================== */
+.detalle-venta {
+  margin-top: 30px;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+#detalle-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.detalle-item {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  background: #f9fafb;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+.detalle-item label {
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 4px;
+}
+
+.detalle-item select,
+.detalle-item input {
+  padding: 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 15px;
+  width: 100%;
+}
+
+.detalle-item input:read-only {
+  background-color: #f1f5f9;
+  color: #475569;
+}
+
+
+.bloque-detalle {
+  grid-column: 1 / -1;
+  margin-top: 20px;
+}
+
+input.bloqueado {
+  pointer-events: none;
+  background-color: #f1f5f9;
+  color: #475569;
+  cursor: default;
+}
+
+
+
+/* ===================== BOTÓN AGREGAR DETALLE ===================== */
+.agregar-detalle {
+  background-color: #1e40af;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.agregar-detalle:hover {
+  background-color: #1e3a8a;
+}
+
+/* ===================== TOTAL VENTA ===================== */
+.total-venta {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.total-venta label {
+  font-weight: 600;
+  font-size: 16px;
   color: #1e293b;
+}
+
+.total-venta input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background-color: #f1f5f9;
+  color: #1e293b;
+  width: 150px;
 }
 
 /* ===================== TABLA DE VENTAS ===================== */
@@ -63,20 +224,13 @@
   background: #f1f5f9;
 }
 
-/* ===================== ESTADOS ===================== */
-.estado-completada {
-  color: green;
-  font-weight: bold;
-}
-
-.estado-pendiente {
-  color: orange;
-  font-weight: bold;
-}
-
 /* ===================== ACCIONES ===================== */
+.acciones a {
+  margin-right: 8px;
+  text-decoration: none;
+}
+
 .acciones i {
-  margin-right: 10px;
   cursor: pointer;
   color: #1e293b;
   transition: color 0.2s ease;
@@ -88,14 +242,21 @@
 
 /* ===================== RESPONSIVE ===================== */
 @media (max-width: 768px) {
-  .resumen-ventas {
+  .formulario {
     grid-template-columns: 1fr;
   }
 
-  .tabla-ventas th,
-  .tabla-ventas td {
-    font-size: 14px;
-    padding: 10px;
+  .detalle-item {
+    grid-template-columns: 1fr;
+  }
+
+  .total-venta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .total-venta input {
+    width: 100%;
   }
 
   .main h1 {
@@ -104,5 +265,11 @@
 
   .main h3 {
     font-size: 18px;
+  }
+
+  .tabla-ventas th,
+  .tabla-ventas td {
+    font-size: 14px;
+    padding: 10px;
   }
 }
