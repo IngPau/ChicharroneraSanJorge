@@ -5,7 +5,8 @@
     <nav>
     <ul>
         <li><a href="/index.php">Dashboard</a></li>     
-        <li><a href="/ventas/ventas.php">Ventas</a></li>     
+        <li><a href="/ventas/ventas.php">Ventas</a></li>  
+        <li><a href="/empleados/empleados.php">Empleados</a></li>    
         <li><a href="/clientes/clientes.php">Clientes</a></li>
         <li><a href="/proveedores/proveedores.php">Proveedores</a></li>
         <li><a href="/inventario/inventario.php">Inventario</a></li>
