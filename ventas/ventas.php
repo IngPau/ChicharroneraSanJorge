@@ -1,9 +1,15 @@
 <?php
 require_once '../conexion.php';
 $db = conectar();
-
+date_default_timezone_set('America/Guatemala'); // Establece la zona horaria correcta
 // Obtener ventas
-$ventas = $db->query("SELECT * FROM ventas ORDER BY id_venta DESC");
+$ventas = $db->query("
+  SELECT v.*, s.nombre_sucursal 
+  FROM ventas v
+  INNER JOIN sucursales s ON v.id_sucursal = s.id_sucursal
+  ORDER BY v.id_venta DESC
+");
+
 
 // Venta a editar
 $ventaEditar = null;
@@ -39,7 +45,7 @@ if (isset($_GET['editar'])) {
       <form method="POST" action="ventas_crud.php" class="formulario">
         <input type="hidden" name="id_venta" value="<?= $ventaEditar['id_venta'] ?? '' ?>">
         <label>Fecha:</label>
-        <input type="date" name="fecha_venta" value="<?= $ventaEditar['fecha_venta'] ?? '' ?>" required>
+        <input type="date" name="fecha_venta" value="<?= $ventaEditar['fecha_venta'] ?? date('Y-m-d') ?>" required>
         <label>Total (Q):</label>
         <input type="number" name="total_venta" id="total_venta" readonly class="bloqueado">
         <label>ID Mesa (opcional):</label>
@@ -53,6 +59,18 @@ if (isset($_GET['editar'])) {
           }
           ?>
         </select>
+        <label>Sucursal:</label>
+<select name="id_sucursal" required>
+  <option value="">-- Selecciona una sucursal --</option>
+  <?php
+  $sucursales = $db->query("SELECT id_sucursal, nombre_sucursal FROM sucursales");
+  while ($s = $sucursales->fetch_assoc()) {
+    $selected = ($ventaEditar['id_sucursal'] ?? '') == $s['id_sucursal'] ? 'selected' : '';
+    echo "<option value='{$s['id_sucursal']}' $selected>{$s['nombre_sucursal']}</option>";
+  }
+  ?>
+</select>
+
         <label>ID Usuario:</label>
         <input type="number" name="id_usuario" value="<?= $ventaEditar['id_usuario'] ?? '' ?>" required>
         <div class="bloque-detalle">
@@ -105,6 +123,7 @@ if (isset($_GET['editar'])) {
               <th>Total</th>
               <th>ID Mesa</th>
               <th>ID Usuario</th>
+              <th>Sucursal</th> <!-- 🔹 Nuevo -->
               <th>Acciones</th>
             </tr>
           </thead>
@@ -116,6 +135,7 @@ if (isset($_GET['editar'])) {
                 <td>Q<?= number_format($v['total_venta'], 2) ?></td>
                 <td><?= $v['id_mesa'] ?></td>
                 <td><?= $v['id_usuario'] ?></td>
+                <td><?= $v['nombre_sucursal'] ?></td> <!-- 🔹 Muestra el nombre -->
                 <td class="acciones">
                   <a href="ventas.php?editar=<?= $v['id_venta'] ?>" class="btn btn-editar" title="Editar"><i class="fas fa-edit"></i></a>
                   <a href="ventas_crud.php?eliminar=<?= $v['id_venta'] ?>" class="btn btn-eliminar" title="Eliminar"><i class="fas fa-trash"></i></a>
