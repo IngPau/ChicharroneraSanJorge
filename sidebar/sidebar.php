@@ -10,7 +10,7 @@
         <li><a href="/clientes/clientes.php">Clientes</a></li>
         <li><a href="/proveedores/proveedores.php">Proveedores</a></li>
         <li><a href="/inventario/inventario.php">Inventario</a></li>
-        <li><a href="#">Planilla</a></li>
+        <li><a href="/Planilla/planilla.php">Planilla</a></li>
         <li><a href="/Compras/compras.php">Compras</a></li>
         <li><a href="/sucursales/sucursales.php">Sucursales</a></li>
         <li><a href="/vehiculos/vehiculos.php">Vehículos</a></li>
