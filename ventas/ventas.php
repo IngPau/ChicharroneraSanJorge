@@ -139,6 +139,8 @@ if (isset($_GET['editar'])) {
                 <td class="acciones">
                   <a href="ventas.php?editar=<?= $v['id_venta'] ?>" class="btn btn-editar" title="Editar"><i class="fas fa-edit"></i></a>
                   <a href="ventas_crud.php?eliminar=<?= $v['id_venta'] ?>" class="btn btn-eliminar" title="Eliminar"><i class="fas fa-trash"></i></a>
+                  <a href="detalle_venta.php?id=<?= $v['id_venta'] ?>" target="_blank" class="btn-detalle">Ver Detalle</a>
+
                 </td>
               </tr>
             <?php endwhile; ?>
