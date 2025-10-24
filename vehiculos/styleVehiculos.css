@@ -1,0 +1,165 @@
+/* ===========================
+   ESTILOS MÓDULO VEHÍCULOS
+   Chicharronera San Jorge
+   =========================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+:root {
+  --rojo-principal: #dc2626;
+  --gris-oscuro: #374151;
+  --gris-claro: #f3f4f6;
+  --gris-medio: #9ca3af;
+  --fuente-base: 'Poppins', sans-serif;
+}
+
+/* ===========================
+   CONTENIDO PRINCIPAL
+   =========================== */
+
+.main {
+  position: relative;
+  z-index: 10;
+  background: #fff;
+  padding: 30px;
+  margin: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  min-height: calc(100vh - 40px);
+  overflow-x: auto;
+}
+
+/* ===========================
+   TITULOS
+   =========================== */
+h1 {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+h3 {
+  font-size: 22px;
+  color: var(--gris-oscuro);
+  margin-bottom: 20px;
+}
+
+/* ===========================
+   BOTONES
+   =========================== */
+.btn {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+  color: white;
+  transition: 0.2s ease;
+  margin: 5px 4px;
+}
+
+.btn-agregar {
+  background-color: var(--rojo-principal);
+}
+.btn-agregar:hover {
+  background-color: #b91c1c;
+}
+
+.btn-editar {
+  background-color: #3a7106;
+}
+.btn-editar:hover {
+  background-color: #1d4ed8;
+}
+
+.btn-eliminar {
+  background-color: #ef4444;
+}
+.btn-eliminar:hover {
+  background-color: #b91c1c;
+}
+
+.btn-cancelar {
+  background-color: var(--gris-medio);
+}
+.btn-cancelar:hover {
+  background-color: #6b7280;
+}
+
+/* ===========================
+   FORMULARIO
+   =========================== */
+.formulario {
+  background-color: var(--gris-claro);
+  padding: 25px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+}
+
+.formulario label {
+  display: block;
+  font-size: 15px;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.formulario input,
+.formulario select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--gris-medio);
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 15px;
+}
+
+/* ===========================
+   TABLA DE VEHÍCULOS
+   =========================== */
+.tabla-vehiculos {
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+.tabla-vehiculos table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tabla-vehiculos th,
+.tabla-vehiculos td {
+  border: 1px solid var(--gris-medio);
+  padding: 10px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.tabla-vehiculos th {
+  background-color: var(--gris-oscuro);
+  color: white;
+}
+
+.tabla-vehiculos tr:nth-child(even) {
+  background-color: var(--gris-claro);
+}
+
+.tabla-vehiculos tr:hover {
+  background-color: #e5e7eb;
+}
+
+.acciones {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.main {
+  margin-left: 250px !important;
+  width: calc(100% - 250px);
+  background: #fff;
+  position: relative;
+  z-index: 10;
+}
