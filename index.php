@@ -1,6 +1,15 @@
-	<?php
+<?php
+require_once 'conexion.php';
+$db = conectar();
+date_default_timezone_set('America/Guatemala'); // Establece la zona horaria correcta
 
-	?>
+$hoy = date('Y-m-d');
+
+$res = $db->query("SELECT SUM(total_venta) AS total FROM ventas WHERE fecha_venta = '$hoy'");
+$totalDia = $res->fetch_assoc()['total'] ?? 0;
+?>
+
+
 	<!DOCTYPE html>
 	<html lang="es">
 	<head>
@@ -23,10 +32,11 @@
 
 		  <section class="cards">
 			<div class="card">
-			  <h3>Ventas del Día</h3>
-			  <p class="number">Q2,450.00</p>
-			  <span class="success">+15.3% vs ayer</span>
+				<h3>Ventas del Día</h3>
+				<p class="number">Q<?= number_format($totalDia, 2) ?></p>
+				<span class="success">+15.3% vs ayer</span>
 			</div>
+
 			<div class="card">
 			  <h3>Órdenes Activas</h3>
 			  <p class="number">23</p>

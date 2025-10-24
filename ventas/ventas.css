@@ -273,3 +273,17 @@ input.bloqueado {
     padding: 10px;
   }
 }
+
+
+
+.btn-detalle {
+  padding: 4px 8px;
+  background-color: #2563eb;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+.btn-detalle:hover {
+  background-color: #1e40af;
+}

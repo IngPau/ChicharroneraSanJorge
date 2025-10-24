@@ -8,10 +8,11 @@ if (isset($_POST['agregar'])) {
   $total = $_POST['total_venta'];
   $id_mesa = empty($_POST['id_mesa']) ? 'NULL' : "'".$_POST['id_mesa']."'";
   $id_usuario = $_POST['id_usuario'];
+  $id_sucursal = $_POST['id_sucursal']; // 🔹 Nuevo campo
 
   // Insertar venta
-  $sql = "INSERT INTO ventas (fecha_venta, total_venta, id_mesa, id_usuario)
-          VALUES ('$fecha', '$total', $id_mesa, '$id_usuario')";
+  $sql = "INSERT INTO ventas (fecha_venta, total_venta, id_mesa, id_usuario, id_sucursal)
+          VALUES ('$fecha', '$total', $id_mesa, '$id_usuario', '$id_sucursal')";
   $db->query($sql);
   $id_venta = $db->insert_id;
 
@@ -38,11 +39,17 @@ if (isset($_POST['editar'])) {
     $total = $_POST['total_venta'];
     $id_mesa = empty($_POST['id_mesa']) ? 'NULL' : "'".$_POST['id_mesa']."'";
     $id_usuario = $_POST['id_usuario'];
+    $id_sucursal = $_POST['id_sucursal']; // 🔹 Nuevo campo
 
     $sql = "UPDATE ventas 
-            SET fecha_venta='$fecha', total_venta='$total', id_mesa=$id_mesa, id_usuario='$id_usuario'
+            SET fecha_venta='$fecha',
+                total_venta='$total',
+                id_mesa=$id_mesa,
+                id_usuario='$id_usuario',
+                id_sucursal='$id_sucursal'
             WHERE id_venta=$id";
     $db->query($sql);
+
     header("Location: ventas.php?editado=1");
     exit;
 }
@@ -50,7 +57,13 @@ if (isset($_POST['editar'])) {
 // Eliminar venta
 if (isset($_GET['eliminar'])) {
     $id = $_GET['eliminar'];
+
+    // Primero eliminar los detalles asociados
+    $db->query("DELETE FROM detalle_venta WHERE id_venta=$id");
+
+    // Luego eliminar la venta
     $db->query("DELETE FROM ventas WHERE id_venta=$id");
+
     header("Location: ventas.php?eliminado=1");
     exit;
 }
