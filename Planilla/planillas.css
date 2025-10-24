@@ -1,0 +1,171 @@
+/* === CONTENEDOR PRINCIPAL === */
+.main {
+  flex: 1;
+  padding: 40px;
+  background-color: #f8fafc;
+  overflow-y: auto;
+}
+
+.main h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.main h3 {
+  font-size: 1.2rem;
+  color: #475569;
+  margin-bottom: 1.5rem;
+}
+
+/* === FORMULARIO === */
+.formulario {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 2rem;
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+}
+
+.formulario label {
+  font-weight: 600;
+  color: #1e293b;
+  grid-column: 1 / 2;
+}
+
+.formulario input,
+.formulario select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background-color: #f8fafc;
+  font-size: 0.95rem;
+  color: #0f172a;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.formulario input:focus,
+.formulario select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+/* === BOTONES === */
+.botones {
+  grid-column: span 2;
+  display: flex;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+  gap: 8px;
+  border: none;
+}
+
+.btn i {
+  font-size: 1rem;
+}
+
+/* === COLORES DE BOTONES === */
+.btn-agregar {
+  background-color: #dc2626;
+}
+
+.btn-agregar:hover {
+  background-color: #b91c1c;
+}
+
+.btn-editar {
+  background-color: #1e40af;
+}
+
+.btn-editar:hover {
+  background-color: #1d4ed8;
+}
+
+.btn-eliminar {
+  background-color: #dc2626;
+}
+
+.btn-eliminar:hover {
+  background-color: #b91c1c;
+}
+
+.btn-cancelar {
+  background-color: #64748b;
+}
+
+.btn-cancelar:hover {
+  background-color: #475569;
+}
+
+/* === TABLA === */
+.tabla {
+  background-color: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: #1e293b;
+  color: white;
+}
+
+th, td {
+  text-align: left;
+  padding: 14px 18px;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 0.95rem;
+}
+
+tbody tr:hover {
+  background-color: #f1f5f9;
+}
+
+.acciones {
+  display: flex;
+  gap: 10px;
+}
+
+.acciones .btn {
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+
+.acciones .btn-editar {
+  background-color: #1e40af;
+}
+
+.acciones .btn-editar:hover {
+  background-color: #1d4ed8;
+}
+
+.acciones .btn-eliminar {
+  background-color: #dc2626;
+}
+
+.acciones .btn-eliminar:hover {
+  background-color: #b91c1c;
+}
