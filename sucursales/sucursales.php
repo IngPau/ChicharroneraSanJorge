@@ -1,74 +1,98 @@
 <?php
-// Aquí podrías cargar datos dinámicos de sucursales desde la BD si lo deseas
+require_once '../conexion.php';
+$db = conectar();
+
+// Obtener sucursales (orden ascendente: 1,2,3...)
+$sucursales = $db->query("
+  SELECT * FROM Sucursales
+  ORDER BY id_sucursal ASC
+");
+
+// Sucursal a editar
+$sucursalEditar = null;
+if (isset($_GET['editar'])) {
+  $id = $_GET['editar'];
+  $res = $db->query("SELECT * FROM Sucursales WHERE id_sucursal=$id");
+  $sucursalEditar = $res->fetch_assoc();
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gestión de Sucursales</title>
-  <link rel="stylesheet" href="/style.css">
+  <title>Módulo Sucursales</title>
   <link rel="stylesheet" href="../SideBar/sidebar.css">
   <link rel="stylesheet" href="../globales.css">
+  <link rel="stylesheet" href="sucursales.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+
 <body>
   <div class="container">
-    <!-- Sidebar -->
     <?php include '../SideBar/sidebar.php'; ?>
 
-    <!-- Contenido principal -->
     <main class="main">
-      <h1>Gestión de Sucursales</h1>
-  
+      <h1>Módulo Sucursales</h1>
+      <h3>Gestión de Sucursales</h3>
 
-      <div class="map-container">
-  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      <!-- Formulario -->
+      <form method="POST" action="sucursales_crud.php" class="formulario">
+        <input type="hidden" name="id_sucursal" value="<?= $sucursalEditar['id_sucursal'] ?? '' ?>">
 
-  <!-- Ubicación 1 -->
-  <div>
-    <h3>Chicharronera San Jorge - Zona 8</h3>
-    <iframe 
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d32614.57263975926!2d-90.56511933128692!3d14.618173800000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8589a10a97a3f98b%3A0x8a3e5368c85f8a9f!2sChicharronera%20San%20Jorge!5e1!3m2!1ses!2sgt!4v1758813953598!5m2!1ses!2sgt" 
-      width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy">
-    </iframe>
-  </div>
+        <label>Nombre:</label>
+        <input type="text" name="nombre_sucursal" value="<?= $sucursalEditar['nombre_sucursal'] ?? '' ?>" required>
 
-  <!-- Ubicación 2 -->
-  <div>
-    <h3>Chicharronera San Jorge - Zona 5</h3>
-    <iframe 
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d32614.57263975926!2d-90.56511933128692!3d14.618173800000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8589a244de2c281b%3A0x960901947767df68!2sChicharronera%20San%20Jorge!5e1!3m2!1ses!2sgt!4v1758813990644!5m2!1ses!2sgt" 
-      width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy">
-    </iframe>
-  </div>
+        <label>Teléfono:</label>
+        <input type="text" name="telefono_sucursal" value="<?= $sucursalEditar['telefono_sucursal'] ?? '' ?>">
 
-  <!-- Ubicación 3 -->
-  <div>
-    <h3>Chicharronera San Jorge - PeriSur</h3>
-    <iframe 
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d32617.84638804202!2d-90.58490862089845!3d14.596107099999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8589a1eec1101e99%3A0xc8dced6baeb3c109!2sChicharronera%20San%20Jorge%20PeriSur2!5e1!3m2!1ses!2sgt!4v1758814023670!5m2!1ses!2sgt" 
-      width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy">
-    </iframe>
-  </div>
+        <label>Dirección:</label>
+        <input type="text" name="direccion_sucursal" value="<?= $sucursalEditar['direccion_sucursal'] ?? '' ?>" required>
 
-  <!-- Ubicación 4 -->
-  <div>
-    <h3>Chicharronera San Jorge - Zona 7</h3>
-    <iframe 
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28908.00215550886!2d-90.59507560393371!3d14.628451440216415!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8589a030eaa7319f%3A0x18e3fb8946e278e8!2sSan%20Jorge%20Chicharronera!5e1!3m2!1ses!2sgt!4v1758813491138!5m2!1ses!2sgt" 
-      width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy">
-    </iframe>
-  </div>
+        <div class="botones">
+          <?php if ($sucursalEditar): ?>
+            <button type="submit" name="editar" class="btn btn-editar"><i class="fas fa-save"></i> Actualizar</button>
+            <a href="sucursales.php" class="btn btn-cancelar"><i class="fas fa-ban"></i> Cancelar</a>
+          <?php else: ?>
+            <button type="submit" name="agregar" class="btn btn-agregar"><i class="fas fa-plus"></i> Agregar</button>
+          <?php endif; ?>
+        </div>
+      </form>
 
-</div>
-
-
-
-
+      <!-- Tabla -->
+      <section class="tabla">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Teléfono</th>
+              <th>Dirección</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php while ($s = $sucursales->fetch_assoc()): ?>
+              <tr>
+                <td><?= $s['id_sucursal'] ?></td>
+                <td><?= $s['nombre_sucursal'] ?></td>
+                <td><?= $s['telefono_sucursal'] ?></td>
+                <td><?= $s['direccion_sucursal'] ?></td>
+                <td class="acciones">
+                  <a href="sucursales.php?editar=<?= $s['id_sucursal'] ?>" class="btn btn-editar" title="Editar"><i class="fas fa-edit"></i></a>
+                  <a href="sucursales_crud.php?eliminar=<?= $s['id_sucursal'] ?>" class="btn btn-eliminar" title="Eliminar"><i class="fas fa-trash"></i></a>
+                </td>
+              </tr>
+            <?php endwhile; ?>
+          </tbody>
+        </table>
+      </section>
     </main>
   </div>
-   <footer>
-        <p>© 2025 Chicharonera San Jorge</p>
-      </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="sucursales_alertas.js"></script>
+
 </body>
 </html>
