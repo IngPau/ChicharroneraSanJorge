@@ -3,9 +3,13 @@ require_once '../conexion.php';
 $db = conectar();
 
 // Obtener clientes
-$clientes = $db->query("SELECT * FROM Clientes ORDER BY id_cliente DESC");
+$clientes = $db->query("
+  SELECT id_cliente, nombre_cliente, apellido_cliente, dpi_cliente, telefono_cliente, direccion_cliente, correo_cliente
+  FROM Clientes
+  ORDER BY id_cliente DESC
+");
 
-// Cliente a editar (si aplica)
+// Cliente a editar
 $clienteEditar = null;
 if (isset($_GET['editar'])) {
   $id = $_GET['editar'];
@@ -22,7 +26,7 @@ if (isset($_GET['editar'])) {
   <title>Módulo Clientes</title>
   <link rel="stylesheet" href="../SideBar/sidebar.css">
   <link rel="stylesheet" href="../globales.css">
-  <link rel="stylesheet" href="styleCli.css">
+  <link rel="stylesheet" href="clientes.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
@@ -34,51 +38,46 @@ if (isset($_GET['editar'])) {
       <h1>Módulo Clientes</h1>
       <h3>Gestión de Clientes</h3>
 
-      <!-- Botón agregar -->
-      <?php if (!$clienteEditar): ?>
-        <div class="botones-header">
-          <a href="?nuevo=1" class="btn btn-agregar"><i class="fas fa-plus"></i> Nuevo Cliente</a>
-        </div>
-      <?php endif; ?>
-
       <!-- Formulario -->
-      <?php if (isset($_GET['nuevo']) || $clienteEditar): ?>
-        <form method="POST" action="crudClientes.php" class="formulario">
-          <input type="hidden" name="id_cliente" value="<?= $clienteEditar['id_cliente'] ?? '' ?>">
+      <form method="POST" action="clientes_crud.php" class="formulario">
+        <input type="hidden" name="id_cliente" value="<?= $clienteEditar['id_cliente'] ?? '' ?>">
 
-          <label>Nombre:</label>
-          <input type="text" name="nombre_cliente" value="<?= $clienteEditar['nombre_cliente'] ?? '' ?>" required>
+        <label>Nombre:</label>
+        <input type="text" name="nombre_cliente" value="<?= $clienteEditar['nombre_cliente'] ?? '' ?>" required>
 
-          <label>Apellido:</label>
-          <input type="text" name="apellido_cliente" value="<?= $clienteEditar['apellido_cliente'] ?? '' ?>" required>
+        <label>Apellido:</label>
+        <input type="text" name="apellido_cliente" value="<?= $clienteEditar['apellido_cliente'] ?? '' ?>" required>
 
-          <label>DPI:</label>
-          <input type="text" name="dpi_cliente" value="<?= $clienteEditar['dpi_cliente'] ?? '' ?>" required>
+        <label>DPI:</label>
+        <input type="text" name="dpi_cliente" value="<?= $clienteEditar['dpi_cliente'] ?? '' ?>" required>
 
-          <label>Teléfono:</label>
-          <input type="text" name="telefono_cliente" value="<?= $clienteEditar['telefono_cliente'] ?? '' ?>">
+        <label>Teléfono:</label>
+        <input type="text" name="telefono_cliente" value="<?= $clienteEditar['telefono_cliente'] ?? '' ?>">
 
-          <label>Dirección:</label>
-          <input type="text" name="direccion_cliente" value="<?= $clienteEditar['direccion_cliente'] ?? '' ?>">
+        <label>Dirección:</label>
+        <input type="text" name="direccion_cliente" value="<?= $clienteEditar['direccion_cliente'] ?? '' ?>">
 
-          <label>Correo:</label>
-          <input type="email" name="correo_cliente" value="<?= $clienteEditar['correo_cliente'] ?? '' ?>">
+        <label>Correo:</label>
+        <input type="email" name="correo_cliente" value="<?= $clienteEditar['correo_cliente'] ?? '' ?>">
 
-          <div class="botones">
-            <?php if ($clienteEditar): ?>
-              <button type="submit" name="editar" class="btn btn-editar"><i class="fas fa-save"></i> Actualizar</button>
-              <a href="clientes.php" class="btn btn-cancelar"><i class="fas fa-ban"></i> Cancelar</a>
-            <?php else: ?>
-              <button type="submit" name="agregar" class="btn btn-agregar"><i class="fas fa-plus"></i> Agregar</button>
-              <a href="clientes.php" class="btn btn-cancelar"><i class="fas fa-arrow-left"></i> Cancelar</a>
-            <?php endif; ?>
-          </div>
-        </form>
-      <?php endif; ?>
+        <div class="botones">
+          <?php if ($clienteEditar): ?>
+            <button type="submit" name="editar" class="btn btn-editar"><i class="fas fa-save"></i> Actualizar</button>
+            <a href="clientes.php" class="btn btn-cancelar"><i class="fas fa-ban"></i> Cancelar</a>
+          <?php else: ?>
+            <button type="submit" name="agregar" class="btn btn-agregar"><i class="fas fa-plus"></i> Agregar</button>
+          <?php endif; ?>
+        </div>
+      </form>
 
-      <!-- Tabla de clientes -->
-      <section class="tabla-clientes">
-        <table>
+      <!-- Buscador -->
+      <div class="buscador">
+        <input type="text" id="buscarCliente" placeholder="🔍 Buscar cliente">
+      </div>
+
+      <!-- Tabla -->
+      <section class="tabla">
+        <table id="tablaClientes">
           <thead>
             <tr>
               <th>ID</th>
@@ -103,15 +102,53 @@ if (isset($_GET['editar'])) {
                 <td><?= $c['correo_cliente'] ?></td>
                 <td class="acciones">
                   <a href="clientes.php?editar=<?= $c['id_cliente'] ?>" class="btn btn-editar" title="Editar"><i class="fas fa-edit"></i></a>
-                  <a href="crudClientes.php?eliminar=<?= $c['id_cliente'] ?>" class="btn btn-eliminar" title="Eliminar"><i class="fas fa-trash"></i></a>
+                  <a href="clientes_crud.php?eliminar=<?= $c['id_cliente'] ?>" class="btn btn-eliminar" title="Eliminar"><i class="fas fa-trash"></i></a>
                 </td>
               </tr>
             <?php endwhile; ?>
           </tbody>
         </table>
       </section>
-
     </main>
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="clientes_alertas.js"></script>
+  <script src="clientes_form.js"></script>
+
+ <!-- Script de búsqueda mejorado -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const inputBuscar = document.getElementById("buscarCliente");
+    const filas = document.querySelectorAll("#tablaClientes tbody tr");
+
+    inputBuscar.addEventListener("keyup", () => {
+      const filtro = inputBuscar.value.toLowerCase();
+      filas.forEach(fila => {
+        // Extrae valores de las columnas relevantes
+        const nombre = fila.cells[1].textContent.toLowerCase();
+        const apellido = fila.cells[2].textContent.toLowerCase();
+        const dpi = fila.cells[3].textContent.toLowerCase();
+        const telefono = fila.cells[4].textContent.toLowerCase();
+        const correo = fila.cells[6].textContent.toLowerCase();
+
+        // Si el texto coincide con alguno, muestra la fila
+        if (
+          nombre.includes(filtro) ||
+          apellido.includes(filtro) ||
+          dpi.includes(filtro) ||
+          telefono.includes(filtro) ||
+          correo.includes(filtro)
+        ) {
+          fila.style.display = "";
+        } else {
+          fila.style.display = "none";
+        }
+      });
+    });
+  });
+</script>
+
+
 </body>
 </html>
