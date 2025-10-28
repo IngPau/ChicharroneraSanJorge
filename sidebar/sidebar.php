@@ -16,7 +16,6 @@
       <li><a href="/Planilla/planilla.php">Planilla</a></li>
       <li><a href="/vehiculos/vehiculos.php">Vehículos</a></li>
       <li><a href="/sucursales/sucursales.php">Sucursales</a></li>
-      <li><a href="/eventos/eventos.php">Eventos</a></li>
 
       <!-- Operación comercial -->
       <li><a href="/clientes/clientes.php">Clientes</a></li>
