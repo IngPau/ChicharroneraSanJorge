@@ -1,3 +1,13 @@
+<?php
+session_start(); // Iniciar la sesión
+//Verificar si el usuario ha iniciado sesión
+if (!isset($_SESSION['usuario_id'])) {
+  // Si no ha iniciado sesión, redirigir a la página de inicio de sesión
+  header("Location: ../login/login.php");
+  exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
   <head>
