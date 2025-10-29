@@ -9,7 +9,14 @@
       <!-- Planificación y abastecimiento -->
       <li><a href="/proveedores/proveedores.php">Proveedores</a></li>
       <li><a href="/Compras/compras.php">Compras</a></li>
-      <li><a href="/inventario/inventario.php">Inventario</a></li>
+      <li class="submenu">
+        <a href="#" class="submenu-toggle">Inventario ▾</a>
+        <ul class="submenu-items">
+        <li><a href="/inventario/materiaPrima/inventarioMP.php">Materia Prima</a></li>
+        <li><a href="/inventario/mobiliario/inventarioMobiliario.php">Mobiliario y Equipo</a></li>
+        <li><a href="/inventario/pérdidas/inventarioPerdidas.php">Pérdidas</a></li>
+        </ul>
+      </li>
 
       <!-- Recursos humanos y logística -->
       <li><a href="/empleados/empleados.php">Empleados</a></li>
@@ -28,3 +35,5 @@
     </ul>
   </nav>
 </aside>
+
+<script src="sidebar.js"></script>
