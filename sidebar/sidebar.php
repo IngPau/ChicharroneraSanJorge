@@ -7,7 +7,12 @@
       <li><a href="/index.php">Dashboard</a></li>
 
       <!-- Planificación y abastecimiento -->
-      <li><a href="/proveedores/proveedores.php">Proveedores</a></li>
+      <li class="submenu">
+        <a href="#" class="submenu-toggle">Proveedores ▾</a>
+        <ul class="submenu-items">
+        <li><a href="/proveedores/proveedores.php">Proveedores</a></li>
+        <li><a href="/proveedores/Pagosproveedores.php">Pago a Proveedores</a></li>
+      </ul>  
       <li><a href="/Compras/compras.php">Compras</a></li>
       <li class="submenu">
         <a href="#" class="submenu-toggle">Inventario ▾</a>

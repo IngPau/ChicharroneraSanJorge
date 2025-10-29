@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;600;800&display=swap');
+
+
+/* Estilos generales */
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-image: url('/imagenes/fondo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.title{
+    padding-top: 1rem;
+}
+
+/* Estilos para el formulario */
+.formulario {
+    background: #dc2626; /* Color sólido */
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 350px;
+    height: 400px;
+    text-align: center;
+    border: 5px solid #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; 
+    position: relative;
+    
+}
+
+.border{
+    border-radius: 15px;
+    border: 5px solid #ffffff;
+    width: 100%;
+    height: 100%;
+    margin-top: 20px;
+}
+
+
+.formulario h1 {
+    margin-bottom: 20px;
+    margin-top: 100px;
+    color: #ffff; /* Color del texto */
+}
+
+/* Estilos para los campos de entrada */
+.campo {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.campo input {
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #f78d8d;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #f78d8d; 
+    color: #ffffff;
+}
+
+.icono-contraseña {
+    position: absolute;
+    top: calc(30% - 5%); /* Centrado verticalmente */
+    right: 23px;
+    z-index: 100;
+    padding: 0 10px;
+    width: 20px;  
+    height: 20px;
+    filter: invert(100%) brightness(200%);
+}
+
+.campo input:focus {
+    border-color: #dc2626; /* Borde rojo al enfocar */
+    outline: none;
+}
+
+.campo label {
+    position: absolute;
+    top: -20px; /* Lo sube */
+    left: 25px;
+    /*transform: translateY(10); /* Lo mantiene arriba */
+    color: #fff; /* Color que quieres */
+    font-size: 12px; /* Tamaño más pequeño */
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+
+/* Estilos para el enlace "¿Olvidó su contraseña?" */
+.recordar {
+    margin: -10px 0 10px 0; /* Ajusta el margen superior para mover el mensaje hacia arriba */
+    font-size: 10px;
+    color: #ffff; /* Color del texto */
+}
+
+.recordar a {
+    color: #ffff; /* Color del enlace */
+    text-decoration: none;
+}
+
+.recordar a:hover {
+    text-decoration: underline;
+}
+
+.boton {
+    margin-bottom: 8px;
+
+}
+
+/* Estilos para el botón de LOGIN */
+input[type="submit"] {
+    width: 40%;
+    padding: 5px;
+    margin-top: -5px;
+    background-color: #D49D41; 
+    color: #ffff; /* Color del texto */
+    border-radius: 15px;
+    border: 3px solid #ffffff;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background-color: #84b6f4; /* Un tono más claro para el hover */
+}
+
+/* Estilos para el círculo blanco */
+.circulo{
+    width: 130px;
+    height: 130px;
+    border: 5px solid white;
+    background-color: #dc2626;;
+    border-radius: 50%;
+    position: absolute;
+    top: 15px;
+    right: 145px;
+    overflow: hidden; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.circulo--2{
+    background-color: white;
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.circulo--2 img {
+    width:100px;
+    height: auto;
+    margin-left: 5px;
+}
