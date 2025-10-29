@@ -36,4 +36,4 @@
   </nav>
 </aside>
 
-<script src="sidebar.js"></script>
+<script src="/sidebar/sidebar.js"></script>
