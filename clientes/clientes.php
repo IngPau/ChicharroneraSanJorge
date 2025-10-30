@@ -1,12 +1,27 @@
 <?php
+session_start(); // Iniciar la sesión
+//Verificar si el usuario ha iniciado sesión
+if (!isset($_SESSION['usuario_id'])) {
+  // Si no ha iniciado sesión, redirigir a la página de inicio de sesión
+  header("Location: ../login/login.php");
+  exit();
+}
+?>
+
+<?php
 require_once '../conexion.php';
 $db = conectar();
 
-// Obtener clientes
+// Orden dinámico (por defecto DESC)
+$orden = isset($_GET['orden']) && in_array($_GET['orden'], ['ASC', 'DESC'])
+    ? $_GET['orden']
+    : 'DESC';
+
+// Obtener clientes con el orden elegido
 $clientes = $db->query("
   SELECT id_cliente, nombre_cliente, apellido_cliente, dpi_cliente, telefono_cliente, direccion_cliente, correo_cliente
   FROM Clientes
-  ORDER BY id_cliente DESC
+  ORDER BY id_cliente $orden
 ");
 
 // Cliente a editar
@@ -17,6 +32,7 @@ if (isset($_GET['editar'])) {
   $clienteEditar = $res->fetch_assoc();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -70,10 +86,17 @@ if (isset($_GET['editar'])) {
         </div>
       </form>
 
-      <!-- Buscador -->
-      <div class="buscador">
-        <input type="text" id="buscarCliente" placeholder="🔍 Buscar cliente">
-      </div>
+<!-- Filtros -->
+<div class="buscador">
+  <input type="text" id="buscarCliente" placeholder="🔍 Buscar cliente">
+
+  <label for="ordenClientes" style="margin-left:15px; font-weight:600;">Ordenar por ID:</label>
+  <select id="ordenClientes">
+    <option value="DESC" <?= ($orden == 'DESC') ? 'selected' : '' ?>>Más recientes primero</option>
+    <option value="ASC" <?= ($orden == 'ASC') ? 'selected' : '' ?>>Más antiguos primero</option>
+  </select>
+</div>
+
 
       <!-- Tabla -->
       <section class="tabla">
@@ -116,23 +139,23 @@ if (isset($_GET['editar'])) {
   <script src="clientes_alertas.js"></script>
   <script src="clientes_form.js"></script>
 
- <!-- Script de búsqueda mejorado -->
+<!-- Script de búsqueda y orden mejorado -->
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const inputBuscar = document.getElementById("buscarCliente");
     const filas = document.querySelectorAll("#tablaClientes tbody tr");
+    const ordenSelect = document.getElementById("ordenClientes"); // 👈 nuevo combobox
 
+    // ===== FILTRO DE BÚSQUEDA =====
     inputBuscar.addEventListener("keyup", () => {
       const filtro = inputBuscar.value.toLowerCase();
       filas.forEach(fila => {
-        // Extrae valores de las columnas relevantes
         const nombre = fila.cells[1].textContent.toLowerCase();
         const apellido = fila.cells[2].textContent.toLowerCase();
         const dpi = fila.cells[3].textContent.toLowerCase();
         const telefono = fila.cells[4].textContent.toLowerCase();
         const correo = fila.cells[6].textContent.toLowerCase();
 
-        // Si el texto coincide con alguno, muestra la fila
         if (
           nombre.includes(filtro) ||
           apellido.includes(filtro) ||
@@ -146,9 +169,14 @@ if (isset($_GET['editar'])) {
         }
       });
     });
+
+    // ===== CAMBIO DE ORDEN DE CLIENTES =====
+    ordenSelect.addEventListener("change", () => {
+      const orden = ordenSelect.value;
+      // Recarga la página con el parámetro ?orden=ASC o ?orden=DESC
+      window.location.href = `clientes.php?orden=${orden}`;
+    });
   });
 </script>
-
-
 </body>
 </html>

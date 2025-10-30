@@ -7,16 +7,27 @@
       <li><a href="/index.php">Dashboard</a></li>
 
       <!-- Planificación y abastecimiento -->
-      <li><a href="/proveedores/proveedores.php">Proveedores</a></li>
+      <li class="submenu">
+        <a href="#" class="submenu-toggle">Proveedores ▾</a>
+        <ul class="submenu-items">
+        <li><a href="/proveedores/proveedores.php">Proveedores</a></li>
+        <li><a href="/proveedores/Pagosproveedores.php">Pago a Proveedores</a></li>
+      </ul>  
       <li><a href="/Compras/compras.php">Compras</a></li>
-      <li><a href="/inventario/inventario.php">Inventario</a></li>
+      <li class="submenu">
+        <a href="#" class="submenu-toggle">Inventario ▾</a>
+        <ul class="submenu-items">
+        <li><a href="/inventario/materiaPrima/inventarioMP.php">Materia Prima</a></li>
+        <li><a href="/inventario/mobiliario/inventarioMobiliario.php">Mobiliario y Equipo</a></li>
+        <li><a href="/inventario/pérdidas/inventarioPerdidas.php">Pérdidas</a></li>
+        </ul>
+      </li>
 
       <!-- Recursos humanos y logística -->
       <li><a href="/empleados/empleados.php">Empleados</a></li>
       <li><a href="/Planilla/planilla.php">Planilla</a></li>
       <li><a href="/vehiculos/vehiculos.php">Vehículos</a></li>
       <li><a href="/sucursales/sucursales.php">Sucursales</a></li>
-      <li><a href="/eventos/eventos.php">Eventos</a></li>
 
       <!-- Operación comercial -->
       <li><a href="/clientes/clientes.php">Clientes</a></li>
@@ -29,3 +40,5 @@
     </ul>
   </nav>
 </aside>
+
+<script src="/sidebar/sidebar.js"></script>

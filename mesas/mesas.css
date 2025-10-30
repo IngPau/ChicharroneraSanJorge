@@ -1,4 +1,4 @@
-/* ===================== ESTILOS MÓDULO CLIENTES ===================== */
+/* ===================== ESTILOS MÓDULO MESAS ===================== */
 .main h1 {
   font-size: 36px;
   font-weight: 600;
@@ -13,7 +13,7 @@
   color: #475569;
 }
 
-/* ===================== FORMULARIO CLIENTES ===================== */
+/* ===================== FORMULARIO MESAS ===================== */
 .formulario {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -36,7 +36,8 @@
   margin-bottom: 6px;
 }
 
-.formulario input {
+.formulario input,
+.formulario select {
   padding: 10px 14px;
   border: 1px solid #cbd5e1;
   border-radius: 8px;
@@ -46,7 +47,8 @@
   transition: border-color 0.2s ease, background 0.2s ease;
 }
 
-.formulario input:focus {
+.formulario input:focus,
+.formulario select:focus {
   outline: none;
   border-color: #dc2626;
   background-color: #fff;
@@ -82,17 +84,14 @@
   background: #dc2626;
   color: white;
 }
-
 .btn-editar {
   background: #1e40af;
   color: white;
 }
-
 .btn-eliminar {
   background: #ef4444;
   color: white;
 }
-
 .btn-cancelar {
   background: #9ca3af;
   color: white;
@@ -133,7 +132,6 @@
 .tabla tr:nth-child(even) {
   background-color: #f9fafb;
 }
-
 .tabla tr:hover {
   background-color: #f1f5f9;
   transition: background 0.2s ease;
@@ -145,18 +143,15 @@
   align-items: center;
   gap: 8px;
 }
-
 .acciones a {
   text-decoration: none;
 }
-
 .acciones i {
   font-size: 18px;
   cursor: pointer;
   color: #1e293b;
   transition: color 0.2s ease;
 }
-
 .acciones i:hover {
   color: #dc2626;
 }
@@ -167,54 +162,42 @@
     grid-template-columns: 1fr;
     padding: 20px;
   }
-
   .main h1 {
     font-size: 28px;
   }
-
   .main h3 {
     font-size: 18px;
   }
-
   .tabla th,
   .tabla td {
     font-size: 14px;
     padding: 10px;
   }
-
   .botones {
     flex-direction: column;
     align-items: stretch;
   }
-
   .btn {
     justify-content: center;
     width: 100%;
   }
 }
 
-/* ===================== BUSCADOR ===================== */
+/* ===================== FILTRO POR SUCURSAL ===================== */
 .buscador {
   margin-bottom: 20px;
   text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.buscador input {
-  padding: 10px 14px;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
+.buscador label {
+  font-weight: 600;
+  color: #374151;
   font-size: 15px;
-  width: 300px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.buscador input:focus {
-  outline: none;
-  border-color: #dc2626;
-  box-shadow: 0 0 4px rgba(220, 38, 38, 0.3);
-}
-
-/* ===================== SELECT DE ORDEN ===================== */
 .buscador select {
   padding: 10px 14px;
   border: 1px solid #cbd5e1;
@@ -223,11 +206,8 @@
   background-color: #f9fafb;
   color: #374151;
   cursor: pointer;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.buscador select:hover {
-  border-color: #dc2626;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease,
+    background-color 0.2s ease;
 }
 
 .buscador select:focus {
@@ -235,4 +215,21 @@
   border-color: #dc2626;
   background-color: #ffffff;
   box-shadow: 0 0 4px rgba(220, 38, 38, 0.3);
+}
+
+/* Pequeño efecto al pasar el mouse */
+.buscador select:hover {
+  border-color: #dc2626;
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 600px) {
+  .buscador {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .buscador select {
+    width: 100%;
+  }
 }
