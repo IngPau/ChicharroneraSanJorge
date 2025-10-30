@@ -13,7 +13,7 @@
         <ul class="submenu-items">
           <li><a href="/inventario/materiaPrima/inventarioMP.php">Inventario Materia Prima</a></li>
           <li><a href="/inventario/mobiliario/inventarioMobiliario.php">Inventario Mobiliario</a></li>
-          <li><a href="/inventario/perdidas/inventarioPerdidas.php">Inventario Pérdidas</a></li>
+          <li><a href="/inventario/pérdidas/inventarioPerdidas.php">Pérdidas</a></li>
         </ul>
       </li>
 
