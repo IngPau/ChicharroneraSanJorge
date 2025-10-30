@@ -1,9 +1,9 @@
 /* ===================== FUENTE GLOBAL ===================== */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
 
 * {
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   scroll-behavior: smooth;
 }
 
@@ -83,7 +83,8 @@
   list-style: none;
   display: none;
   padding-left: 10px;
-  background-color: #24324a;
+  /*  background-color: #24324a; */
+  background-color: #3c4c67;
 }
 
 .submenu .submenu-items li a {
@@ -95,7 +96,8 @@
 }
 
 .submenu .submenu-items li a:hover {
-  background-color: #ef4444;
+  /* background-color: #ef4444; */
+  background-color: #e77474;
   color: white;
 }
 
@@ -111,8 +113,14 @@
 
 /* Animación suave al abrir submenu */
 @keyframes slideDown {
-  from { opacity: 0; transform: translateY(-5px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ===================== CONTENIDO PRINCIPAL ===================== */
