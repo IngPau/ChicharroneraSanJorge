@@ -62,6 +62,7 @@
         <ul class="submenu-items">
           <li><a href="/reportes/reportes.php">Reportes</a></li>
           <li><a href="/bi/businessIntelligence.php">Business Intelligence</a></li>
+          <li><a href="/dashboard/dashboard.php">Dashboard</a></li>
         </ul>
       </li>
 
