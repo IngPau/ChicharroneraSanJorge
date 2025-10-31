@@ -179,6 +179,14 @@ function actualizarInventario(fila){
             document.getElementById("textoResultado").style.display = "block";
             return;
         }
+        if(nuevaCantidad < 0) {
+            Swal.fire({
+                title: "Error",
+                text: "La cantidad debe ser mayor o igual a 0.",
+                icon: "error",
+            });
+            return;
+        }
         if(nuevaDescripcion!== "" && nuevaCantidad !== "" && nuevaCategoria !== ""){
             if(nuevaCantidad !== cantidad){
                 datosNuevos.cantidad = nuevaCantidad;

@@ -48,14 +48,21 @@ if (!isset($_SESSION['usuario_id'])) {
             <button id="buscar">Buscar</button>
           </div>
           <div class="inventarioTabla">
-            <h2 id="nombreSucursal">Perisur</h2>
+            <div class="encabezadoTabla">
+              <h2 id="nombreSucursal">Perisur</h2>
+              <button id="agregarMobiliario">
+                <ion-icon name="add-circle-outline"></ion-icon>
+                Añadir Registro
+              </button>
+            </div>
             <table>
               <thead>
                 <tr>
                   <th style="width: 10%">Código</th>
                   <th style="width: 50%">Materia Prima</th>
-                  <th>Cantidad</th>
-                  <th style="width: 12%; font-size: 14px">Unidad de Medida</th>
+                  <th style="font-size: 14px">Cantidad Actual</th>
+                  <th style="font-size: 14px">Unidad de Medida</th>
+                  <th style="font-size: 14px">Stock Minimo</th>
                   <th style="width: 10%">Acciones</th>
                 </tr>
               </thead>

@@ -3,6 +3,9 @@ const contenedorDetalles = document.querySelector(".contenedorDetalles");
 const contenedorActualizar = document.querySelector(".actualizarInventario");
 const iconoCerrarActualizar = document.getElementById("iconoCerrarLista");
 const btnActualizar = document.getElementById("btnActualizar");
+const contenedorFormulario = document.querySelector(".formularioIngreso");
+const btnAgregar = document.getElementById('agregarMobiliario');
+const iconoCerrar = document.getElementById("iconoCerrar");
 let datosInventario = [];
 
 seleccionSucursal.addEventListener('change', function() {
@@ -10,6 +13,16 @@ seleccionSucursal.addEventListener('change', function() {
     const sucursalSeleccionada = this.value;
     tituloSucursal.textContent = sucursalSeleccionada.charAt(0).toUpperCase() + sucursalSeleccionada.slice(1).replace(/([A-Z])/g, ' $1').trim();
     cargarInventario(sucursalSeleccionada);
+});
+
+btnAgregar.addEventListener('click', function() {
+    contenedorDetalles.style.display = "block";
+    contenedorFormulario.style.display = "block";
+});
+
+iconoCerrar.addEventListener('click', function() {
+    contenedorDetalles.style.display = "none";
+    contenedorFormulario.style.display = "none";
 });
 
 
@@ -31,7 +44,7 @@ function cargarInventario(sucursal) {
     const pagPrev = document.getElementById('paginacionAnterior');
     const pagNext = document.getElementById('paginacionSiguiente');
 
-    if (!tabla) return; // evitar errores si el DOM no coincide
+    if (!tabla) return;
 
     let filtroDescripcion = '';
 
@@ -56,12 +69,19 @@ function cargarInventario(sucursal) {
                 tabla.innerHTML = '';
                 datos.forEach(fila => {
                     const tr = document.createElement('tr');
+                    const cantidad = parseFloat(fila.cantidad);
+                    const stockMinimo = parseFloat(fila.stockMinimo);
+
+                    if (!isNaN(cantidad) && !isNaN(stockMinimo) && cantidad <= stockMinimo) {
+                        tr.classList.add('bajo-stock');
+                    }
                     tr.setAttribute('data-idInventario', fila.idInventario);
                     tr.innerHTML = `
                         <td>${fila.codigo || ''}</td>
                         <td>${fila.materiaPrima || ''}</td>
                         <td>${fila.cantidad || ''}</td>
                         <td>${fila.unidadMedida || ''}</td>
+                        <td>${fila.stockMinimo || ''}</td>
                         <td>
                             <img class="iconoEditar" src="Editar.svg" alt="" style="cursor:pointer" />
                             <ion-icon class="iconoEliminar" name="trash-outline" style="font-size: 20px; color: #dc2626; cursor: pointer" title="Eliminar"></ion-icon>
@@ -132,32 +152,54 @@ function actualizarInventario(fila){
     const materiaPrima = fila.children[1].textContent;
     const cantidad = fila.children[2].textContent;
     const unidadMedida = fila.children[3].textContent;
+    const stockMinimo = fila.children[4].textContent;
+
 
     const tituloMateriaPrima = document.getElementById("materiaPrima");
     const inputCantidad = document.getElementById("cantidadMP");
     const inputUnidad = document.getElementById("unidadMedida");
+    const inputCantidadMinima = document.getElementById("cantidadMinima");
 
     tituloMateriaPrima.textContent = "Actualizar Inventario de " + materiaPrima;
     inputCantidad.value = cantidad;
     inputUnidad.value = unidadMedida;
+    inputCantidadMinima.value = stockMinimo;
 
     
-
     btnActualizar.onclick = function() {
         document.getElementById("textoResultado").style.display = "none";
         const nuevaCantidad = inputCantidad.value.trim();
         const nuevaUnidad = inputUnidad.value.trim();
-        if(nuevaCantidad === cantidad && nuevaUnidad === unidadMedida){
+        const nuevoStockMinimo = inputCantidadMinima.value.trim();
+
+        if(nuevaCantidad === cantidad && nuevaUnidad === unidadMedida && nuevoStockMinimo === stockMinimo) {
             document.getElementById("textoResultado").style.display = "block";
             return;
         }
-        if(nuevaCantidad !== "" && nuevaUnidad !== ""){
-            if(nuevaCantidad !== cantidad){
-                datosNuevos.cantidad = nuevaCantidad;
-            }
-            if(nuevaUnidad !== unidadMedida){
-                datosNuevos.unidadMedida = nuevaUnidad;
-            }
+        if(nuevaCantidad < 0) {
+            Swal.fire({
+                title: "Error",
+                text: "La cantidad debe ser mayor o igual a 0.",
+                icon: "error",
+            });
+            return;
+        }
+        if(nuevoStockMinimo < 1) {
+            Swal.fire({
+                title: "Error",
+                text: "La cantidad debe ser mayor a 0.",
+                icon: "error",
+            });
+            return;
+        }
+        if(nuevaCantidad !== cantidad && nuevaCantidad >= 0){
+            datosNuevos.cantidad = nuevaCantidad;
+        }
+        if(nuevaUnidad !== unidadMedida){
+            datosNuevos.unidadMedida = nuevaUnidad;
+        }
+        if(nuevoStockMinimo !== stockMinimo && nuevoStockMinimo > 0){
+            datosNuevos.stockMinimo = nuevoStockMinimo;
         }
         if(Object.keys(datosNuevos).length > 0){
             fetch('actualizarInventarioMP.php', {
@@ -248,3 +290,27 @@ function eliminarInventario(fila){
     }
     });
 }
+
+window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('status')) {
+        if (urlParams.get('status') === 'success') {
+            Swal.fire({
+                title: "Registro Agregado",
+                text: "El registro se ha ingresado al inventario correctamente.",
+                icon: "success"
+            });
+            const sucursalActual = seleccionSucursal.value;
+            cargarInventario(sucursalActual);
+        } else if (urlParams.get('status') === 'error') {
+            Swal.fire({
+                title: "Error",
+                text: "No se pudo agregar al inventario.",
+                icon: "error",
+            });
+        }
+    }
+    const url = new URL(window.location);
+    url.searchParams.delete('status');
+    window.history.replaceState({}, document.title, url);
+};
