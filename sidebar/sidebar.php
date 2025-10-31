@@ -62,7 +62,7 @@
       <li class="submenu">
         <a href="#" class="submenu-toggle">Reportes y Análisis ▾</a>
         <ul class="submenu-items">
-          <li><a href="/reportes/reportes.php">Reportes</a></li>
+          <li><a href="/ventas/reporte_ventas.php">Reporte de Ventas</a></li>
           <li><a href="/bi/businessIntelligence.php">Business Intelligence</a></li>
           <li><a href="/dashboard/dashboard.php">Dashboard</a></li>
         </ul>

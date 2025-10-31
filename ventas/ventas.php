@@ -14,11 +14,15 @@ $db = conectar();
 date_default_timezone_set('America/Guatemala'); // Establece la zona horaria correcta
 // Obtener ventas
 $ventas = $db->query("
-  SELECT v.*, s.nombre_sucursal 
+  SELECT v.*, 
+         s.nombre_sucursal, 
+         u.nombre_usuario 
   FROM ventas v
   INNER JOIN sucursales s ON v.id_sucursal = s.id_sucursal
+  INNER JOIN usuarios u ON v.id_usuario = u.id_usuario
   ORDER BY v.id_venta DESC
 ");
+
 
 
 // Venta a editar
@@ -81,8 +85,25 @@ if (isset($_GET['editar'])) {
   ?>
 </select>
 
-        <label>ID Usuario:</label>
-        <input type="number" name="id_usuario" value="<?= $_SESSION['usuario_id'] ?>" readonly class="bloqueado">
+          <label>Cliente (opcional):</label>
+<div style="display: flex; gap: 10px;">
+  <select name="id_cliente">
+    <option value="">-- Sin cliente asignado --</option>
+    <?php
+    $clientes = $db->query("SELECT id_cliente, nombre_cliente FROM clientes");
+    while ($c = $clientes->fetch_assoc()) {
+      $selected = ($ventaEditar['id_cliente'] ?? '') == $c['id_cliente'] ? 'selected' : '';
+      echo "<option value='{$c['id_cliente']}' $selected>{$c['nombre_cliente']}</option>";
+    }
+    ?>
+  </select>
+  <a href="../clientes/clientes.php" target="_blank" class="btn btn-agregar-cliente">Nuevo</a>
+</div>
+
+  </select>
+
+
+        <input type="hidden" name="id_usuario" value="<?= $_SESSION['usuario_id'] ?>">
         <div class="bloque-detalle">
           <h3>Detalle de Venta</h3>
           <div id="detalle-container">
@@ -121,42 +142,6 @@ if (isset($_GET['editar'])) {
         </div>
 
       </form>
-
-
-      <!-- Tabla -->
-      <section class="tabla-ventas">
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Fecha</th>
-              <th>Total</th>
-              <th>ID Mesa</th>
-              <th>ID Usuario</th>
-              <th>Sucursal</th> <!-- 🔹 Nuevo -->
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php while ($v = $ventas->fetch_assoc()): ?>
-              <tr>
-                <td><?= $v['id_venta'] ?></td>
-                <td><?= $v['fecha_venta'] ?></td>
-                <td>Q<?= number_format($v['total_venta'], 2) ?></td>
-                <td><?= $v['id_mesa'] ?></td>
-                <td><?= $v['id_usuario'] ?></td>
-                <td><?= $v['nombre_sucursal'] ?></td> <!-- 🔹 Muestra el nombre -->
-                <td class="acciones">
-                  <a href="ventas.php?editar=<?= $v['id_venta'] ?>" class="btn btn-editar" title="Editar"><i class="fas fa-edit"></i></a>
-                  <a href="ventas_crud.php?eliminar=<?= $v['id_venta'] ?>" class="btn btn-eliminar" title="Eliminar"><i class="fas fa-trash"></i></a>
-                  <a href="detalle_venta.php?id=<?= $v['id_venta'] ?>" target="_blank" class="btn-detalle">Ver Detalle</a>
-
-                </td>
-              </tr>
-            <?php endwhile; ?>
-          </tbody>
-        </table>
-      </section>
     </main>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
