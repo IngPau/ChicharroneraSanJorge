@@ -82,7 +82,7 @@ if (isset($_GET['editar'])) {
 </select>
 
         <label>ID Usuario:</label>
-        <input type="number" name="id_usuario" value="<?= $ventaEditar['id_usuario'] ?? '' ?>" required>
+        <input type="number" name="id_usuario" value="<?= $_SESSION['usuario_id'] ?>" readonly class="bloqueado">
         <div class="bloque-detalle">
           <h3>Detalle de Venta</h3>
           <div id="detalle-container">

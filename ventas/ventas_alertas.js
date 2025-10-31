@@ -1,4 +1,4 @@
-
+// ✅ Venta agregada
 if (window.location.search.includes("agregado=1")) {
   Swal.fire({
     icon: 'success',
@@ -8,7 +8,7 @@ if (window.location.search.includes("agregado=1")) {
   });
 }
 
-
+// ✅ Venta editada
 if (window.location.search.includes("editado=1")) {
   Swal.fire({
     icon: 'success',
@@ -18,7 +18,7 @@ if (window.location.search.includes("editado=1")) {
   });
 }
 
-
+// ✅ Venta eliminada
 if (window.location.search.includes("eliminado=1")) {
   Swal.fire({
     icon: 'success',
@@ -28,7 +28,17 @@ if (window.location.search.includes("eliminado=1")) {
   });
 }
 
+// ⚠️ Nueva alerta: sin suficiente stock
+if (window.location.search.includes("sin_stock=1")) {
+  Swal.fire({
+    icon: 'error',
+    title: 'Stock insuficiente',
+    text: 'No hay suficiente materia prima en inventario para completar esta venta.',
+    confirmButtonColor: '#dc2626'
+  });
+}
 
+// 🚫 Confirmación antes de eliminar
 document.querySelectorAll(".btn-eliminar").forEach(btn => {
   btn.addEventListener("click", function(e) {
     e.preventDefault();
@@ -50,3 +60,4 @@ document.querySelectorAll(".btn-eliminar").forEach(btn => {
     });
   });
 });
+
