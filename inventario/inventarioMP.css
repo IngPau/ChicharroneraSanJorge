@@ -180,6 +180,9 @@ thead th {
   top: 0;
 }
 
+.bajo-stock {
+  background-color: #ffe5e5 !important; 
+}
 
 .iconoEditar {
   margin-right: 10px;
@@ -409,3 +412,4 @@ thead th {
     font-size: 16px;
   }
 }
+

@@ -23,6 +23,13 @@ if (isset($data['unidadMedida'])){
     $tipos .= 's';  
 }
 
+if (isset($data['stockMinimo'])){
+    $stockNuevo = (float)$data['stockMinimo'];
+    $campos[] = "cantidad_minima = ?";
+    $valores[] = $stockNuevo;
+    $tipos .= 'd';  
+}
+
 if (!empty($campos)){
     $actualizarCampos = $conn->prepare("UPDATE Inventario_MateriaPrima SET " . implode(', ', $campos) . " WHERE id_inventario = ?");
     $valores[] = $codigo;
