@@ -5,7 +5,7 @@
     <ul>
 
       <!-- DASHBOARD -->
-      <li><a href="/index.php">Dashboard</a></li>
+      <li><a href="/index.php">MenuPrincipal</a></li>
 
       <!-- INVENTARIO -->
       <li class="submenu">
