@@ -1,0 +1,128 @@
+/* ===================== GENERAL ===================== */
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #f9fafb;
+  margin: 0;
+  padding: 0;
+}
+
+/* ===================== MAIN HEADER ===================== */
+.main {
+  padding: 30px;
+}
+
+.main h1 {
+  font-size: 36px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #1e293b;
+}
+
+.main h3 {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  color: #475569;
+}
+
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.header h1 {
+  font-size: 34px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 10px 0;
+}
+
+/* ===================== MENU CARDS ===================== */
+.menu-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 25px;
+}
+
+.menu-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 25px 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.menu-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.icon {
+  font-size: 45px;
+  color: #dc2626;
+  margin-bottom: 15px;
+}
+
+/* ===================== BOTONES ===================== */
+.menu-btn {
+  background: #dc2626;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+  width: 100%;
+}
+
+.menu-btn:hover {
+  background: #b91c1c;
+}
+
+/* ===================== TEXTOS ===================== */
+.menu-card p {
+  color: #475569;
+  font-size: 14px;
+  margin-top: 12px;
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 800px) {
+  .menu-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+
+  .menu-btn {
+    font-size: 14px;
+  }
+
+  .header h1 {
+    font-size: 28px;
+  }
+
+  .icon {
+    font-size: 38px;
+  }
+}
+
+.menu-section {
+  margin-bottom: 45px;
+}
+
+.menu-section h2 {
+  font-size: 26px;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 20px;
+  border-left: 6px solid #dc2626;
+  padding-left: 10px;
+}
+
