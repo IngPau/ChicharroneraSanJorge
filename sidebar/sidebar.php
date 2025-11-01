@@ -43,6 +43,8 @@
           <li><a href="/compras/compras.php">Compras</a></li>
           <li><a href="/ventas/ventas.php">Ventas</a></li>
           <li><a href="/clientes/clientes.php">Clientes</a></li>
+          <li><a href="/Platos/platos.php">Platos</a></li>
+          <li><a href="#">Recetas</a></li>
         </ul>
       </li>
 
@@ -60,7 +62,7 @@
       <li class="submenu">
         <a href="#" class="submenu-toggle">Reportes y Análisis ▾</a>
         <ul class="submenu-items">
-          <li><a href="/reportes/reportes.php">Reportes</a></li>
+          <li><a href="/ventas/reporte_ventas.php">Reporte de Ventas</a></li>
           <li><a href="/bi/businessIntelligence.php">Business Intelligence</a></li>
           <li><a href="/dashboard/dashboard.php">Dashboard</a></li>
         </ul>
