@@ -58,12 +58,39 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // ================= ALERTAS ASISTENCIA =================
+  if (msg === "agregarAsistencia") {
+    Swal.fire({
+      icon: "success",
+      title: "Asistencia registrada correctamente",
+      showConfirmButton: false,
+      timer: 1500
+    });
+  }
+
+  if (msg === "editarAsistencia") {
+    Swal.fire({
+      icon: "success",
+      title: "Asistencia actualizada correctamente",
+      showConfirmButton: false,
+      timer: 1500
+    });
+  }
+
+  if (msg === "eliminar") {
+    Swal.fire({
+      icon: "info",
+      title: "Asistencia eliminada",
+      showConfirmButton: false,
+      timer: 1500
+    });
+  }
+
   // ================= FORMULARIO NÓMINA =================
   const btnNomina = document.getElementById('btnNomina');
   const formNomina = document.getElementById('formNomina');
   const cerrarNomina = document.getElementById('cerrarNomina');
 
-  // Mostrar formulario automáticamente si se está editando una nómina
   if (urlParams.get("editarNomina")) {
     formNomina.style.display = 'grid';
     if (btnNomina) btnNomina.style.display = 'none';
@@ -77,5 +104,26 @@ document.addEventListener("DOMContentLoaded", () => {
   cerrarNomina?.addEventListener('click', () => {
     formNomina.style.display = 'none';
     if (btnNomina) btnNomina.style.display = 'inline-flex';
+  });
+
+  // ================= FORMULARIO ASISTENCIA =================
+  const btnAsistencia = document.getElementById('btnAsistencia');
+  const formAsistencia = document.getElementById('formAsistencia');
+  const cerrarAsistencia = document.getElementById('cerrarAsistencia');
+
+  // Mostrar formulario automáticamente si se está editando una asistencia
+  if (urlParams.get("editarAsistencia")) {
+    formAsistencia.style.display = 'grid';
+    if (btnAsistencia) btnAsistencia.style.display = 'none';
+  }
+
+  btnAsistencia?.addEventListener('click', () => {
+    formAsistencia.style.display = 'grid';
+    btnAsistencia.style.display = 'none';
+  });
+
+  cerrarAsistencia?.addEventListener('click', () => {
+    formAsistencia.style.display = 'none';
+    if (btnAsistencia) btnAsistencia.style.display = 'inline-flex';
   });
 });

@@ -7,10 +7,10 @@ if (isset($_POST['agregarNomina'])) {
     $id_empleado = $_POST['id_empleado'];
     $año = $_POST['año'];
     $mes = $_POST['mes'];
-    $sueldo_base = $_POST['sueldo_base'];
 
-    $stmt = $db->prepare("INSERT INTO Nomina (id_empleado, año, mes, sueldo_base) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("iiid", $id_empleado, $año, $mes, $sueldo_base);
+    // ❌ No insertamos sueldo_base (lo llenará el trigger automáticamente)
+    $stmt = $db->prepare("INSERT INTO Nomina (id_empleado, año, mes) VALUES (?, ?, ?)");
+    $stmt->bind_param("iii", $id_empleado, $año, $mes);
     $stmt->execute();
 
     header("Location: empleados.php?msg=nomina_agregada");
@@ -23,10 +23,10 @@ if (isset($_POST['editarNomina'])) {
     $id_empleado = $_POST['id_empleado'];
     $año = $_POST['año'];
     $mes = $_POST['mes'];
-    $sueldo_base = $_POST['sueldo_base'];
 
-    $stmt = $db->prepare("UPDATE Nomina SET id_empleado=?, año=?, mes=?, sueldo_base=? WHERE id_nomina=?");
-    $stmt->bind_param("iiidi", $id_empleado, $año, $mes, $sueldo_base, $id_nomina);
+    // ❌ No actualizamos sueldo_base manualmente, el trigger lo recalculará
+    $stmt = $db->prepare("UPDATE Nomina SET id_empleado=?, año=?, mes=? WHERE id_nomina=?");
+    $stmt->bind_param("iiii", $id_empleado, $año, $mes, $id_nomina);
     $stmt->execute();
 
     header("Location: empleados.php?msg=nomina_editada");
