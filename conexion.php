@@ -1,9 +1,7 @@
 <?php
 
 function conectar() {
-
-    $db = new mysqli("localhost","root", "", "CSJ_db");
-
+    $db = new mysqli("localhost","root", "", "CSJ_db",3307);
   
 
     if (!$db)
