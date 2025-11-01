@@ -63,6 +63,10 @@
         <a href="#" class="submenu-toggle">Reportes y Análisis ▾</a>
         <ul class="submenu-items">
           <li><a href="/ventas/reporte_ventas.php">Reporte de Ventas</a></li>
+          <li><a href="/inventario/reporte_inventario_materiaprima.php">Reporte de inventario Materia prima</a></li>
+          <li><a href="/inventario/reporte_inventario_mobiliario.php">Reporte de inventario Mobiliario</a></li>
+          <li><a href="/reportes/reporte_clientes.php">Reporte de Clientes</a></li>
+          <li><a href="/reportes/reporte_proveedores.php">Reporte de Proveedores</a></li>
           <li><a href="/bi/businessIntelligence.php">Business Intelligence</a></li>
           <li><a href="/dashboard/dashboard.php">Dashboard</a></li>
         </ul>
