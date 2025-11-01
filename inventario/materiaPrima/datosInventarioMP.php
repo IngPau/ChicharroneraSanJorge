@@ -56,8 +56,8 @@ $sql = "SELECT
             imp.unidad_medida AS unidadMedida,
             imp.cantidad_minima AS stockMinimo,
             s.nombre_sucursal AS sucursal
-        FROM Inventario_MateriaPrima imp
-        INNER JOIN MateriaPrima mp ON imp.id_insumo = mp.id_materia_prima
+        FROM inventario_materiaprima imp
+        INNER JOIN materiaprima mp ON imp.id_insumo = mp.id_materia_prima
         INNER JOIN Almacenes_Sucursal Als ON imp.id_almacen = Als.id_almacen
         INNER JOIN Sucursales s ON Als.id_sucursal = s.id_sucursal
         $where
