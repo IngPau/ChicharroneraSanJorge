@@ -70,34 +70,51 @@ if (isset($_GET['editar'])) {
         </div>
       </form>
 
-      <!-- Tabla -->
-      <section class="tabla">
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nombre</th>
-              <th>Teléfono</th>
-              <th>Dirección</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php while ($s = $sucursales->fetch_assoc()): ?>
-              <tr>
-                <td><?= $s['id_sucursal'] ?></td>
-                <td><?= $s['nombre_sucursal'] ?></td>
-                <td><?= $s['telefono_sucursal'] ?></td>
-                <td><?= $s['direccion_sucursal'] ?></td>
-                <td class="acciones">
-                  <a href="sucursales.php?editar=<?= $s['id_sucursal'] ?>" class="btn btn-editar" title="Editar"><i class="fas fa-edit"></i></a>
-                  <a href="sucursales_crud.php?eliminar=<?= $s['id_sucursal'] ?>" class="btn btn-eliminar" title="Eliminar"><i class="fas fa-trash"></i></a>
-                </td>
-              </tr>
-            <?php endwhile; ?>
-          </tbody>
-        </table>
-      </section>
+<!-- Tabla -->
+<section class="tabla">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Teléfono</th>
+        <th>Dirección / Mapa</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php if ($sucursales && $sucursales->num_rows > 0): ?>
+        <?php while ($s = $sucursales->fetch_assoc()): ?>
+          <tr>
+            <td><?= htmlspecialchars($s['id_sucursal']) ?></td>
+            <td><?= htmlspecialchars($s['nombre_sucursal']) ?></td>
+            <td><?= htmlspecialchars($s['telefono_sucursal']) ?></td>
+            <td>
+              <?= htmlspecialchars($s['direccion_sucursal']) ?><br>
+              <iframe
+                width="300"
+                height="200"
+                style="border:0; margin-top:8px;"
+                loading="lazy"
+                allowfullscreen
+                referrerpolicy="no-referrer-when-downgrade"
+                src="https://www.google.com/maps?q=<?= urlencode($s['direccion_sucursal']) ?>&output=embed">
+              </iframe>
+            </td>
+            <td class="acciones">
+              <a href="sucursales.php?editar=<?= urlencode($s['id_sucursal']) ?>" class="btn btn-editar" title="Editar"><i class="fas fa-edit"></i></a>
+              <a href="sucursales_crud.php?eliminar=<?= urlencode($s['id_sucursal']) ?>" class="btn btn-eliminar" title="Eliminar"><i class="fas fa-trash"></i></a>
+            </td>
+          </tr>
+        <?php endwhile; ?>
+      <?php else: ?>
+        <tr>
+          <td colspan="5">No hay sucursales registradas.</td>
+        </tr>
+      <?php endif; ?>
+    </tbody>
+  </table>
+</section>
     </main>
   </div>
 
