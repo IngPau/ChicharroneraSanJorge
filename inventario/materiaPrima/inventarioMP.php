@@ -13,7 +13,7 @@ if (!isset($_SESSION['usuario_id'])) {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard Restaurante</title>
+    <title>Inventario de Materia Prima</title>
     <link rel="stylesheet" href="../inventarioMP.css">
     <link rel="stylesheet" href="../../sidebar/sidebar.css">
     <link rel="stylesheet" href="../../globales.css">
@@ -35,10 +35,7 @@ if (!isset($_SESSION['usuario_id'])) {
             <div class="filtro">
               <label for="sucursal">Seleccione la sucursal</label>
               <select id="sucursal" name="sucursal">
-                <option value="Perisur">Perisur</option>
-                <option value="Zona 8 Ciudad">Zona 8 Ciudad</option>
-                <option value="San Cristobal">San Cristobal</option>
-                <option value="Monserrat">Monserrat</option>
+                <?php include '../sucursales.php'; ?>
               </select>
             </div>
             <div class="filtro">

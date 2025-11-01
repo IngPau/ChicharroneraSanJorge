@@ -31,7 +31,9 @@ iconoCerrar.addEventListener('click', function() {
 
 /* ------------------------------------------ Cargar Datos de Inventario -------------------------- */
 document.addEventListener('DOMContentLoaded', function () {
-    const sucursalInicial = "Perisur";
+    const sucursalInicial = seleccionSucursal.value;
+    const tituloSucursal = document.getElementById('nombreSucursal');
+    tituloSucursal.textContent = sucursalInicial.charAt(0).toUpperCase() + sucursalInicial.slice(1).replace(/([A-Z])/g, ' $1').trim();
     cargarInventario(sucursalInicial);
 });
 
@@ -142,6 +144,7 @@ iconoCierre.addEventListener('click', function() {
 });
 
 function actualizarInventario(fila){
+    const sucursalActual = seleccionSucursal.value;
     let datosNuevos = {};
     const idPerdida = fila.getAttribute('data-idPerdida');
     const MateriaPrima = fila.children[0].textContent;
@@ -211,7 +214,6 @@ function actualizarInventario(fila){
                     text: "El registro se ha actualizado correctamente.",
                     icon: "success",
                     });
-                    const sucursalActual = seleccionSucursal.value;
                     cargarInventario(sucursalActual);
                 }
                 else if (data.estado == 2) {
@@ -241,11 +243,12 @@ document.addEventListener("click", function(e) {
 });
 
 function eliminarInventario(fila){
+    const sucursalActual = seleccionSucursal.value;
     const idInventario = fila.getAttribute('data-idPerdida');
     const mpSeleccionada = fila.children[0].textContent;
     Swal.fire({
         title: "Eliminación",
-        text: "Se eliminará el registro de " + mpSeleccionada + " del las pérdidas de inventario.",
+        text: "Se eliminará el registro de " + mpSeleccionada + " de las pérdidas de inventario.",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -271,7 +274,6 @@ function eliminarInventario(fila){
                     text: "El registro se ha eliminado correctamente.",
                     icon: "success"
                 });
-                const sucursalActual = seleccionSucursal.value;
                 cargarInventario(sucursalActual);
             }
             else {

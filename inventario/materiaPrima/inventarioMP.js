@@ -27,7 +27,9 @@ iconoCerrar.addEventListener('click', function() {
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    const sucursalInicial = "Perisur";
+    const sucursalInicial = seleccionSucursal.value;
+    const tituloSucursal = document.getElementById('nombreSucursal');
+    tituloSucursal.textContent = sucursalInicial.charAt(0).toUpperCase() + sucursalInicial.slice(1).replace(/([A-Z])/g, ' $1').trim();
     cargarInventario(sucursalInicial);
 });
 
@@ -147,6 +149,7 @@ iconoCerrarActualizar.addEventListener("click", function() {
 });
 
 function actualizarInventario(fila){
+    const sucursalActual = seleccionSucursal.value;
     let datosNuevos = {};
     const idInventario = fila.getAttribute('data-idInventario');
     const materiaPrima = fila.children[1].textContent;
@@ -223,7 +226,6 @@ function actualizarInventario(fila){
                     text: "El inventario se ha actualizado correctamente.",
                     icon: "success",
                     });
-                    const sucursalActual = seleccionSucursal.value;
                     cargarInventario(sucursalActual);
                 }
                 else {
@@ -246,6 +248,7 @@ document.addEventListener("click", function(e) {
 });
 
 function eliminarInventario(fila){
+    const sucursalActual = seleccionSucursal.value;
     const idInventario = fila.getAttribute('data-idInventario');
     const materiaPrima = fila.children[1].textContent;
     Swal.fire({
@@ -276,7 +279,6 @@ function eliminarInventario(fila){
                     text: "El registro se ha eliminado correctamente.",
                     icon: "success"
                 });
-                const sucursalActual = seleccionSucursal.value;
                 cargarInventario(sucursalActual);
             }
             else {
