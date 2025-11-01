@@ -22,10 +22,7 @@
         <div class="camposMobiliario">
             <label for="sucursalSeleccionada">Sucursal</label>
             <select id="sucursalSeleccionada" name="sucursalSeleccionada" required>
-                <option value="Perisur">Perisur</option>
-                <option value="Zona 8 Ciudad">Zona 8 Ciudad</option>
-                <option value="San Cristobal">San Cristobal</option>
-                <option value="Monserrat">Monserrat</option>
+                <?php include '../sucursales.php'; ?>
             </select>
         </div>
         <button type="submit" class="btnRegistrar">Registar en Inventario</button>
