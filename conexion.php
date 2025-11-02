@@ -2,7 +2,7 @@
 
 function conectar() {
 
-    $db = new mysqli("localhost","root", "", "CSJ_db");
+    $db = new mysqli("localhost","root", "1234", "CSJ_db");
 
   
 
@@ -15,6 +15,7 @@ function conectar() {
 function ir($pagina) {
     print "<meta http-equiv='refresh' content='3;url=$pagina'>";
 }
+
 
 /* 
 conexion a DW via ODBC
