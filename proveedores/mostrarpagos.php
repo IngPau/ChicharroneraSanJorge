@@ -53,10 +53,10 @@ if ($stmt = $db->prepare($sql)) {
                         <td contenteditable='true' data-field='fecha'>$fecha_pago_proveedor</td>
                         <td contenteditable='true' data-field='monto'>$monto_pago_proveedor</td>
                         <td> 
-                            <ion-icon name='create-outline' class='iconoEditar' onclick='editarDatos($numeroFila);'></ion-icon> 
+                            <button class='boton editar' onclick='editarDatos(".htmlspecialchars($numeroFila, ENT_QUOTES, 'UTF-8').");'>Editar</button>
                         </td>
                         <td> 
-                            <ion-icon name='trash-outline' class='iconoEliminar' onclick='eliminarDatos($id_pago_proveedor)'></ion-icon> 
+                            <button class='boton eliminar' onclick='eliminarDatos(".htmlspecialchars($fila['id_pago_proveedor'], ENT_QUOTES, 'UTF-8').");'>Eliminar</button>
                         </td>
                     </tr>";
             $datos[] = $fila;

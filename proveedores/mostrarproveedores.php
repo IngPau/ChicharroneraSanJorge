@@ -47,18 +47,17 @@ if ($stmt = $db->prepare($sql)) {
                     <tbody>";
         
         while ($fila = $resultado->fetch_assoc()) {
-            extract($fila);
             $tabla .= "<tr>
-                        <td>$id_proveedor</td> 
-                        <td contenteditable='true' data-field='nombre'>$nombre_proveedor</td>
-                        <td contenteditable='true' data-field='correo'>$correo_proveedor</td>
-                        <td contenteditable='true' data-field='telefono'>$telefono_proveedor</td>
-                        <td contenteditable='true' data-field='direccion'>$direccion_proveedor</td>
+                        <td>".htmlspecialchars($fila['id_proveedor'], ENT_QUOTES, 'UTF-8')."</td> 
+                        <td contenteditable='true' data-field='nombre'>".htmlspecialchars($fila['nombre_proveedor'], ENT_QUOTES, 'UTF-8')."</td>
+                        <td contenteditable='true' data-field='correo'>".htmlspecialchars($fila['correo_proveedor'], ENT_QUOTES, 'UTF-8')."</td>
+                        <td contenteditable='true' data-field='telefono'>".htmlspecialchars($fila['telefono_proveedor'], ENT_QUOTES, 'UTF-8')."</td>
+                        <td contenteditable='true' data-field='direccion'>".htmlspecialchars($fila['direccion_proveedor'], ENT_QUOTES, 'UTF-8')."</td>
                         <td> 
-                            <ion-icon name='create-outline' class='iconoEditar' onclick='editarDatos($numeroFila);'></ion-icon> 
+                            <button class='boton editar' onclick='editarDatos(".htmlspecialchars($numeroFila, ENT_QUOTES, 'UTF-8').");'>Editar</button>
                         </td>
                         <td> 
-                            <ion-icon name='trash-outline' class='iconoEliminar' onclick='eliminarDatos($id_proveedor)'></ion-icon> 
+                            <button class='boton eliminar' onclick='eliminarDatos(".htmlspecialchars($fila['id_proveedor'], ENT_QUOTES, 'UTF-8').");'>Eliminar</button>
                         </td>
                     </tr>";
             $datos[] = $fila;

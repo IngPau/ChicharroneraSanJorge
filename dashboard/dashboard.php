@@ -105,7 +105,7 @@ $tablaTop = $db->query("
 </head>
 <body>
 <div class="container">
-  <?php include '../sidebar/sidebar.php'; ?>
+  <?php include_once '../sidebar/sidebar.php'; ?>
 
   <main class="main">
 <header class="header">

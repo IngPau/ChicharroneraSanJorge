@@ -1,0 +1,118 @@
+.main {
+ flex: 1;
+ padding: 20px;
+ background: #f8fafc;
+}
+
+/* ---------- ESTILOS GENERALES ---------- */
+body {
+ font-family: 'Poppins', sans-serif;
+ background-color: #d1d5db; /* Gris claro */
+ margin: 0;
+ padding: 20px;
+ color: #374151; /* Gris oscuro */
+}
+
+/* ---------- TITULOS ---------- */
+h1 {
+ font-size: 48px;
+ margin-bottom: 20px;
+ text-align: center;
+}
+
+/* ---------- CONTENEDOR ---------- */
+.contenedor {
+ background: white;
+ border-radius: 16px;
+ padding: 20px;
+ box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+ width: calc(100% - 250px);
+ margin-left: 250px; /* mismo ancho que el sidebar */
+ transition: all 0.3s ease;
+}
+
+/* ---------- TABLA ---------- */
+table {
+ width: 100%;
+ border-collapse: collapse;
+ margin-top: 20px;
+}
+
+th, td {
+ padding: 12px 15px;
+ border-bottom: 1px solid #d1d5db; /* Gris claro */
+ text-align: center;
+ font-size: 18px;
+}
+
+th {
+ background-color: #374151; /* Gris oscuro */
+ color: white;
+}
+
+tr:hover {
+ background-color: #d1d5db; /* Gris claro */
+}
+
+/* ---------- BOTONES ---------- */
+.boton {
+ padding: 8px 14px;
+ border: none;
+ border-radius: 8px;
+ cursor: pointer;
+ font-size: 16px;
+ transition: 0.3s;
+ color: white;
+}
+
+.agregar {
+ background-color: #dc2626; /* Rojo principal */
+ display: block;
+ margin: 0 auto 10px auto;
+}
+
+.editar {
+ background-color: #9ca3af; /* Gris medio */
+}
+
+.eliminar {
+ background-color: #dc2626; /* Rojo principal */
+}
+
+.boton:hover {
+ opacity: 0.85;
+ transform: scale(1.05);
+}
+
+/* 🔘 Botón de confirmación (Guardar) */
+.swal2-confirm {
+ background-color: #374151 !important; /* Gris oscuro */
+ color: white !important;
+ font-weight: bold;
+ border-radius: 10px;
+ padding: 10px 25px;
+ transition: 0.3s;
+}
+
+.swal2-confirm:hover {
+ background-color: #4b5563 !important; /* Gris más oscuro */
+}
+
+/* 🔘 Botón de cancelación (Cancelar) */
+.swal2-cancel {
+ background-color: #f44336 !important; /* Rojo */
+ color: white !important;
+ font-weight: bold;
+ border-radius: 10px;
+ padding: 10px 25px;
+ transition: 0.3s;
+}
+
+.swal2-cancel:hover {
+ background-color: #e53935 !important; /* Rojo más oscuro */
+}
+
+/* 💬 Opcional: ajustar espaciado entre botones */
+.swal2-actions {
+ gap: 15px !important;
+}

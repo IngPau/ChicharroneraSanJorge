@@ -8,6 +8,10 @@ if (!isset($_SESSION['usuario_id'])) {
 require_once '../conexion.php';
 $db = conectar();
 
+  include '../conexion.php';
+  include_once '../SideBar/sidebar.php';
+
+
 // Orden dinámico
 $orden = (isset($_GET['orden']) && in_array($_GET['orden'], ['ASC','DESC'])) ? $_GET['orden'] : 'DESC';
 

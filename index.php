@@ -22,7 +22,7 @@ $db = conectar();
 </head>
 <body>
   <div class="container">
-    <?php include 'SideBar/sidebar.php'; ?>
+    <?php include_once 'SideBar/sidebar.php'; ?>
 
     <main class="main">
       <header class="header">
@@ -32,6 +32,7 @@ $db = conectar();
 
       <!-- ===================== INVENTARIO ===================== -->
       <section class="menu-section">
+            <?php if (puedeVerModulo('Inventario')): ?>
         <h2>Inventario</h2>
         <div class="menu-container">
           <div class="menu-card">
@@ -52,10 +53,12 @@ $db = conectar();
             <p>Registro de pérdidas y deterioro de productos.</p>
           </div>
         </div>
+        <?php endif; ?>
       </section>
 
       <!-- ===================== RECURSOS HUMANOS ===================== -->
       <section class="menu-section">
+            <?php if (puedeVerModulo('RRHH')): ?>
         <h2>Recursos Humanos</h2>
         <div class="menu-container">
           <div class="menu-card">
@@ -76,10 +79,12 @@ $db = conectar();
             <p>Control de nómina mensual.</p>
           </div>
         </div>
+        <?php endif; ?>
       </section>
 
       <!-- ===================== PROVEEDORES ===================== -->
       <section class="menu-section">
+        <?php if (puedeVerModulo('Proveedores')): ?>
         <h2>Proveedores</h2>
         <div class="menu-container">
           <div class="menu-card">
@@ -94,10 +99,12 @@ $db = conectar();
             <p>Registro de pagos y cuentas por pagar.</p>
           </div>
         </div>
+        <?php endif; ?>
       </section>
 
       <!-- ===================== OPERACIONES ===================== -->
       <section class="menu-section">
+        <?php if (puedeVerModulo('Operaciones')): ?>
         <h2>Operaciones</h2>
         <div class="menu-container">
           <div class="menu-card">
@@ -130,10 +137,12 @@ $db = conectar();
             <p>Control de ingredientes y preparación de platillos.</p>
           </div>
         </div>
+        <?php endif; ?>
       </section>
 
       <!-- ===================== GESTIÓN COMERCIAL ===================== -->
       <section class="menu-section">
+        <?php if (puedeVerModulo('Gestión Comercial')): ?>
         <h2>Gestión Comercial</h2>
         <div class="menu-container">
           <div class="menu-card">
@@ -154,10 +163,12 @@ $db = conectar();
             <p>Control de transporte y distribución.</p>
           </div>
         </div>
+        <?php endif; ?>
       </section>
 
       <!-- ===================== REPORTES Y ANÁLISIS ===================== -->
       <section class="menu-section">
+        <?php if (puedeVerModulo('Reportes y Análisis')): ?>
         <h2>Reportes y Análisis</h2>
         <div class="menu-container">
 
@@ -187,10 +198,12 @@ $db = conectar();
             <p>Panel de métricas generales del negocio.</p>
           </div>
         </div>
+        <?php endif; ?>
       </section>
 
       <!-- ===================== ADMINISTRACIÓN DEL SISTEMA ===================== -->
       <section class="menu-section">
+        <?php if (puedeVerModulo('Administración del Sistema')): ?>
         <h2>Administración del Sistema</h2>
         <div class="menu-container">
           <div class="menu-card">
@@ -211,6 +224,7 @@ $db = conectar();
             <p>Control de acceso a los diferentes módulos.</p>
           </div>
         </div>
+        <?php endif; ?>
       </section>
 
     </main>
