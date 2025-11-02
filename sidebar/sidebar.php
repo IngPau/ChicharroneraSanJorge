@@ -67,6 +67,7 @@
           <li><a href="/inventario/reporte_inventario_mobiliario.php">Reporte de inventario Mobiliario</a></li>
           <li><a href="/reportes/reporte_clientes.php">Reporte de Clientes</a></li>
           <li><a href="/reportes/reporte_proveedores.php">Reporte de Proveedores</a></li>
+          <li><a href="../reportes/reportes_compras.php">Reporte de Compras</a></li>
           <li><a href="/bi/businessIntelligence.php">Business Intelligence</a></li>
           <li><a href="/dashboard/dashboard.php">Dashboard</a></li>
         </ul>
