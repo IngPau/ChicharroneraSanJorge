@@ -1,5 +1,6 @@
 <?php
-include_once "C:/xampp/htdocs/ChicharroneraSanJorge/conexion.php";
+include_once(__DIR__ . '/../conexion.php');
+
 
 function tienePermiso($permiso_requerido) {
     if (!isset($_SESSION['usuario_id']) || !isset($_SESSION['id_rol'])) {
