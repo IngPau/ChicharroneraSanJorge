@@ -73,7 +73,8 @@ if (isset($_GET['editarAsistencia'])) {
 
 <body>
   <div class="container">
-    <?php include '../SideBar/sidebar.php'; ?>
+    <?php include_once '../SideBar/sidebar.php'; ?>
+
     <main class="main">
       <h1>Módulo Empleados</h1>
       <h2>Gestión de Personal</h2>

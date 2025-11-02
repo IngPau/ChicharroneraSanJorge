@@ -18,10 +18,11 @@ $db = conectar();
   <link rel="stylesheet" href="SideBar/sidebar.css">
   <link rel="stylesheet" href="globales.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
 <body>
   <div class="container">
-    <?php include 'SideBar/sidebar.php'; ?>
+    <?php include_once 'SideBar/sidebar.php'; ?>
 
     <main class="main">
       <header class="header">
@@ -31,6 +32,7 @@ $db = conectar();
 
       <!-- ===================== INVENTARIO ===================== -->
       <section class="menu-section">
+            <?php if (puedeVerModulo('Inventario')): ?>
         <h2>Inventario</h2>
         <div class="menu-container">
           <div class="menu-card">
@@ -51,10 +53,12 @@ $db = conectar();
             <p>Registro de pérdidas y deterioro de productos.</p>
           </div>
         </div>
+        <?php endif; ?>
       </section>
 
       <!-- ===================== RECURSOS HUMANOS ===================== -->
       <section class="menu-section">
+            <?php if (puedeVerModulo('RRHH')): ?>
         <h2>Recursos Humanos</h2>
         <div class="menu-container">
           <div class="menu-card">
@@ -75,10 +79,12 @@ $db = conectar();
             <p>Control de nómina mensual.</p>
           </div>
         </div>
+        <?php endif; ?>
       </section>
 
       <!-- ===================== PROVEEDORES ===================== -->
       <section class="menu-section">
+        <?php if (puedeVerModulo('Proveedores')): ?>
         <h2>Proveedores</h2>
         <div class="menu-container">
           <div class="menu-card">
@@ -93,10 +99,12 @@ $db = conectar();
             <p>Registro de pagos y cuentas por pagar.</p>
           </div>
         </div>
+        <?php endif; ?>
       </section>
 
       <!-- ===================== OPERACIONES ===================== -->
       <section class="menu-section">
+        <?php if (puedeVerModulo('Operaciones')): ?>
         <h2>Operaciones</h2>
         <div class="menu-container">
           <div class="menu-card">
@@ -129,10 +137,12 @@ $db = conectar();
             <p>Control de ingredientes y preparación de platillos.</p>
           </div>
         </div>
+        <?php endif; ?>
       </section>
 
       <!-- ===================== GESTIÓN COMERCIAL ===================== -->
       <section class="menu-section">
+        <?php if (puedeVerModulo('Gestión Comercial')): ?>
         <h2>Gestión Comercial</h2>
         <div class="menu-container">
           <div class="menu-card">
@@ -153,18 +163,29 @@ $db = conectar();
             <p>Control de transporte y distribución.</p>
           </div>
         </div>
+        <?php endif; ?>
       </section>
 
       <!-- ===================== REPORTES Y ANÁLISIS ===================== -->
       <section class="menu-section">
+        <?php if (puedeVerModulo('Reportes y Análisis')): ?>
         <h2>Reportes y Análisis</h2>
         <div class="menu-container">
+
           <div class="menu-card">
             <i class="fa-solid fa-file-lines icon"></i>
             <button class="menu-btn" onclick="location.href='/ventas/reporte_ventas.php'">Reporte de Ventas</button>
             <p>Consulta detallada de ventas por periodo.</p>
           </div>
 
+          <div class="menu-card">
+            <i class="fa-solid fa-file-lines icon"></i>
+            <button class="menu-btn" onclick="location.href='../reportes/reportes_compras.php'">
+              Reporte de Compras
+            </button>
+            <p>Consulta detallada de compras por periodo.</p>
+          </div>
+          
           <div class="menu-card">
             <i class="fa-solid fa-brain icon"></i>
             <button class="menu-btn" onclick="location.href='/bi/businessIntelligence.php'">Business Intelligence</button>
@@ -177,10 +198,12 @@ $db = conectar();
             <p>Panel de métricas generales del negocio.</p>
           </div>
         </div>
+        <?php endif; ?>
       </section>
 
       <!-- ===================== ADMINISTRACIÓN DEL SISTEMA ===================== -->
       <section class="menu-section">
+        <?php if (puedeVerModulo('Administración del Sistema')): ?>
         <h2>Administración del Sistema</h2>
         <div class="menu-container">
           <div class="menu-card">
@@ -201,9 +224,13 @@ $db = conectar();
             <p>Control de acceso a los diferentes módulos.</p>
           </div>
         </div>
+        <?php endif; ?>
       </section>
 
     </main>
   </div>
+
+  <script src="alertaInventario.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

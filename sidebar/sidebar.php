@@ -1,13 +1,32 @@
+<?php
+include_once "verificarpermisos.php";
+
+// DEBUG TEMPORAL - Esto se verá en el código fuente de la página
+echo "<!-- ===== DEBUG INICIO ===== -->";
+echo "<!-- Usuario ID: " . ($_SESSION['usuario_id'] ?? 'NO SESIÓN') . " -->";
+echo "<!-- Rol ID: " . ($_SESSION['id_rol'] ?? 'NO ROL') . " -->";
+echo "<!-- ¿Sesión activa?: " . (isset($_SESSION['usuario_id']) ? 'SÍ' : 'NO') . " -->";
+
+// Probar cada permiso individualmente
+$permisos_a_probar = ['Inventario', 'RRHH', 'Proveedores', 'Operaciones', 'Gestión Comercial', 'Reportes y Análisis', 'Administración del Sistema'];
+
+foreach ($permisos_a_probar as $permiso) {
+    echo "<!-- Permiso '$permiso': " . (tienePermiso($permiso) ? '✅ SÍ' : '❌ NO') . " -->";
+}
+
+echo "<!-- ===== DEBUG FIN ===== -->";
+?>
+
 <!-- Sidebar -->
 <aside class="sidebar">
   <h2>Chicharronera San Jorge</h2>
   <nav>
     <ul>
-
       <!-- DASHBOARD -->
       <li><a href="/index.php">MenuPrincipal</a></li>
 
       <!-- INVENTARIO -->
+      <?php if (puedeVerModulo('Inventario')): ?>
       <li class="submenu">
         <a href="#" class="submenu-toggle">Inventario ▾</a>
         <ul class="submenu-items">
@@ -16,8 +35,10 @@
           <li><a href="/inventario/pérdidas/inventarioPerdidas.php">Pérdidas</a></li>
         </ul>
       </li>
+      <?php endif; ?>
 
       <!-- RECURSOS HUMANOS -->
+      <?php if (puedeVerModulo('RRHH')): ?>
       <li class="submenu">
         <a href="#" class="submenu-toggle">RRHH ▾</a>
         <ul class="submenu-items">
@@ -26,8 +47,10 @@
           <li><a href="/planilla/planilla.php">Planilla</a></li>
         </ul>
       </li>
+      <?php endif; ?>
 
       <!-- PROVEEDORES -->
+      <?php if (puedeVerModulo('Proveedores')): ?>
       <li class="submenu">
         <a href="#" class="submenu-toggle">Proveedores ▾</a>
         <ul class="submenu-items">
@@ -35,8 +58,10 @@
           <li><a href="/proveedores/pagosproveedores.php">Pago a Proveedor</a></li>
         </ul>
       </li>
+      <?php endif; ?>
 
-      <!-- SUBMENÚ COMPRAS, VENTAS Y CLIENTES -->
+      <!-- OPERACIONES -->
+      <?php if (puedeVerModulo('Operaciones')): ?>
       <li class="submenu">
         <a href="#" class="submenu-toggle">Operaciones ▾</a>
         <ul class="submenu-items">
@@ -47,8 +72,10 @@
           <li><a href="/Recetas/recetas.php">Recetas</a></li>
         </ul>
       </li>
+      <?php endif; ?>
 
       <!-- GESTIÓN COMERCIAL -->
+      <?php if (puedeVerModulo('Gestión Comercial')): ?>
       <li class="submenu">
         <a href="#" class="submenu-toggle">Gestión Comercial ▾</a>
         <ul class="submenu-items">
@@ -57,8 +84,10 @@
           <li><a href="/vehiculos/vehiculos.php">Vehículos</a></li>
         </ul>
       </li>
+      <?php endif; ?>
 
-      <!-- REPORTES Y BUSINESS INTELLIGENCE -->
+      <!-- REPORTES -->
+      <?php if (puedeVerModulo('Reportes y Análisis')): ?>
       <li class="submenu">
         <a href="#" class="submenu-toggle">Reportes y Análisis ▾</a>
         <ul class="submenu-items">
@@ -67,12 +96,15 @@
           <li><a href="/inventario/reporte_inventario_mobiliario.php">Reporte de inventario Mobiliario</a></li>
           <li><a href="/reportes/reporte_clientes.php">Reporte de Clientes</a></li>
           <li><a href="/reportes/reporte_proveedores.php">Reporte de Proveedores</a></li>
+          <li><a href="../reportes/reportes_compras.php">Reporte de Compras</a></li>
           <li><a href="/bi/businessIntelligence.php">Business Intelligence</a></li>
           <li><a href="/dashboard/dashboard.php">Dashboard</a></li>
         </ul>
       </li>
+      <?php endif; ?>
 
       <!-- ADMINISTRACIÓN DEL SISTEMA -->
+      <?php if (puedeVerModulo('Administración del Sistema')): ?>
       <li class="submenu">
         <a href="#" class="submenu-toggle">Administración del Sistema ▾</a>
         <ul class="submenu-items">
@@ -81,9 +113,15 @@
           <li><a href="/permisos/permisos.php">Permisos</a></li>
         </ul>
       </li>
+      <?php endif; ?>
 
     </ul>
+    
+<div class="sidebar-footer">
+    <button onclick="window.location.href='/logout/logout.php'" class="boton-salir">
+       <img src="/imagenes/salirLogo.png" alt="Salir" class="icono-boton3" />
+    </button>
+</div>
   </nav>
 </aside>
-
 <script src="/sidebar/sidebar.js"></script>
