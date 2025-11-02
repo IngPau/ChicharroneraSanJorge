@@ -57,7 +57,6 @@ $compras = $db->query("
 </head>
 <body>
   <div class="container">
-    <?php include '../SideBar/sidebar.php'; ?>
 
     <main class="main">
       <h1>Módulo Compras</h1>
