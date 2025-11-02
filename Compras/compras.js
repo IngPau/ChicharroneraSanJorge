@@ -1,10 +1,5 @@
-// Compras/compras.js
 // ================== Formato de moneda (GTQ) ==================
-const nfGTQ = new Intl.NumberFormat('es-GT', {
-  style: 'currency',
-  currency: 'GTQ',
-  minimumFractionDigits: 2
-});
+const nfGTQ = new Intl.NumberFormat('es-GT', { style: 'currency', currency: 'GTQ', minimumFractionDigits: 2 });
 const formatGTQ  = (n) => nfGTQ.format(isNaN(n) ? 0 : Number(n));
 const parseMoney = (str) => parseFloat(String(str || '').replace(/[^\d.-]/g, '')) || 0;
 
@@ -13,28 +8,24 @@ let compraCount = 0;
 
 // ================== Boot ==================
 document.addEventListener('DOMContentLoaded', async () => {
-  await addCompra();   // crea la primera compra visible
-  renderResumen();     // pinta listado
+  await addCompra();        // crea la primera compra visible
+  renderResumen();          // pinta el resumen
+  // Si tienes un botón global de guardar (por ejemplo con id="btn-guardar-todo"):
+  const btnGuardarGlobal = document.getElementById('btn-guardar-todo');
+  if (btnGuardarGlobal) btnGuardarGlobal.addEventListener('click', submitCompras);
 });
 
-// ================== Helpers de tabla ==================
-function getCompraTable(compraEl){
-  return compraEl.querySelector('table.detalle_compra');
-}
+// ================== Helpers ==================
+function getCompraTable(compraEl){ return compraEl.querySelector('table.detalle_compra'); }
 
-// guarda plantilla de fila por tabla
 function cacheRowTemplateForTable(tableEl){
   const firstRow = tableEl.querySelector('tbody tr.row-item');
-  if (firstRow) {
-    tableEl.dataset.rowTpl = firstRow.outerHTML;
-  }
+  if (firstRow) tableEl.dataset.rowTpl = firstRow.outerHTML;
 }
 
-// crea una fila limpia desde la plantilla guardada en la tabla
 function createRowFromTableTemplate(tableEl){
   const tpl = tableEl?.dataset?.rowTpl;
   if (!tpl) { console.error('Sin plantilla para esta tabla'); return null; }
-
   const container = document.createElement('tbody');
   container.innerHTML = tpl.trim();
   const row = container.firstElementChild;
@@ -50,11 +41,10 @@ function createRowFromTableTemplate(tableEl){
     s.removeAttribute('disabled');
   });
 
-  // subtotal = 0
   const subEl = row.querySelector('input.subtotal, input[name="subtotal[]"]');
   if (subEl) subEl.value = formatGTQ(0);
 
-  // re-engancha handlers por si la plantilla no trae (seguridad)
+  // reenganchar handlers defensivamente
   const addBtn = row.querySelector('.btn-save');
   const delBtn = row.querySelector('.btn-danger');
   if (addBtn && !addBtn.onclick) addBtn.onclick = () => addRow(addBtn);
@@ -63,15 +53,12 @@ function createRowFromTableTemplate(tableEl){
   return row;
 }
 
-// asegura que siempre quede 1 fila en esa tabla
 async function ensureOneRowForTable(tableEl){
   const tbody = tableEl.querySelector('tbody');
   if (!tbody.querySelector('tr.row-item')) {
     const newRow = createRowFromTableTemplate(tableEl);
     if (!newRow) return;
     tbody.appendChild(newRow);
-
-    // hidrata selects de la nueva fila
     if (typeof hydrateRow === 'function') {
       await hydrateRow(newRow);
     } else if (typeof hydrateRowInsumos === 'function') {
@@ -90,52 +77,64 @@ async function addCompra() {
   const compraEl = frag.firstElementChild;
   container.appendChild(compraEl);
 
-  // cachea plantilla de fila para ESTA tabla
   const tableEl = getCompraTable(compraEl);
   cacheRowTemplateForTable(tableEl);
 
-  // Hidratar selects (si tienes loaders)
+  // Hidratar selects de cabecera
   const selSuc  = compraEl.querySelector('.sel-sucursal');
   const selProv = compraEl.querySelector('.sel-proveedor');
   if (window.Compras?.fillSucursalSelect && selSuc)  await window.Compras.fillSucursalSelect(selSuc);
   if (window.Compras?.fillProveedorSelect && selProv) await window.Compras.fillProveedorSelect(selProv);
 
-  // Insumos de la primera fila (si tienes loader)
+  // Hidratar primera fila de insumos
   if (typeof hydrateRowInsumos === 'function') {
     const firstRow = compraEl.querySelector('tr.row-item');
     if (firstRow) await hydrateRowInsumos(firstRow);
   }
 
-  // Delegación de cálculo en ESTA compra
+  // Delegación de cálculo
   const tbody = tableEl.querySelector('tbody');
   tbody.addEventListener('input', (e) => {
     if (e.target.matches('.qty, .price, input[name="cantidad_insumo[]"], input[name="precio_unitario[]"]')) {
       const row = e.target.closest('tr');
       recalcRow(row);
       recalcCompraTotal(compraEl);
-      renderResumen();
+      renderResumenDebounced();
     }
   });
 
-  // Cambios en selects refrescan resumen (y si cambias proveedor, puedes recargar insumos)
+  // Cambios en selects de cabecera o fila
   compraEl.addEventListener('change', async (e) => {
-    if (e.target.matches('.sel-sucursal, .sel-proveedor, .sel-insumo')) {
+    if (e.target.matches('.sel-sucursal, .sel-proveedor')) {
+      // Si cambias proveedor de la compra, rehidrata insumos de TODAS las filas de esa compra
       if (e.target.matches('.sel-proveedor') && typeof hydrateRowInsumos === 'function') {
         for (const row of compraEl.querySelectorAll('tr.row-item')) {
           await hydrateRowInsumos(row);
         }
       }
-      renderResumen();
+      renderResumenDebounced();
+    }
+    if (e.target.matches('.sel-insumo')) {
+      renderResumenDebounced();
     }
   });
 
+  // Botón "Guardar todo" DENTRO de la compra
+  const btnGuardar = compraEl.querySelector('button[type="submit"]');
+  if (btnGuardar) {
+    btnGuardar.addEventListener('click', async (ev) => {
+      ev.preventDefault();
+      await submitCompras(); // guarda todas las compras del contenedor
+    });
+  }
+
   recalcCompraTotal(compraEl);
   compraCount++;
-  renderResumen();
+  renderResumenDebounced();
   return compraEl;
 }
 
-// ================== Filas dentro de UNA compra ==================
+// ================== Filas en UNA compra ==================
 async function addRow(btn){
   const compraEl = btn.closest('.compra');
   const tableEl  = getCompraTable(compraEl);
@@ -146,35 +145,34 @@ async function addRow(btn){
 
   tbody.appendChild(newRow);
 
-  // hidratar insumos
+  // ✅ Solo una hidratación
   if (typeof hydrateRowInsumos === 'function') await hydrateRowInsumos(newRow);
 
   recalcCompraTotal(compraEl);
-  renderResumen();
+  renderResumenDebounced();
 }
 
 async function removeRow(btn){
   const compraEl = btn.closest('.compra');
   const tableEl  = getCompraTable(compraEl);
-  const tbody    = tableEl.querySelector('tbody');
   const row      = btn.closest('tr');
 
   if (row) row.remove();
-
-  // re-crear una fila limpia
   await ensureOneRowForTable(tableEl);
 
   recalcCompraTotal(compraEl);
-  renderResumen();
+  renderResumenDebounced();
 }
 
 // ================== Totales y Resumen ==================
 function recalcRow(row){
-  const qty   = parseFloat(row.querySelector('.qty')?.value || row.querySelector('input[name="cantidad_insumo[]"]')?.value || 0);
-  const price = parseFloat(row.querySelector('.price')?.value || row.querySelector('input[name="precio_unitario[]"]')?.value || 0);
+  const qtyIn  = row.querySelector('.qty') || row.querySelector('input[name="cantidad_insumo[]"]');
+  const prcIn  = row.querySelector('.price') || row.querySelector('input[name="precio_unitario[]"]');
+  const subOut = row.querySelector('.subtotal') || row.querySelector('input[name="subtotal[]"]');
+  const qty   = parseFloat(qtyIn?.value || 0);
+  const price = parseFloat(prcIn?.value || 0);
   const sub   = qty * price;
-  const subEl = row.querySelector('.subtotal') || row.querySelector('input[name="subtotal[]"]');
-  if (subEl) subEl.value = formatGTQ(sub);
+  if (subOut) subOut.value = formatGTQ(sub);
 }
 
 function recalcCompraTotal(compraEl){
@@ -191,9 +189,12 @@ function getSelectedText(sel){
 }
 
 function rowCuenta(row){
-  const ins   = row.querySelector('.sel-insumo')?.value?.trim();
-  const qty   = parseFloat(row.querySelector('.qty')?.value || row.querySelector('input[name="cantidad_insumo[]"]')?.value || 0);
-  const price = parseFloat(row.querySelector('.price')?.value || row.querySelector('input[name="precio_unitario[]"]')?.value || 0);
+  const insSel = row.querySelector('.sel-insumo');
+  const ins   = insSel ? insSel.value : '';
+  const qtyIn = row.querySelector('.qty') || row.querySelector('input[name="cantidad_insumo[]"]');
+  const prcIn = row.querySelector('.price') || row.querySelector('input[name="precio_unitario[]"]');
+  const qty   = parseFloat(qtyIn?.value || 0);
+  const price = parseFloat(prcIn?.value || 0);
   return !!ins && (qty > 0 || price > 0);
 }
 
@@ -201,9 +202,9 @@ function getRowSubtotal(row){
   const subEl = row.querySelector('.subtotal') || row.querySelector('input[name="subtotal[]"]');
   let sub = subEl ? parseMoney(subEl.value) : 0;
   if (!sub) {
-    const qty   = parseFloat(row.querySelector('.qty')?.value || row.querySelector('input[name="cantidad_insumo[]"]')?.value || 0);
-    const price = parseFloat(row.querySelector('.price')?.value || row.querySelector('input[name="precio_unitario[]"]')?.value || 0);
-    sub = qty * price;
+    const qtyIn = row.querySelector('.qty') || row.querySelector('input[name="cantidad_insumo[]"]');
+    const prcIn = row.querySelector('.price') || row.querySelector('input[name="precio_unitario[]"]');
+    sub = (parseFloat(qtyIn?.value || 0) * parseFloat(prcIn?.value || 0)) || 0;
   }
   return sub;
 }
@@ -244,14 +245,71 @@ function renderResumen(){
   }
 }
 
+let rafId = null;
+function renderResumenDebounced(){
+  if (rafId) cancelAnimationFrame(rafId);
+  rafId = requestAnimationFrame(() => {
+    renderResumen();
+    rafId = null;
+  });
+}
+
 // ================== Eliminar compra completa ==================
 function removeCompra(btn){
   const container = document.getElementById('compras-container');
   const compraEl  = btn.closest('.compra');
   compraEl.remove();
+  if (!container.querySelector('.compra')) addCompra(); // deja al menos 1
+  renderResumenDebounced();
+}
 
-  if (!container.querySelector('.compra')) addCompra(); // deja al menos 1 compra
-  renderResumen();
+// ================== Payload y envío ==================
+function buildComprasPayload(){
+  const comprasEls = [...document.querySelectorAll('#compras-container .compra')];
+
+  const compras = comprasEls.map(compraEl => {
+    const id_sucursal  = parseInt(compraEl.querySelector('.sel-sucursal')?.value || 0);
+    const id_proveedor = parseInt(compraEl.querySelector('.sel-proveedor')?.value || 0);
+    const fechaInput   = compraEl.querySelector('.fecha')?.value;
+    const fecha_compra = fechaInput || new Date().toISOString().slice(0,10);
+
+    const detalles = [...compraEl.querySelectorAll('tbody tr.row-item')].map(row => {
+      const id_insumo = parseInt(row.querySelector('.sel-insumo')?.value || 0);
+      const qtyIn = row.querySelector('.qty') || row.querySelector('input[name="cantidad_insumo[]"]');
+      const prcIn = row.querySelector('.price') || row.querySelector('input[name="precio_unitario[]"]');
+      const cantidad_insumo = parseFloat(qtyIn?.value || 0);
+      const precio_unitario = parseFloat(prcIn?.value || 0);
+      return { id_insumo, cantidad_insumo, precio_unitario };
+    }).filter(d => d.id_insumo && d.cantidad_insumo > 0);
+
+    return { id_sucursal, id_proveedor, fecha_compra, detalles };
+  }).filter(c => c.id_sucursal && c.id_proveedor && c.detalles.length);
+
+  return compras;
+}
+
+async function submitCompras(){
+  const compras = buildComprasPayload();
+  if (!compras.length) {
+    alert('No hay compras válidas para guardar.');
+    return;
+  }
+  try {
+    const res = await fetch('../api/compras/batch_create.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ compras })
+    });
+    const json = await res.json();
+    if (!res.ok) throw new Error(json?.error || ('HTTP ' + res.status));
+    alert('Compras guardadas: ' + (json.ids?.join(', ') || 'OK'));
+    // reset UI
+    document.getElementById('compras-container').innerHTML = '';
+    await addCompra();
+  } catch (e) {
+    console.error(e);
+    alert('Error guardando compras: ' + e.message);
+  }
 }
 
 // ================== Exponer funciones globales ==================
@@ -260,31 +318,21 @@ window.addRow       = addRow;
 window.removeRow    = removeRow;
 window.removeCompra = removeCompra;
 
-
-//================== Cargar Datos ==================
-// Compras/cargarProveedores.js
+// ================== Cargar catálogos ==================
 window.Compras = window.Compras || {};
 (function(NS){
-  // cache de opciones para no re-fetch en cada fila
   let proveedorOptionsHTML = null;
-  const ENDPOINT = 'cargarProveedores.php?format=options'; // <-- verifica la ruta correcta
+  const ENDPOINT = 'cargarProveedores.php?format=options';
 
   async function fetchOptions() {
     const res = await fetch(ENDPOINT, { cache: 'no-store' });
-    if (!res.ok) {
-      const txt = await res.text().catch(()=> '');
-      console.error('Respuesta servidor (proveedores):', txt);
-      throw new Error('HTTP ' + res.status);
-    }
+    if (!res.ok) throw new Error('HTTP ' + res.status + ' proveedores');
     return await res.text();
   }
 
-  // Rellena un <select> puntual
   NS.fillProveedorSelect = async function(selectEl){
     try {
-      if (!proveedorOptionsHTML) {
-        proveedorOptionsHTML = await fetchOptions();
-      }
+      if (!proveedorOptionsHTML) proveedorOptionsHTML = await fetchOptions();
       selectEl.innerHTML = proveedorOptionsHTML;
     } catch (e) {
       console.error('Error cargando proveedores:', e);
@@ -292,41 +340,32 @@ window.Compras = window.Compras || {};
     }
   };
 
-  // Si existen selects ya pintados en el HTML al cargar
   document.addEventListener('DOMContentLoaded', async () => {
     const selects = document.querySelectorAll('select.sel-proveedor');
     if (selects.length) {
-      // carga una vez y aplica a todos
       if (! proveedorOptionsHTML) {
-        try { proveedorOptionsHTML = await fetchOptions(); } catch(e){ proveedorOptionsHTML = '<option value="">Error</option>'; }
+        try { proveedorOptionsHTML = await fetchOptions(); }
+        catch(e){ proveedorOptionsHTML = '<option value="">Error</option>'; }
       }
       selects.forEach(s => s.innerHTML = proveedorOptionsHTML);
     }
   });
 })(window.Compras);
 
-
-// Compras/cargarSucursal.js
 window.Compras = window.Compras || {};
 (function(NS){
   let sucursalOptionsHTML = null;
-  const ENDPOINT = 'cargarSucursal.php?format=options'; // <-- verifica tu archivo PHP
+  const ENDPOINT = 'cargarSucursal.php?format=options';
 
   async function fetchOptions() {
     const res = await fetch(ENDPOINT, { cache: 'no-store' });
-    if (!res.ok) {
-      const txt = await res.text().catch(()=> '');
-      console.error('Respuesta servidor (sucursales):', txt);
-      throw new Error('HTTP ' + res.status);
-    }
+    if (!res.ok) throw new Error('HTTP ' + res.status + ' sucursales');
     return await res.text();
   }
 
   NS.fillSucursalSelect = async function(selectEl){
     try {
-      if (!sucursalOptionsHTML) {
-        sucursalOptionsHTML = await fetchOptions();
-      }
+      if (!sucursalOptionsHTML) sucursalOptionsHTML = await fetchOptions();
       selectEl.innerHTML = sucursalOptionsHTML;
     } catch (e) {
       console.error('Error cargando sucursales:', e);
@@ -338,51 +377,41 @@ window.Compras = window.Compras || {};
     const selects = document.querySelectorAll('select.sel-sucursal');
     if (selects.length) {
       if (!sucursalOptionsHTML) {
-        try { sucursalOptionsHTML = await fetchOptions(); } catch(e){ sucursalOptionsHTML = '<option value="">Error</option>'; }
+        try { sucursalOptionsHTML = await fetchOptions(); }
+        catch(e){ sucursalOptionsHTML = '<option value="">Error</option>'; }
       }
       selects.forEach(s => s.innerHTML = sucursalOptionsHTML);
     }
   });
 })(window.Compras);
 
-
-// Compras/cargarInsumos.js
-// Expone: window.hydrateRowInsumos(row)
-
+// ================== Insumos (con proveedor por COMPRA) ==================
 (function(){
-  // cachés: uno global y uno por proveedor
   let insumoOptionsGlobal = null;
   const insumoOptionsByProv = new Map();
 
   async function fetchOptionsGlobal(){
     const res = await fetch('cargarInsumos.php?format=options', { cache: 'no-store' });
-    if (!res.ok) {
-      const txt = await res.text().catch(()=> '');
-      console.error('Respuesta servidor (insumos global):', txt);
-      throw new Error('HTTP ' + res.status);
-    }
+    if (!res.ok) throw new Error('HTTP ' + res.status + ' insumos global');
     return await res.text();
   }
 
   async function fetchOptionsByProveedor(idProveedor){
     const url = 'cargarInsumos.php?format=options&id_proveedor=' + encodeURIComponent(idProveedor);
     const res = await fetch(url, { cache: 'no-store' });
-    if (!res.ok) {
-      const txt = await res.text().catch(()=> '');
-      console.error('Respuesta servidor (insumos por proveedor):', txt);
-      throw new Error('HTTP ' + res.status);
-    }
+    if (!res.ok) throw new Error('HTTP ' + res.status + ' insumos por proveedor');
     return await res.text();
   }
 
-  // Rellena el <select class="sel-insumo"> de UNA fila (row)
+  // Rellena el <select.sel-insumo> de UNA fila según el proveedor de la COMPRA
   window.hydrateRowInsumos = async function(row){
     const selInsumo = row.querySelector('select.sel-insumo');
     if (!selInsumo) return;
 
-    // si hay proveedor en ESTA fila, intenta por proveedor
-    const selProv = row.querySelector('select.sel-proveedor');
-    const provId  = selProv?.value?.trim();
+    // ⬇️ proveedor está en la CABECERA de la compra
+    const compraEl = row.closest('.compra');
+    const selProvCompra = compraEl?.querySelector('select.sel-proveedor');
+    const provId  = selProvCompra?.value?.trim();
 
     try {
       if (provId) {
@@ -391,9 +420,7 @@ window.Compras = window.Compras || {};
         }
         selInsumo.innerHTML = insumoOptionsByProv.get(provId);
       } else {
-        if (!insumoOptionsGlobal) {
-          insumoOptionsGlobal = await fetchOptionsGlobal();
-        }
+        if (!insumoOptionsGlobal) insumoOptionsGlobal = await fetchOptionsGlobal();
         selInsumo.innerHTML = insumoOptionsGlobal;
       }
     } catch (e) {
@@ -402,32 +429,36 @@ window.Compras = window.Compras || {};
     }
   };
 
-  // Si hay filas ya pintadas al cargar, hidrátalas
+  // Hidratar filas ya pintadas
   document.addEventListener('DOMContentLoaded', async () => {
     const rows = document.querySelectorAll('tr.row-item');
-    for (const r of rows) {
-      await window.hydrateRowInsumos(r);
-    }
+    for (const r of rows) await window.hydrateRowInsumos(r);
 
-    // Al cambiar proveedor en cualquier fila, rehacer insumos SOLO de esa fila
+    // Si cambias el proveedor de una COMPRA, rehidrata todas sus filas (esto también se hace en addCompra)
     document.body.addEventListener('change', async (e) => {
       if (e.target.matches('select.sel-proveedor')) {
-        const row = e.target.closest('tr.row-item');
-        if (row) await window.hydrateRowInsumos(row);
+        const compra = e.target.closest('.compra');
+        if (compra) {
+          const rows = compra.querySelectorAll('tr.row-item');
+          for (const r of rows) await window.hydrateRowInsumos(r);
+        }
       }
     });
   });
 })();
 
-
-// ================== Opcional: hydrateRow para usar con ensureOneRowForTable ==================
-// Si ya tienes hydrateRow en otro archivo, ignora esto.
-// async function hydrateRow(row) {
-//   const provSel = row.querySelector('select.sel-proveedor');
-//   if (window.Compras?.fillProveedorSelect && provSel) {
-//     await window.Compras.fillProveedorSelect(provSel);
-//   }
-//   if (typeof hydrateRowInsumos === 'function') {
-//     await hydrateRowInsumos(row);
-//   }
-// }
+// ================== Hidratar fila completa (si la plantilla trae combos de cabecera en fila) ==================
+async function hydrateRow(row) {
+  const sucSel = row.querySelector('select.sel-sucursal');
+  if (window.Compras?.fillSucursalSelect && sucSel) {
+    try { await window.Compras.fillSucursalSelect(sucSel); } catch (e) { console.error(e); }
+  }
+  const provSel = row.querySelector('select.sel-proveedor');
+  if (window.Compras?.fillProveedorSelect && provSel) {
+    try { await window.Compras.fillProveedorSelect(provSel); } catch (e) { console.error(e); }
+  }
+  if (typeof hydrateRowInsumos === 'function') {
+    try { await hydrateRowInsumos(row); } catch (e) { console.error(e); }
+  }
+  return row;
+}
