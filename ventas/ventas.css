@@ -232,12 +232,12 @@ input.bloqueado {
 
 .acciones i {
   cursor: pointer;
-  color: #1e293b;
+  color: #3f3f3f;
   transition: color 0.2s ease;
 }
 
 .acciones i:hover {
-  color: #ef4444;
+  color: #ececec;
 }
 
 /* ===================== RESPONSIVE ===================== */
@@ -291,7 +291,7 @@ input.bloqueado {
 .btn-agregar-cliente {
   display: inline-block;
   padding: 6px 12px;
-  background-color: #10b981; /* Verde moderno */
+  background-color: #dc2626; /* Verde moderno */
   color: white;
   font-size: 0.95rem;
   border: none;
@@ -299,12 +299,38 @@ input.bloqueado {
   text-decoration: none;
   transition: background-color 0.3s ease;
   cursor: pointer;
+  margin: 5px;
 }
 
 .btn-agregar-cliente:hover {
-  background-color: #059669; /* Verde más oscuro al pasar el mouse */
+  background-color: #b91c1c; 
 }
 
 .btn-agregar-cliente i {
   margin-right: 4px;
+}
+
+.acciones a {
+  margin-right: 8px;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.btn-editar {
+  background-color: #3b82f6;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.btn-eliminar {
+  background-color: #ef4444;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.btn-editar:hover,
+.btn-eliminar:hover {
+  opacity: 0.9;
 }

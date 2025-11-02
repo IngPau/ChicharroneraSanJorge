@@ -91,6 +91,9 @@ form button:hover {
 .table-responsive {
   overflow-x: auto;
 }
+.tabla-ventas{
+  margin-top: 1rem;
+}
 
 table {
   width: 100%;
@@ -163,3 +166,5 @@ table tr:hover td {
     font-size: 0.9rem;
   }
 }
+
+

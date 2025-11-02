@@ -57,7 +57,7 @@ $clientes = $db->query("
         </form>
 
         <!-- Botones de exportación -->
-        <div style="margin-top: 20px; display: flex; gap: 10px;">
+        <div style="margin-bottom: 20px; margin-top: 20px; display: flex; gap: 10px;">
             <a href="exportar_pdf_clientes.php?direccion=<?= urlencode($_GET['direccion'] ?? '') ?>" class="btn btn-agregar" target="_blank">
                 <i class="fas fa-file-pdf"></i> Exportar a PDF
             </a>
