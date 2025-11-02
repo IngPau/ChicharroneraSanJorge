@@ -24,7 +24,7 @@ if (isset($_GET['editar'])) {
   $res = $db->query("SELECT * FROM compra WHERE id_compra = $id");
   $compraEditar = $res ? $res->fetch_assoc() : null;
 
-  // Traer primer detalle (una línea) si existe
+  // Traer primer detalle 
   $rDet = $db->query("SELECT id_insumo, cantidad_insumo, precio_unitario
                       FROM detalle_compra WHERE id_compra = $id LIMIT 1");
   $detalleEditar = $rDet ? $rDet->fetch_assoc() : null;
@@ -99,7 +99,7 @@ $compras = $db->query("
         <input type="date" name="fecha_compra" id="fecha_compra"
                value="<?= $compraEditar['fecha_compra'] ?? date('Y-m-d') ?>" required>
 
-        <!-- ===== Detalle (una línea) ===== -->
+        <!-- ===== Detalle ===== -->
         <div style="height:8px"></div>
         <h4>Detalle de la compra</h4>
 
