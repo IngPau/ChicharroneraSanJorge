@@ -18,6 +18,7 @@ $db = conectar();
   <link rel="stylesheet" href="SideBar/sidebar.css">
   <link rel="stylesheet" href="globales.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
 <body>
   <div class="container">
@@ -170,12 +171,21 @@ $db = conectar();
         <?php if (puedeVerModulo('Reportes y Análisis')): ?>
         <h2>Reportes y Análisis</h2>
         <div class="menu-container">
+
           <div class="menu-card">
             <i class="fa-solid fa-file-lines icon"></i>
             <button class="menu-btn" onclick="location.href='/ventas/reporte_ventas.php'">Reporte de Ventas</button>
             <p>Consulta detallada de ventas por periodo.</p>
           </div>
 
+          <div class="menu-card">
+            <i class="fa-solid fa-file-lines icon"></i>
+            <button class="menu-btn" onclick="location.href='../reportes/reportes_compras.php'">
+              Reporte de Compras
+            </button>
+            <p>Consulta detallada de compras por periodo.</p>
+          </div>
+          
           <div class="menu-card">
             <i class="fa-solid fa-brain icon"></i>
             <button class="menu-btn" onclick="location.href='/bi/businessIntelligence.php'">Business Intelligence</button>

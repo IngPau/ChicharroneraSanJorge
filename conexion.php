@@ -16,6 +16,7 @@ function ir($pagina) {
     print "<meta http-equiv='refresh' content='3;url=$pagina'>";
 }
 
+
 /* 
 conexion a DW via ODBC
 

@@ -8,7 +8,7 @@ if (!isset($_SESSION['usuario_id'])) {
 require_once '../conexion.php';
 $db = conectar();
 
-  include_once '../SideBar/sidebar.php';
+include_once '../SideBar/sidebar.php';
 
 
 // Orden dinámico
