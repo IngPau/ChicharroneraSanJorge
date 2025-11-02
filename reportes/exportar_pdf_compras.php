@@ -1,5 +1,6 @@
 <?php
 // ---- NUNCA IMPRIMIR NADA ANTES DEL PDF ----
+
 ob_start();
 
 session_start();
