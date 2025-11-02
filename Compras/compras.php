@@ -10,7 +10,7 @@ if (!isset($_SESSION['usuario_id'])) {
 
 <?php
   include '../conexion.php';
-  include '../SideBar/sidebar.php';
+  include_once '../SideBar/sidebar.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">

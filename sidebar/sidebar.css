@@ -111,6 +111,38 @@
   animation: slideDown 0.3s ease;
 }
 
+ /* Footer del sidebar */
+.sidebar-footer {
+    display: flex; /* Usa flexbox */ 
+    justify-content: flex-start; /* Alinea los botones al inicio */
+    width: 100%; /* Ancho completo */
+    margin-top: 90px; /* Espaciado vertical */
+    padding-left: 5px; /* Espaciado izquierdo */
+}
+
+/* Botones del footer */
+.sidebar-footer button {
+    background-color: transparent; /* Fondo transparente */
+    border: none; /* Sin borde */
+    color: white; /* Texto blanco */
+    width: 55px; /* Ancho del botón */
+    height: 55px; /* Altura del botón */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    display: flex; /* Usa flexbox */
+    align-items: center; /* Centra el contenido verticalmente */
+    justify-content: center; /* Centra el contenido horizontalmente */
+    border-radius: 10px; /* Esquinas redondeadas */
+    transition: background-color 0.3s ease; /* Transición suave */
+}
+
+/* Iconos pequeños en el footer */
+.icono-boton3 {
+    width: 35px; /* Ancho del icono */
+    height: 35px; /* Altura del icono */
+    vertical-align: middle; /* Alinea verticalmente */
+    filter: invert(100%); /* Invierte los colores */
+}
+
 /* Animación suave al abrir submenu */
 @keyframes slideDown {
   from {
@@ -149,4 +181,7 @@
     margin-left: 0;
     padding: 15px;
   }
+
+
 }
+

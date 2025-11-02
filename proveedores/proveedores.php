@@ -21,7 +21,7 @@ if (!isset($_SESSION['usuario_id'])) {
 <body>
   <div class="container">
     <!-- Sidebar -->
-    <?php include '../SideBar/sidebar.php'; ?>
+    <?php include_once '../SideBar/sidebar.php'; ?>
 
  <div class="main">
     <header>

@@ -32,7 +32,7 @@ $sucursales = $db->query("SELECT id_sucursal, nombre_sucursal FROM sucursales");
 </head>
 <body>
   <div class="container">
-    <?php include '../SideBar/sidebar.php'; ?>
+    <?php include_once '../SideBar/sidebar.php'; ?>
     <main class="main">
       <h1>Módulo Vehículos</h1>
       <h3>Gestión de Vehículos</h3>

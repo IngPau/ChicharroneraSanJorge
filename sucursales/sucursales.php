@@ -41,7 +41,7 @@ if (isset($_GET['editar'])) {
 
 <body>
   <div class="container">
-    <?php include '../SideBar/sidebar.php'; ?>
+    <?php include_once '../SideBar/sidebar.php'; ?>
 
     <main class="main">
       <h1>Módulo Sucursales</h1>

@@ -25,7 +25,7 @@ if (!isset($_SESSION['usuario_id'])) {
   <body>
     <div class="container">
       <!-- Sidebar -->
-      <?php include '../../sidebar/sidebar.php'; ?>
+      <?php include_once '../../sidebar/sidebar.php'; ?>
       <?php include 'contenedorActualizar.php'; ?>
       <!-- Main Dashboard -->
       <main class="main">
