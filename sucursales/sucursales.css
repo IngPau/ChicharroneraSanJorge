@@ -16,14 +16,25 @@
 /* ===================== FORMULARIO SUCURSALES ===================== */
 .formulario {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  grid-template-columns: 150px 1fr; /* etiqueta fija, input ancho */
+  gap: 12px 20px;
   margin-bottom: 30px;
   background: #ffffff;
   padding: 25px;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+}
+
+.botones {
+  grid-column: 1 / -1;
+}
+
+.formulario label {
+  margin-bottom: 4px;
+}
+
+.formulario input {
+  margin-bottom: 10px;
 }
 
 .formulario:hover {
@@ -127,6 +138,7 @@
   border-bottom: 1px solid #e2e8f0;
   font-size: 15px;
   color: #374151;
+  vertical-align: middle; /* 🔹 centra verticalmente los contenidos */
 }
 
 .tabla th {
@@ -146,11 +158,18 @@
   transition: background 0.2s ease;
 }
 
+/* 🔹 Quitar línea gris de la última fila */
+.tabla tbody tr:last-child td {
+  border-bottom: none !important;
+}
+
 /* ===================== ACCIONES ===================== */
 .acciones {
   display: flex;
-  align-items: center;
+  justify-content: center; /* 🔹 centra horizontalmente */
+  align-items: center; /* 🔹 centra verticalmente */
   gap: 8px;
+  height: 100%;
 }
 
 .acciones a {
