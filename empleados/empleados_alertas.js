@@ -86,25 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ================= FORMULARIO NÓMINA =================
-  const btnNomina = document.getElementById('btnNomina');
-  const formNomina = document.getElementById('formNomina');
-  const cerrarNomina = document.getElementById('cerrarNomina');
 
-  if (urlParams.get("editarNomina")) {
-    formNomina.style.display = 'grid';
-    if (btnNomina) btnNomina.style.display = 'none';
-  }
-
-  btnNomina?.addEventListener('click', () => {
-    formNomina.style.display = 'grid';
-    btnNomina.style.display = 'none';
-  });
-
-  cerrarNomina?.addEventListener('click', () => {
-    formNomina.style.display = 'none';
-    if (btnNomina) btnNomina.style.display = 'inline-flex';
-  });
 
   // ================= FORMULARIO ASISTENCIA =================
   const btnAsistencia = document.getElementById('btnAsistencia');

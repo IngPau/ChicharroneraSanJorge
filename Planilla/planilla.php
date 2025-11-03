@@ -1,39 +1,27 @@
 <?php
-session_start(); // Iniciar la sesión
-//Verificar si el usuario ha iniciado sesión
+session_start();
 if (!isset($_SESSION['usuario_id'])) {
-  // Si no ha iniciado sesión, redirigir a la página de inicio de sesión
   header("Location: ../login/login.php");
   exit();
 }
-?>
 
-<?php
 require_once '../conexion.php';
 $db = conectar();
 
-// Obtener empleados para el <select>
-$empleados = $db->query("
-  SELECT id_empleados, CONCAT(nombre_empleados, ' ', apellido_empleados) AS nombre_completo
-  FROM Empleados
-  ORDER BY nombre_empleados ASC
-");
-
-// Obtener todas las nóminas con nombre de empleado
+// Consulta de nóminas
 $nominas = $db->query("
-  SELECT n.*, CONCAT(e.nombre_empleados, ' ', e.apellido_empleados) AS nombre_empleado
+  SELECT n.id_nomina, n.id_empleado, n.año, n.mes, n.sueldo_base,
+         e.nombre_empleados, e.apellido_empleados
   FROM Nomina n
-  INNER JOIN Empleados e ON n.id_empleado = e.id_empleados
-  ORDER BY n.id_nomina ASC
+  LEFT JOIN Empleados e ON n.id_empleado = e.id_empleados
+  ORDER BY n.id_nomina DESC
 ");
 
-// Nómina a editar
+// Editar nómina
 $nominaEditar = null;
-if (isset($_GET['editar'])) {
-  $id = $_GET['editar'];
-  $res = $db->query("
-    SELECT * FROM Nomina WHERE id_nomina=$id
-  ");
+if (isset($_GET['editarNomina'])) {
+  $id = $_GET['editarNomina'];
+  $res = $db->query("SELECT * FROM Nomina WHERE id_nomina=$id");
   $nominaEditar = $res->fetch_assoc();
 }
 ?>
@@ -43,79 +31,73 @@ if (isset($_GET['editar'])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Módulo Planillas</title>
+  <title>Módulo Planilla</title>
   <link rel="stylesheet" href="../SideBar/sidebar.css">
   <link rel="stylesheet" href="../globales.css">
   <link rel="stylesheet" href="planillas.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
 </head>
 
 <body>
   <div class="container">
     <?php include '../SideBar/sidebar.php'; ?>
-
     <main class="main">
-      <h1>Módulo Planillas</h1>
-      <h3>Gestión de Nóminas</h3>
+      <h1>Módulo de Planilla</h1>
+      <h2>Gestión de Nóminas</h2>
 
-      <!-- Formulario -->
+      <!-- Formulario de nómina -->
       <form method="POST" action="planillas_crud.php" class="formulario">
+        <h3><?= $nominaEditar ? 'Editar Nómina' : 'Registrar Nómina' ?></h3>
         <input type="hidden" name="id_nomina" value="<?= $nominaEditar['id_nomina'] ?? '' ?>">
 
         <label>Empleado:</label>
-        <select name="id_empleado" required>
-          <option value="">Seleccione un empleado</option>
-          <?php while ($emp = $empleados->fetch_assoc()): ?>
-            <option value="<?= $emp['id_empleados'] ?>"
-              <?= isset($nominaEditar['id_empleado']) && $nominaEditar['id_empleado'] == $emp['id_empleados'] ? 'selected' : '' ?>>
-              <?= $emp['nombre_completo'] ?>
-            </option>
-          <?php endwhile; ?>
+        <select name="id_empleado" id="empleadoSelect" required>
+          <option value="">-- Selecciona Empleado --</option>
+          <?php
+          $emps = $db->query("SELECT e.id_empleados, e.nombre_empleados, e.apellido_empleados, p.salario_base_puestos FROM Empleados e JOIN Puestos p ON e.id_puesto = p.id_puesto");
+          while ($emp = $emps->fetch_assoc()) {
+            $selected = ($nominaEditar['id_empleado'] ?? '') == $emp['id_empleados'] ? 'selected' : '';
+            echo "<option value='{$emp['id_empleados']}' data-sueldo='{$emp['salario_base_puestos']}' $selected>{$emp['nombre_empleados']} {$emp['apellido_empleados']}</option>";
+          }
+          ?>
         </select>
 
         <label>Año:</label>
-        <input type="number" name="año" value="<?= $nominaEditar['año'] ?? '' ?>" required>
+        <input type="number" name="año" min="2000" max="2100" required value="<?= $nominaEditar['año'] ?? '' ?>">
 
         <label>Mes:</label>
-        <input type="number" name="mes" value="<?= $nominaEditar['mes'] ?? '' ?>" required>
+        <input type="number" name="mes" min="1" max="12" required value="<?= $nominaEditar['mes'] ?? '' ?>">
 
         <label>Sueldo Base:</label>
-        <input type="number" step="0.01" name="sueldo_base" value="<?= $nominaEditar['sueldo_base'] ?? '' ?>" required>
+        <input type="number" step="0.01" name="sueldo_base" id="sueldoBase" readonly value="<?= $nominaEditar['sueldo_base'] ?? '' ?>">
 
         <div class="botones">
-            <?php if ($nominaEditar): ?>
-            <button type="submit" name="editar" class="btn btn-editar"><i class="fas fa-save"></i> Actualizar</button>
-            <a href="planilla.php" class="btn btn-cancelar"><i class="fas fa-ban"></i> Cancelar</a>
+          <?php if ($nominaEditar): ?>
+            <button type="submit" name="editarNomina" class="btn btn-editar"><i class="fas fa-save"></i> Actualizar Nómina</button>
+            <a href="planilla.php" class="btn btn-cancelar"><i class="fas fa-times"></i> Cancelar</a>
           <?php else: ?>
-            <button type="submit" name="agregar" class="btn btn-agregar"><i class="fas fa-plus"></i> Agregar</button>
+            <button type="submit" name="agregarNomina" class="btn btn-agregar"><i class="fas fa-check"></i> Guardar Nómina</button>
           <?php endif; ?>
         </div>
       </form>
 
-      <!-- Tabla -->
+      <!-- Tabla de nómina -->
       <section class="tabla">
         <table>
           <thead>
-            <tr>
-              <th>ID</th>
-              <th>Empleado</th>
-              <th>Año</th>
-              <th>Mes</th>
-              <th>Sueldo Base</th>
-              <th>Acciones</th>
-            </tr>
+            <tr><th>ID</th><th>Empleado</th><th>Año</th><th>Mes</th><th>Sueldo</th><th>Acciones</th></tr>
           </thead>
           <tbody>
             <?php while ($n = $nominas->fetch_assoc()): ?>
               <tr>
                 <td><?= $n['id_nomina'] ?></td>
-                <td><?= $n['nombre_empleado'] ?></td>
+                <td><?= $n['nombre_empleados'] ?> <?= $n['apellido_empleados'] ?></td>
                 <td><?= $n['año'] ?></td>
                 <td><?= $n['mes'] ?></td>
-                <td>Q <?= number_format($n['sueldo_base'], 2) ?></td>
+                <td>Q<?= number_format($n['sueldo_base'], 2) ?></td>
                 <td class="acciones">
-                  <a href="planilla.php?editar=<?= $n['id_nomina'] ?>" class="btn btn-editar" title="Editar"><i class="fas fa-edit"></i></a>
-                  <a href="planillas_crud.php?eliminar=<?= $n['id_nomina'] ?>" class="btn btn-eliminar" title="Eliminar"><i class="fas fa-trash"></i></a>
+                  <a href="planilla.php?editarNomina=<?= $n['id_nomina'] ?>" class="btn btn-editar"><i class="fas fa-edit"></i></a>
+                  <a href="planillas_crud.php?eliminar=<?= $n['id_nomina'] ?>" class="btn btn-eliminar"><i class="fas fa-trash"></i></a>
                 </td>
               </tr>
             <?php endwhile; ?>
@@ -124,6 +106,17 @@ if (isset($_GET['editar'])) {
       </section>
     </main>
   </div>
+
+  <script>
+  // Cargar sueldo base automático
+  const empleadoSelect = document.getElementById('empleadoSelect');
+  if (empleadoSelect) {
+    empleadoSelect.addEventListener('change', function() {
+      const sueldo = this.options[this.selectedIndex].getAttribute('data-sueldo');
+      document.getElementById('sueldoBase').value = sueldo || '';
+    });
+  }
+  </script>
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="planillas_alertas.js"></script>

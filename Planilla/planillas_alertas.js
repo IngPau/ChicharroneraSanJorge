@@ -1,53 +1,41 @@
 document.addEventListener("DOMContentLoaded", () => {
   const urlParams = new URLSearchParams(window.location.search);
-  const mensaje = urlParams.get("mensaje");
+  const msg = urlParams.get("msg");
 
-  // ✅ Mensajes automáticos de alerta (según la acción)
-  if (mensaje === "agregado") {
+  // ================= ALERTAS NÓMINA =================
+  if (msg === "nomina_agregada") {
     Swal.fire({
       icon: "success",
-      title: "¡Nómina registrada correctamente!",
+      title: "Nómina agregada correctamente",
       showConfirmButton: false,
       timer: 1500
     });
   }
 
-  if (mensaje === "editado") {
+  if (msg === "nomina_editada") {
     Swal.fire({
       icon: "success",
-      title: "¡Nómina actualizada correctamente!",
+      title: "Nómina actualizada correctamente",
       showConfirmButton: false,
       timer: 1500
     });
   }
 
-  if (mensaje === "eliminado") {
+  if (msg === "nomina_eliminada") {
     Swal.fire({
       icon: "info",
-      title: "Nómina eliminada correctamente",
+      title: "Nómina eliminada",
       showConfirmButton: false,
       timer: 1500
     });
   }
 
-  // ✅ Confirmación antes de eliminar
-  document.querySelectorAll('.btn-eliminar').forEach(btn => {
-    btn.addEventListener('click', function(e) {
-      e.preventDefault();
-      const href = this.href;
-      Swal.fire({
-        title: '¿Estás seguro?',
-        text: 'Esta acción eliminará la nómina permanentemente.',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonText: 'Cancelar',
-        confirmButtonText: 'Sí, eliminar'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location.href = href; // Redirige para ejecutar la eliminación en el servidor
-        }
-      });
+  if (msg === "error") {
+    Swal.fire({
+      icon: "error",
+      title: "Ocurrió un error al procesar la nómina",
+      showConfirmButton: false,
+      timer: 1800
     });
-  });
+  }
 });
