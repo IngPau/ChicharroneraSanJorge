@@ -18,15 +18,6 @@ $empleados = $db->query("
   ORDER BY e.id_empleados DESC
 ");
 
-// Nóminas
-$nominas = $db->query("
-  SELECT n.id_nomina, n.id_empleado, n.año, n.mes, n.sueldo_base, 
-         e.nombre_empleados, e.apellido_empleados
-  FROM Nomina n
-  LEFT JOIN Empleados e ON n.id_empleado = e.id_empleados
-  ORDER BY n.id_nomina DESC
-");
-
 // Asistencias
 $asistencias = $db->query("
   SELECT a.id_asistencia, a.id_empleado, a.fecha, a.hora_entrada, a.hora_salida,
@@ -36,7 +27,7 @@ $asistencias = $db->query("
   ORDER BY a.id_asistencia DESC
 ");
 
-// Editar
+// Editar empleados
 $empleadoEditar = null;
 if (isset($_GET['editar'])) {
   $id = $_GET['editar'];
@@ -44,13 +35,7 @@ if (isset($_GET['editar'])) {
   $empleadoEditar = $res->fetch_assoc();
 }
 
-$nominaEditar = null;
-if (isset($_GET['editarNomina'])) {
-  $id = $_GET['editarNomina'];
-  $res = $db->query("SELECT * FROM Nomina WHERE id_nomina=$id");
-  $nominaEditar = $res->fetch_assoc();
-}
-
+// Editar asistencia
 $asistenciaEditar = null;
 if (isset($_GET['editarAsistencia'])) {
   $id = $_GET['editarAsistencia'];
@@ -73,7 +58,7 @@ if (isset($_GET['editarAsistencia'])) {
 
 <body>
   <div class="container">
-    <?php include_once '../SideBar/sidebar.php'; ?>
+    <?php include '../SideBar/sidebar.php'; ?>
 
     <main class="main">
       <h1>Módulo Empleados</h1>
@@ -125,45 +110,8 @@ if (isset($_GET['editarAsistencia'])) {
             <a href="empleados.php" class="btn btn-cancelar"><i class="fas fa-ban"></i> Cancelar</a>
           <?php else: ?>
             <button type="submit" name="agregar" class="btn btn-agregar"><i class="fas fa-plus"></i> Agregar</button>
-            <button type="button" id="btnNomina" class="btn btn-nomina"><i class="fas fa-money-bill"></i> Nómina</button>
             <button type="button" id="btnAsistencia" class="btn btn-asistencia"><i class="fas fa-user-check"></i> Asistencia</button>
           <?php endif; ?>
-        </div>
-      </form>
-
-      <!-- Formulario de nómina -->
-      <form method="POST" action="nomina_crud.php" id="formNomina" class="formulario nomina-form" style="<?= $nominaEditar ? 'display:grid;' : 'display:none;' ?>">
-        <h3><?= $nominaEditar ? 'Editar Nómina' : 'Registrar Nómina' ?></h3>
-        <input type="hidden" name="id_nomina" value="<?= $nominaEditar['id_nomina'] ?? '' ?>">
-
-        <label>Empleado:</label>
-        <select name="id_empleado" id="empleadoSelect" required>
-          <option value="">-- Selecciona Empleado --</option>
-          <?php
-          $emps = $db->query("SELECT e.id_empleados, e.nombre_empleados, e.apellido_empleados, p.salario_base_puestos FROM Empleados e JOIN Puestos p ON e.id_puesto = p.id_puesto");
-          while ($emp = $emps->fetch_assoc()) {
-            $selected = ($nominaEditar['id_empleado'] ?? '') == $emp['id_empleados'] ? 'selected' : '';
-            echo "<option value='{$emp['id_empleados']}' data-sueldo='{$emp['salario_base_puestos']}' $selected>{$emp['nombre_empleados']} {$emp['apellido_empleados']}</option>";
-          }
-          ?>
-        </select>
-
-        <label>Año:</label>
-        <input type="number" name="año" min="2000" max="2100" required value="<?= $nominaEditar['año'] ?? '' ?>">
-
-        <label>Mes:</label>
-        <input type="number" name="mes" min="1" max="12" required value="<?= $nominaEditar['mes'] ?? '' ?>">
-
-        <label>Sueldo Base:</label>
-        <input type="number" step="0.01" name="sueldo_base" id="sueldoBase" readonly value="<?= $nominaEditar['sueldo_base'] ?? '' ?>">
-
-        <div class="botones">
-          <?php if ($nominaEditar): ?>
-            <button type="submit" name="editarNomina" class="btn btn-editar"><i class="fas fa-save"></i> Actualizar Nómina</button>
-          <?php else: ?>
-            <button type="submit" name="agregarNomina" class="btn btn-agregar"><i class="fas fa-check"></i> Guardar Nómina</button>
-          <?php endif; ?>
-          <button type="button" id="cerrarNomina" class="btn btn-cancelar"><i class="fas fa-times"></i> Cerrar</button>
         </div>
       </form>
 
@@ -232,31 +180,6 @@ if (isset($_GET['editarAsistencia'])) {
         </table>
       </section>
 
-      <!-- Tabla de nómina -->
-      <section class="tabla">
-        <h3>Registro de Nómina</h3>
-        <table>
-          <thead>
-            <tr><th>ID</th><th>Empleado</th><th>Año</th><th>Mes</th><th>Sueldo</th><th>Acciones</th></tr>
-          </thead>
-          <tbody>
-            <?php while ($n = $nominas->fetch_assoc()): ?>
-              <tr>
-                <td><?= $n['id_nomina'] ?></td>
-                <td><?= $n['nombre_empleados'] ?> <?= $n['apellido_empleados'] ?></td>
-                <td><?= $n['año'] ?></td>
-                <td><?= $n['mes'] ?></td>
-                <td>Q<?= number_format($n['sueldo_base'], 2) ?></td>
-                <td class="acciones">
-                  <a href="empleados.php?editarNomina=<?= $n['id_nomina'] ?>" class="btn btn-editar"><i class="fas fa-edit"></i></a>
-                  <a href="nomina_crud.php?eliminar=<?= $n['id_nomina'] ?>" class="btn btn-eliminar"><i class="fas fa-trash"></i></a>
-                </td>
-              </tr>
-            <?php endwhile; ?>
-          </tbody>
-        </table>
-      </section>
-
       <!-- Tabla de asistencia -->
       <section class="tabla">
         <h3>Registro de Asistencia</h3>
@@ -285,30 +208,24 @@ if (isset($_GET['editarAsistencia'])) {
   </div>
 
   <script>
-  document.getElementById('btnNomina').addEventListener('click', () => {
-    document.getElementById('formNomina').style.display = 'grid';
-  });
-  document.getElementById('cerrarNomina').addEventListener('click', () => {
-    document.getElementById('formNomina').style.display = 'none';
+  // Mostrar/ocultar formulario de asistencia
+  const btnAsistencia = document.getElementById('btnAsistencia');
+  const formAsistencia = document.getElementById('formAsistencia');
+  const cerrarAsistencia = document.getElementById('cerrarAsistencia');
+
+  btnAsistencia?.addEventListener('click', () => {
+    formAsistencia.style.display = 'grid';
+    btnAsistencia.style.display = 'none';
   });
 
-  document.getElementById('btnAsistencia').addEventListener('click', () => {
-    document.getElementById('formAsistencia').style.display = 'grid';
+  cerrarAsistencia?.addEventListener('click', () => {
+    formAsistencia.style.display = 'none';
+    if (btnAsistencia) btnAsistencia.style.display = 'inline-flex';
   });
-  document.getElementById('cerrarAsistencia').addEventListener('click', () => {
-    document.getElementById('formAsistencia').style.display = 'none';
-  });
-
-  const empleadoSelect = document.getElementById('empleadoSelect');
-  if (empleadoSelect) {
-    empleadoSelect.addEventListener('change', function() {
-      const sueldo = this.options[this.selectedIndex].getAttribute('data-sueldo');
-      document.getElementById('sueldoBase').value = sueldo || '';
-    });
-  }
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="empleados_alertas.js"></script>
+  <script src="empleados_validaciones.js"></script>
 </body>
 </html>
