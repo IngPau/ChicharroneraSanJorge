@@ -127,6 +127,7 @@ if (isset($_GET['editar'])) {
 
               <label>Subtotal:</label>
               <input type="number" class="subtotal" readonly class="bloqueado">
+              
             </div>
           </div>
 

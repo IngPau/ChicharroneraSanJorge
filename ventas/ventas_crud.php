@@ -12,16 +12,16 @@ if (isset($_POST['agregar'])) {
     $id_usuario = $_POST['id_usuario'];
     $id_sucursal = $_POST['id_sucursal'];
 
-    // ✅ Corregido: si el cliente no fue seleccionado, se inserta NULL
+    
     $id_cliente = isset($_POST['id_cliente']) && $_POST['id_cliente'] !== '' 
         ? intval($_POST['id_cliente']) 
         : 'NULL';
 
-    // Empezar transacción
+   
     $db->begin_transaction();
 
     try {
-        // 1) Determinar el id_almacen asociado a la sucursal
+        
         $id_almacen = null;
         $qAlmacen = "SELECT id_almacen FROM almacenes_sucursal WHERE id_sucursal = $id_sucursal LIMIT 1";
         $rAlmacen = $db->query($qAlmacen);
@@ -145,7 +145,7 @@ if (isset($_POST['editar'])) {
     $id_usuario = $_POST['id_usuario'];
     $id_sucursal = $_POST['id_sucursal'];
 
-    // ✅ También ajustamos id_cliente aquí, si lo necesitas editar
+    
     $id_cliente = isset($_POST['id_cliente']) && $_POST['id_cliente'] !== '' 
         ? intval($_POST['id_cliente']) 
         : 'NULL';

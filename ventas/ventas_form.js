@@ -46,3 +46,4 @@ function calcularTotal() {
   });
   document.getElementById('total_venta').value = total.toFixed(2);
 }
+
