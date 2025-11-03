@@ -42,4 +42,27 @@ if (isset($_GET['eliminar'])) {
     header("Location: empleados.php?msg=eliminado");
     exit;
 }
+
+
+$dpi = $_POST['dpi_empleados'];
+
+// Validación de longitud
+if (strlen($dpi) !== 13) {
+  $_SESSION['mensaje'] = ['tipo' => 'error', 'texto' => 'El DPI debe tener exactamente 13 dígitos.'];
+  header("Location: empleados.php");
+  exit();
+}
+
+// Validación de caracteres (solo números)
+if (!ctype_digit($dpi)) {
+  $_SESSION['mensaje'] = ['tipo' => 'error', 'texto' => 'El DPI solo puede contener números.'];
+  header("Location: empleados.php");
+  exit();
+}
+
+
+
+
+
+
 ?>
