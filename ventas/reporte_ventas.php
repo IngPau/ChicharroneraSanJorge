@@ -126,7 +126,7 @@ $sucursales = $db->query("SELECT id_sucursal, nombre_sucursal FROM sucursales");
         </form>
 
         <!-- 📤 Botones de exportación -->
-        <div style="margin-top: 20px; display: flex; flex-wrap: wrap; gap: 10px;">
+        <div style="margin-bottom:20px; margin-top: 20px; display: flex; flex-wrap: wrap; gap: 10px;">
             <a href="exportar_pdf.php?<?= http_build_query($_GET) ?>" class="btn btn-agregar" target="_blank">
                 <i class="fas fa-file-pdf"></i> Exportar a PDF
             </a>
@@ -148,6 +148,7 @@ $sucursales = $db->query("SELECT id_sucursal, nombre_sucursal FROM sucursales");
                     <th>Usuario</th>
                     <th>Sucursal</th>
                     <th>Cliente</th>
+                    <th>Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -161,6 +162,15 @@ $sucursales = $db->query("SELECT id_sucursal, nombre_sucursal FROM sucursales");
                             <td><?= htmlspecialchars($v['nombre_usuario']) ?></td>
                             <td><?= htmlspecialchars($v['nombre_sucursal']) ?></td>
                             <td><?= $v['nombre_cliente'] ?: '—' ?></td>
+                            <td class="acciones">
+                                <a href="../ventas/ventas.php?editar=<?= $v['id_venta'] ?>" class="btn btn-editar" title="Editar">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="../ventas/ventas_crud.php?eliminar=<?= $v['id_venta'] ?>" class="btn btn-eliminar" title="Eliminar">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+
                         </tr>
                     <?php endwhile; ?>
                 <?php else: ?>

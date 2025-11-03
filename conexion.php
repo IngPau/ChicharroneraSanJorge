@@ -4,7 +4,6 @@ function conectar() {
 
     $db = new mysqli("localhost","root", "", "csj_db",3307);
 
-  
 
     if (!$db)
         die("no hay conexion a la base de datos");

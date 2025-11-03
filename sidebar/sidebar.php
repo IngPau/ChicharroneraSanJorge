@@ -69,7 +69,7 @@ echo "<!-- ===== DEBUG FIN ===== -->";
           <li><a href="/ventas/ventas.php">Ventas</a></li>
           <li><a href="/clientes/clientes.php">Clientes</a></li>
           <li><a href="/Platos/platos.php">Platos</a></li>
-          <li><a href="#">Recetas</a></li>
+          <li><a href="/Recetas/recetas.php">Recetas</a></li>
         </ul>
       </li>
       <?php endif; ?>
