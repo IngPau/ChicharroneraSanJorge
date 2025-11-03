@@ -76,5 +76,6 @@ $detalles = $db->query("
     </footer>
 
   </div>
+
 </body>
 </html>

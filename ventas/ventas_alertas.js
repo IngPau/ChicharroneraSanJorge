@@ -61,3 +61,36 @@ document.querySelectorAll(".btn-eliminar").forEach(btn => {
   });
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  const formulario = document.querySelector("form");
+
+  if (formulario) {
+    formulario.addEventListener("submit", function (e) {
+      const cantidades = document.querySelectorAll(".cantidad");
+      let valido = true;
+
+      cantidades.forEach((input) => {
+        const valor = input.value.trim();
+        const numero = parseFloat(valor);
+
+        // Validar: número positivo, no vacío, sin letras ni símbolos
+        if (!valor || isNaN(numero) || numero <= 0) {
+          valido = false;
+          input.style.borderColor = "#dc2626";
+        } else {
+          input.style.borderColor = "";
+        }
+      });
+
+      if (!valido) {
+        e.preventDefault();
+        Swal.fire({
+          icon: "error",
+          title: "Cantidad inválida",
+          text: "Verifica que todas las cantidades sean números positivos mayores a cero.",
+          confirmButtonColor: "#dc2626"
+        });
+      }
+    });
+  }
+});
