@@ -153,12 +153,12 @@
 .acciones i {
   font-size: 18px;
   cursor: pointer;
-  color: #1e293b;
+  color: #eeeeee;
   transition: color 0.2s ease;
 }
 
 .acciones i:hover {
-  color: #dc2626;
+  color: #aeaeae;
 }
 
 /* ===================== RESPONSIVE ===================== */

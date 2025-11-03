@@ -2,7 +2,9 @@
 
 function conectar() {
 
+
     $db = new mysqli("localhost","root", "123456", "csj_db");
+
 
   
 
